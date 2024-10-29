@@ -1,0 +1,7 @@
+{
+  "name": "cosplayrent",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
