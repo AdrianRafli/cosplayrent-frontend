@@ -1,0 +1,67 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>search</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true">
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">search</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+
+  <div class="p-6">
+      <div class="flex items-center justify-between gap-2">
+        <button ion-button> <!-- (click)="goBack()" -->
+          <a href="/home">
+            <ion-icon name="arrow-back-outline"></ion-icon>
+          </a>
+        </button>
+        <div class="flex-1 mx-2">
+          <ion-searchbar></ion-searchbar> <!-- [(ngModel)]="searchQuery" (ionInput)="onSearch()" -->
+        </div>
+        <button ion-button>
+          <ion-icon name="cart-outline"></ion-icon>
+        </button>
+         <button ion-button>
+           <a href="/login">
+             <ion-icon name="menu-outline"></ion-icon>
+           </a>
+         </button>
+      </div>
+  
+    <div class="my-4">
+      <label for="sort" class="block text-sm font-medium text-gray-700">Sortir Berdasarkan</label>
+      <select id="sort" [(ngModel)]="sortOption" (ngModelChange)="onSortChange($event)" 
+        class="mt-1 block w-full px-3 py-2 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none">
+        <option value="terlaris">Terlaris</option>
+        <option value="harga-terendah">Harga Terendah</option>
+        <option value="harga-tertinggi">Harga Tertinggi</option>
+      </select>
+    </div>
+  
+    <div class="grid grid-cols-2 gap-4">
+      <div *ngFor="let costume of costume" class="rounded-lg shadow-lg">
+        <div (click)="goToCostumeDetail(costume.id)">
+          <img [src]="costume.picture" alt="{{ costume.picture }}" class="w-full h-34 object-cover rounded-md">
+        <div class="p-2">
+          <h3 class="mt-1 product-name">{{ costume.name }}</h3>
+          <div class="flex items-center">
+            <p class="font-semibold product-price">{{ costume.price | currency:'Rp' }}</p>
+            <p class="text-sm text-gray-600 product-day">/Day</p>
+          </div>
+          <div class="flex items-center mt-2">
+            <ion-icon name="star" class="text-yellow-500 mr-1"></ion-icon>
+            <span class="text-xs product-rate">{{ costume.rating }} | {{ costume.totalRent }} tersewa</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <p class="text-gray-500 mt-1 text-xs shop-name">{{ costume.shopName }}</p>
+            <p class="text-gray-500 mt-1 text-xs shop-city">{{ costume.city }}</p>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
