@@ -1,32 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../api.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { Component, OnInit } from "@angular/core";
+import { ApiService } from "../api.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AlertController } from "@ionic/angular";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: "app-login",
+  templateUrl: "./login.page.html",
+  styleUrls: ["./login.page.scss"],
 })
 export class LoginPage implements OnInit {
-  data:any = {email:'',password:''}
-  resp:any
-  successMessage: string = ''
-  constructor(public api:ApiService, public router:Router, private route: ActivatedRoute, private alertController: AlertController) { }
+  data: any = { email: "", password: "" };
+  resp: any;
+  successMessage: string = "";
+  constructor(
+    public api: ApiService,
+    public router: Router,
+    private route: ActivatedRoute,
+    private alertController: AlertController,
+  ) {}
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      if (params['successMessage']) {
-        this.successMessage = params['successMessage'];
+    this.route.queryParams.subscribe((params) => {
+      if (params["successMessage"]) {
+        this.successMessage = params["successMessage"];
       }
     });
   }
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      header: 'Login Failed',
+      header: "Login Failed",
       message: message,
-      buttons: ['OK'],
+      buttons: ["OK"],
     });
     await alert.present();
   }
@@ -38,22 +43,25 @@ export class LoginPage implements OnInit {
     //   return;
     // }
 
-    this.api.post('login', this.data).subscribe((resp)=> {
-      // console.log("login", resp)
-      this.resp = resp
+    this.api.post("login", this.data).subscribe(
+      (resp) => {
+        // console.log("login", resp)
+        this.resp = resp;
 
-      if(this.resp.code == 200) {
-        localStorage.setItem('userToken', this.resp.data.token)
-        this.router.navigateByUrl("/homepage")
-      } else {
-        this.presentAlert('Invalid email or password.');
-      }
-    }, (error) => {
-      this.presentAlert('An error occurred. Please try again.');
-    })
+        if (this.resp.code == 200) {
+          localStorage.setItem("userToken", this.resp.data.token);
+          this.router.navigateByUrl("/home");
+        } else {
+          this.presentAlert("Invalid email or password.");
+        }
+      },
+      (error) => {
+        this.presentAlert("An error occurred. Please try again.");
+      },
+    );
   }
 
   doLogout() {
-    localStorage.removeItem('userToken')
+    localStorage.removeItem("userToken");
   }
 }
