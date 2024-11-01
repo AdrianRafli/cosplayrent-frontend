@@ -7,8 +7,9 @@
 <ion-content [fullscreen]="true">
   <div class="p-6">
     <div class="flex items-center justify-between gap-2 mb-4">
-      <button ion-button> <!-- (click)="goBack()" -->
-        <a href="/homepage">
+      <button ion-button>
+        <!-- (click)="goBack()" -->
+        <a href="/home">
           <ion-icon name="arrow-back-outline"></ion-icon>
         </a>
       </button>
@@ -19,28 +20,39 @@
         </a>
       </button>
     </div>
-  
+
     <!-- Cart Items -->
     <div *ngFor="let store of cartStores" class="border-t mt-4">
       <div class="flex items-center my-4">
         <ion-checkbox [(ngModel)]="store.selected"></ion-checkbox>
         <h3 class="ml-4 font-semibold">{{ store.name }}</h3>
       </div>
-  
+
       <div *ngFor="let product of store.products" class="py-2">
         <div class="flex items-center">
           <ion-checkbox [(ngModel)]="product.selected"></ion-checkbox>
-          <img [src]="product.image" alt="{{ product.name }}" class="w-16 h-16 object-cover ml-4">
+          <img
+            [src]="product.image"
+            alt="{{ product.name }}"
+            class="w-16 h-16 object-cover ml-4"
+          />
           <div class="ml-4">
             <p>{{ product.name }}</p>
             <p class="text-gray-600">Ukuran: {{ product.size }}</p>
             <p class="font-semibold">{{ product.price | currency:'IDR' }}</p>
           </div>
         </div>
-  
-        <div class="flex items-center border rounded-lg justify-self-end p-1 mt-2">
-          <button (click)="updateQuantity(product, -1)" [disabled]="product.quantity <= 1">
-            <ion-icon [name]="product.quantity > 1 ? 'remove-outline' : 'trash-outline'"></ion-icon>
+
+        <div
+          class="flex items-center border rounded-lg justify-self-end p-1 mt-2"
+        >
+          <button
+            (click)="updateQuantity(product, -1)"
+            [disabled]="product.quantity <= 1"
+          >
+            <ion-icon
+              [name]="product.quantity > 1 ? 'remove-outline' : 'trash-outline'"
+            ></ion-icon>
           </button>
           <p class="mx-2">{{ product.quantity }} Hari</p>
           <button>
@@ -54,20 +66,32 @@
       <h2 class="text-xl font-bold mb-4">Rekomendasi</h2>
       <div class="grid grid-cols-2 gap-4">
         <div *ngFor="let costume of costumes" class="rounded-lg shadow-lg">
-          <img [src]="costume.image" alt="{{ costume.name }}" class="w-full h-34 object-cover rounded-md">
+          <img
+            [src]="costume.image"
+            alt="{{ costume.name }}"
+            class="w-full h-34 object-cover rounded-md"
+          />
           <div class="p-2">
             <h3 class="mt-1 product-name">{{ costume.name }}</h3>
             <div class="flex items-center">
-              <p class="font-semibold product-price">{{ costume.price | currency:'Rp' }}</p>
+              <p class="font-semibold product-price">
+                {{ costume.price | currency:'Rp' }}
+              </p>
               <p class="text-sm text-gray-600 product-day">/Day</p>
             </div>
             <div class="flex items-center mt-2">
               <ion-icon name="star" class="text-yellow-500 mr-1"></ion-icon>
-              <span class="text-xs product-rate">{{ costume.rating }} | {{ costume.totalRent }} tersewa</span>
+              <span class="text-xs product-rate"
+                >{{ costume.rating }} | {{ costume.totalRent }} tersewa</span
+              >
             </div>
             <div class="flex items-center justify-between">
-              <p class="text-gray-500 mt-1 text-xs shop-name">{{ costume.shopName }}</p>
-              <p class="text-gray-500 mt-1 text-xs shop-city">{{ costume.city }}</p>
+              <p class="text-gray-500 mt-1 text-xs shop-name">
+                {{ costume.shopName }}
+              </p>
+              <p class="text-gray-500 mt-1 text-xs shop-city">
+                {{ costume.city }}
+              </p>
             </div>
           </div>
         </div>
@@ -83,7 +107,9 @@
         </div>
         <div class="flex items-center space-x-4">
           <p class="font-bold">Total: {{ totalPrice | currency:'IDR' }}</p>
-          <button class="bg-green-500 text-white px-4 py-2 rounded-md">Sewa</button><!--(click)="checkout()"-->
+          <button class="bg-green-500 text-white px-4 py-2 rounded-md">
+            Sewa</button
+          ><!--(click)="checkout()"-->
         </div>
       </div>
     </div>

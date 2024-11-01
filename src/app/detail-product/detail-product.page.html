@@ -7,8 +7,9 @@
 <ion-content [fullscreen]="true" class="ion-padding">
   <div class="p-2">
     <div class="flex items-center justify-between gap-2 mb-4">
-      <button ion-button> <!-- (click)="goBack()" -->
-        <a href="/homepage">
+      <button ion-button>
+        <!-- (click)="goBack()" -->
+        <a href="/home">
           <ion-icon name="arrow-back-outline"></ion-icon>
         </a>
       </button>
@@ -16,24 +17,31 @@
         <button ion-button>
           <ion-icon name="cart-outline"></ion-icon>
         </button>
-         <button ion-button>
-           <a href="/login">
-             <ion-icon name="menu-outline"></ion-icon>
-           </a>
-         </button>
+        <button ion-button>
+          <a href="/login">
+            <ion-icon name="menu-outline"></ion-icon>
+          </a>
+        </button>
       </div>
     </div>
 
     <!-- Product Image -->
-    <img [src]="costume.picture" alt="{{ product.name }}" class="w-full h-128 object-cover rounded-lg">
+    <img
+      [src]="costume.picture"
+      alt="{{ product.name }}"
+      class="w-full h-128 object-cover rounded-lg"
+    />
 
     <!-- Product Info -->
     <div class="mt-4">
       <h2 class="text-2xl font-bold">{{ costume.price | currency:'IDR' }}</h2>
       <p class="text-lg">{{ costume.name }}</p>
       <div class="flex">
-        <p class="text-gray-600">Tersewa {{ costume.totalRent }} | </p>
-        <p class="text-gray-600"><ion-icon name="star" class="text-yellow-500 mr-1 ms-2"></ion-icon>{{ costume.rating }}</p>
+        <p class="text-gray-600">Tersewa {{ costume.totalRent }} |</p>
+        <p class="text-gray-600">
+          <ion-icon name="star" class="text-yellow-500 mr-1 ms-2"></ion-icon>{{
+          costume.rating }}
+        </p>
       </div>
     </div>
 
@@ -45,7 +53,11 @@
       </div>
       <div *ngFor="let review of review" class="mt-4">
         <div class="flex items-center">
-          <img [src]="review.userAvatar" alt="User Avatar" class="w-8 h-8 rounded-full mr-2">
+          <img
+            [src]="review.userAvatar"
+            alt="User Avatar"
+            class="w-8 h-8 rounded-full mr-2"
+          />
           <div>
             <p class="font-semibold">{{ review.userName }}</p>
             <p class="text-sm text-gray-500">{{ review.created_at }}</p>
@@ -75,7 +87,11 @@
 
     <!-- Shop Info -->
     <div class="mt-6 pb-6 border-y pt-4 flex items-center">
-      <img [src]="product.shop.avatar" alt="Shop Avatar" class="w-12 h-12 rounded-full mr-3">
+      <img
+        [src]="product.shop.avatar"
+        alt="Shop Avatar"
+        class="w-12 h-12 rounded-full mr-3"
+      />
       <div>
         <p class="font-semibold">{{ product.shop.name }}</p>
         <p class="text-sm text-gray-500">{{ product.shop.lastOnline }}</p>
@@ -86,38 +102,56 @@
     <div class="mt-4 mb-16">
       <h2 class="text-xl font-bold mb-4">Rekomendasi</h2>
       <div class="grid grid-cols-2 gap-4">
-        <div *ngFor="let costume of Allcostume"  class="rounded-lg shadow-lg">
+        <div *ngFor="let costume of Allcostume" class="rounded-lg shadow-lg">
           <div (click)="goToCostumeDetail(costume.id)">
-            <img [src]="costume.picture" alt="{{ costume.name }}" class="w-full h-34 object-cover rounded-md">
+            <img
+              [src]="costume.picture"
+              alt="{{ costume.name }}"
+              class="w-full h-34 object-cover rounded-md"
+            />
             <div class="p-2">
               <h3 class="mt-1 product-name">{{ costume.name }}</h3>
-            <div class="flex items-center">
-              <p class="font-semibold product-price">{{ costume.price | currency:'Rp' }}</p>
-              <p class="text-sm text-gray-600 product-day">/Day</p>
+              <div class="flex items-center">
+                <p class="font-semibold product-price">
+                  {{ costume.price | currency:'Rp' }}
+                </p>
+                <p class="text-sm text-gray-600 product-day">/Day</p>
+              </div>
+              <div class="flex items-center mt-2">
+                <ion-icon name="star" class="text-yellow-500 mr-1"></ion-icon>
+                <span class="text-xs product-rate"
+                  >{{ costume.rating }} | {{ costume.totalRent }} tersewa</span
+                >
+              </div>
+              <div class="flex items-center justify-between">
+                <p class="text-gray-500 mt-1 text-xs shop-name">
+                  {{ costume.shopName }}
+                </p>
+                <p class="text-gray-500 mt-1 text-xs shop-city">
+                  {{ costume.city }}
+                </p>
+              </div>
             </div>
-            <div class="flex items-center mt-2">
-              <ion-icon name="star" class="text-yellow-500 mr-1"></ion-icon>
-              <span class="text-xs product-rate">{{ costume.rating }} | {{ costume.totalRent }} tersewa</span>
-            </div>
-            <div class="flex items-center justify-between">
-              <p class="text-gray-500 mt-1 text-xs shop-name">{{ costume.shopName }}</p>
-              <p class="text-gray-500 mt-1 text-xs shop-city">{{ costume.city }}</p>
-            </div>
-          </div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Sticky Footer Buttons -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white p-6 gap-2 shadow-2xl flex items-center">
+    <div
+      class="fixed bottom-0 left-0 right-0 bg-white p-6 gap-2 shadow-2xl flex items-center"
+    >
       <button class="flex flex-none items-center text-gray-600">
         <ion-icon name="chatbubble-ellipses-outline" class="mr-2"></ion-icon>
       </button>
       <div (click)="goToCheckout()" class="flex flex-1">
-        <button class="flex-1 bg-green-500 text-white px-4 py-2 rounded-md">Sewa</button>
+        <button class="flex-1 bg-green-500 text-white px-4 py-2 rounded-md">
+          Sewa
+        </button>
       </div>
-      <button class="flex-1 bg-gray-300 text-gray-600 px-4 py-2 rounded-md">+ Keranjang</button>
+      <button class="flex-1 bg-gray-300 text-gray-600 px-4 py-2 rounded-md">
+        + Keranjang
+      </button>
     </div>
   </div>
 </ion-content>

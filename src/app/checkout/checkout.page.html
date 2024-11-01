@@ -7,8 +7,9 @@
 <ion-content [fullscreen]="true">
   <div class="p-6">
     <div class="flex items-center gap-2 mb-4">
-      <button ion-button> <!-- (click)="goBack()" -->
-        <a href="/homepage">
+      <button ion-button>
+        <!-- (click)="goBack()" -->
+        <a href="/home">
           <ion-icon name="arrow-back-outline"></ion-icon>
         </a>
       </button>
@@ -18,16 +19,21 @@
     <div class="mb-4">
       <div class="flex items-center">
         <i class="fas fa-map-marker-alt mr-2"></i>
-        <p><strong>Rumah</strong> Jl. Merdeka Raya, Boro Jambangan, Saptosari...</p>
+        <p>
+          <strong>Rumah</strong> Jl. Merdeka Raya, Boro Jambangan, Saptosari...
+        </p>
         <a href="#" class="ml-auto text-blue-500">Ubah</a>
       </div>
     </div>
-  
+
     <!-- Detail Pesanan -->
     <div class="mb-4 bg-white rounded shadow">
       <h3 class="text-lg font-bold">Pesanan</h3>
       <div class="flex gap-2">
-        <img src="/assets/product/kostum-2.png" class="w-32 h-32 object-cover ml-4">
+        <img
+          src="/assets/product/kostum-2.png"
+          class="w-32 h-32 object-cover ml-4"
+        />
         <div class="mt-2">
           <h4 class="font-semibold">Toko Cosplay Jaya</h4>
           <p>Costum Naruto</p>
@@ -35,7 +41,7 @@
           <p class="font-semibold text-xl">Rp 10.000.000</p>
         </div>
       </div>
-  
+
       <!-- Pilihan Shipping -->
       <div class="mt-4">
         <label class="block font-semibold mb-1">Pilihan Pengiriman</label>
@@ -44,7 +50,7 @@
           <option>Cargo</option>
           <option>Ekonomi</option>
         </select>
-  
+
         <div class="mt-2 flex items-center">
           <select class="w-full p-2 border rounded">
             <option>SiCepat (Rp26.000)</option>
@@ -54,14 +60,17 @@
           <span class="ml-2">Estimasi tiba 12 - 14 Nov</span>
         </div>
       </div>
-  
+
       <!-- Tambah Catatan -->
       <div class="mt-4">
         <label class="block font-semibold mb-1">Tambahkan Catatan</label>
-        <textarea class="w-full p-2 border rounded" placeholder="Tambahkan catatan untuk penjual"></textarea>
+        <textarea
+          class="w-full p-2 border rounded"
+          placeholder="Tambahkan catatan untuk penjual"
+        ></textarea>
       </div>
     </div>
-  
+
     <!-- Tambah Promo -->
     <div class="mb-4 bg-white rounded shadow">
       <h3 class="text-lg font-bold">Tambahkan Promo</h3>
@@ -72,7 +81,7 @@
         </select>
       </div>
     </div>
-  
+
     <!-- Ringkasan Pesanan -->
     <div class="mb-4 bg-white rounded shadow">
       <h3 class="text-lg font-bold">Ringkasan Pesanan</h3>
@@ -89,19 +98,22 @@
           <span>Biaya Jasa Aplikasi</span>
           <span>Rp 1.000</span>
         </div>
-        <hr class="my-4">
+        <hr class="my-4" />
         <div class="flex justify-between font-bold text-xl mb-4">
           <span>Total Sewa</span>
           <span>Rp 10.027.000</span>
         </div>
       </div>
     </div>
-  
+
     <!-- Tombol Pilih Pembayaran -->
     <div class="p-2">
-      <button class="w-full bg-green-600 text-white p-3 rounded-lg">Pilih Pembayaran</button>
+      <button class="w-full bg-green-600 text-white p-3 rounded-lg">
+        Pilih Pembayaran
+      </button>
       <p class="text-center text-gray-500 text-sm mt-2">
-        Dengan melanjutkan pembayaran, kamu menyetujui <a href="#" class="text-blue-500">S&K</a>
+        Dengan melanjutkan pembayaran, kamu menyetujui
+        <a href="#" class="text-blue-500">S&K</a>
       </p>
     </div>
   </div>
