@@ -42,7 +42,15 @@ const routes: Routes = [
   {
     path: 'chat',
     loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  },  {
+    path: 'profil-change',
+    loadChildren: () => import('./profil-change/profil-change.module').then( m => m.ProfilChangePageModule)
   },
+  {
+    path: 'user-profile',
+    loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+  },
+
 ];
 
 @NgModule({
