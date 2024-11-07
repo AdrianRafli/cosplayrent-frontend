@@ -1,13 +1,21 @@
-<ion-header [translucent]="true">
+<!-- <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>chat</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content [fullscreen]="true">
+  <div class="p-2">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">chat</ion-title>
     </ion-toolbar>
+    <button ion-button>
+      <!-- (click)="goBack()" -->
+      <a href="/home">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </a>
+    </button>
   </ion-header>
+  </div>
 </ion-content>
