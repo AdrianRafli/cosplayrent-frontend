@@ -1,0 +1,64 @@
+<ion-header [translucent]="true" class="px-4">
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goBack()" class="text-xl">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </ion-buttons>
+    <ion-title>Ubah profilemu disini</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">user-profile</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="ion-padding px-5">
+    <div class="profile-header">
+      <img src="../../assets/product/kostum-1.png" alt="Profile Picture" class="profile-img" />
+      <div class="profile-info">
+        <h2>Lorem Ipsum <ion-icon name="pencil"></ion-icon></h2> <!-- (click)="editProfile()"  -->
+        <p>123456789</p>
+      </div>
+    </div>
+  </div>
+
+  <ion-list class="px-2">
+    <ion-item button class="text-xl"> <!-- (click)="navigateTo('address-settings')"-->
+      <ion-label><ion-icon name="location-outline"></ion-icon> Pengaturan Alamat</ion-label>
+    </ion-item>
+    <ion-item button class="text-xl"> <!-- (click)="navigateTo('account-security')" -->
+      <ion-label><ion-icon name="lock-closed-outline"></ion-icon> Keamanan Akun</ion-label>
+    </ion-item>
+    <ion-item button class="text-xl"> <!-- (click)="navigateTo('app-settings')" -->
+      <ion-label><ion-icon name="settings-outline"></ion-icon> Pengaturan Aplikasi</ion-label>
+    </ion-item>
+    <ion-item button class="text-xl"> <!-- (click)="navigateTo('payment-settings')" -->
+      <ion-label><ion-icon name="wallet-outline"></ion-icon> Pengaturan Pembayaran</ion-label>
+    </ion-item>
+    <ion-item lines="none" id="delete-alert" class="text-xl">
+      <ion-label color="danger"><ion-icon name="trash-outline"></ion-icon> Hapus Akun</ion-label>
+    </ion-item>
+    <ion-item lines="none" id="logout-alert" class="text-xl">
+      <ion-label color="danger"><ion-icon name="log-out-outline"></ion-icon> Keluar Akun</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
+
+<ion-alert
+  trigger="delete-alert"
+  class="custom-alert"
+  header="Konfirmasi"
+  message="Apakah Anda yakin ingin menghapus akun Anda?"
+  [buttons]="deleteAlertButtons">
+</ion-alert>
+
+<!-- Alert untuk Keluar Akun -->
+<ion-alert
+  trigger="logout-alert"
+  class="custom-alert"
+  header="Konfirmasi"
+  message="Apakah anda ingin keluar dari akun ini?"
+  [buttons]="logoutAlertButtons">
+</ion-alert>
