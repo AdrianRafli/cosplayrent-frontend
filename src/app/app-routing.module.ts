@@ -42,7 +42,8 @@ const routes: Routes = [
   {
     path: 'chat',
     loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
-  },  {
+  },
+  {
     path: 'profil-change',
     loadChildren: () => import('./profil-change/profil-change.module').then( m => m.ProfilChangePageModule)
   },
