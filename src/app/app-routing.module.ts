@@ -50,7 +50,11 @@ const routes: Routes = [
   {
     path: 'user-profile',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+  },  {
+    path: 'toko-home-page',
+    loadChildren: () => import('./toko-home-page/toko-home-page.module').then( m => m.TokoHomePagePageModule)
   },
+
 
 ];
 
