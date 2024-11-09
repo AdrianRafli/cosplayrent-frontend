@@ -50,6 +50,13 @@ const routes: Routes = [
   {
     path: 'user-profile',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+  },  {
+    path: 'toko-product-tambah',
+    loadChildren: () => import('./toko-product-tambah/toko-product-tambah.module').then( m => m.TokoProductTambahPageModule)
+  },
+  {
+    path: 'toko-product-edit',
+    loadChildren: () => import('./toko-product-edit/toko-product-edit.module').then( m => m.TokoProductEditPageModule)
   },
   {
     path: 'toko-home-page',
@@ -60,6 +67,7 @@ const routes: Routes = [
     path: 'toko-produk',
     loadChildren: () => import('./toko-produk/toko-produk.module').then( m => m.TokoProdukPageModule)
   },
+
 
 
 ];

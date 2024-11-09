@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilChangePage implements OnInit {
   data: any = { name: 'test', email: 'test@gmail.com', username: 'testuser', password: '123', nomortlp: '0808080808' };
-
   constructor() { }
 
   ngOnInit() {
