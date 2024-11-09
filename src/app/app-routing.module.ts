@@ -67,6 +67,10 @@ const routes: Routes = [
     path: 'toko-produk',
     loadChildren: () => import('./toko-produk/toko-produk.module').then( m => m.TokoProdukPageModule)
   },
+  {
+    path: 'ubah-sandi',
+    loadChildren: () => import('./ubah-sandi/ubah-sandi.module').then( m => m.UbahSandiPageModule)
+  },
 
 
 

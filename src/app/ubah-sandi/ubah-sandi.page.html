@@ -1,0 +1,38 @@
+<ion-header [hidden]="true" [translucent]="true">
+  <ion-toolbar>
+    <ion-title style="font-family: 'Poppins', sans-serif;">Ubah Kata Sandi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-no-padding" style="font-family: 'Poppins'">
+  <div class="mt-5">
+    <div class="border-b-2 border-black mb-4">
+      <a href="/user-profile" class="flex items-center mb-5">
+        <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2"></ion-icon>
+        <span class="text-sm font-semibold" style="font-size: 18px;">Ubah kata sandi</span>
+      </a>
+    </div>  
+    <p class="text-center mt-5 mb-12 mr-8 ml-8" style="font-size: 13px;">Membuat kata sandi membantu anda menjaga keamanan akun dan transaksi.</p>
+    <form class="px-4">
+      <div class="mb-6">
+        <label for="new-password" class="block mb-2 text-sm font-semibold text-gray-900">Sandi Baru</label>
+        <ion-input type="password" id="new-password" placeholder="Masukkan Kata Sandi Baru" class="bg-transparent border-b border-white text-black-900 text-sm p-0 border-b-black"[(ngModel)]="pass.new"  [ngModelOptions]="{standalone: true}">
+          <ion-icon slot="end" name="eye" (click)="togglePasswordVisibility('new-password')" style="cursor: pointer; font-size: 20px; padding-right: 0.75rem;"></ion-icon>
+        </ion-input>
+      </div>
+      <div class="mb-6">
+        <label for="confirm-password" class="block mb-2 text-sm font-semibold text-gray-900">Konfirmasi Sandi</label>
+        <ion-input type="password" id="confirm-password" placeholder="Masukkan Ulang Kata Sandi Baru" class="bg-transparent border-b border-white text-black-900 text-sm p-0 border-b-black"[(ngModel)]="pass.konfirmasi"  [ngModelOptions]="{standalone: true}">
+          <ion-icon slot="end" name="eye" (click)="togglePasswordVisibility('confirm-password')" style="cursor: pointer; font-size: 20px; padding-right: 0.75rem;"></ion-icon>
+        </ion-input>
+      </div>
+      <!-- Display error message if passwords do not match -->
+      <div *ngIf="!passwordsMatch" class="text-red-500 text-center mb-4">
+        {{ errorMessage }}
+      </div>
+      <div class="flex justify-center mt-8">
+        <button expand="full"  class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="background-color: #226F54; color: white; border-radius: 20px; font-size: 16px;" (click)="gantipassword()">Ubah kata sand </button>
+      </div>
+    </form>
+  </div>
+</ion-content>
