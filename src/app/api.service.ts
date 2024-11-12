@@ -6,6 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ApiService {
   baseUrl = 'https://cosplayrent.site/api/'
+  //baseUrl = 'http://localhost:8081/api/'
+
   token:any = ''
   constructor(private http: HttpClient) {
     this.token = localStorage.getItem('userToken') || ''
@@ -39,6 +41,16 @@ export class ApiService {
 
   getReviewByCostumeId(url:any,costumeId:any) {
     return this.http.get(this.baseUrl+url+costumeId,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
+  verifyAndRetrieve(url:any){
+    return this.http.get(this.baseUrl+url,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
+  updateUserProfile(url:any,id:any,data:any){
+    return this.http.put(this.baseUrl+url+id,data,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
 }

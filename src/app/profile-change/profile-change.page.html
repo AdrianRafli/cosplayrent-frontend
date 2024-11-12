@@ -1,0 +1,68 @@
+<ion-header [hidden]="true" [translucent]="true">
+  <ion-toolbar>
+    <ion-title style="font-family: 'Poppins', sans-serif;">profil_change</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-no-padding" style="font-family: 'Poppins'">
+  <div class="mt-5">
+      <a href="/home" class="flex items-center mb-5">
+        <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2"></ion-icon>
+        <span class="text-sm font-semibold" style="font-size: 18px;">Ubah Profilmu disini!</span>
+      </a>          
+      
+      <form class="px-4">
+        <div class="mb-3 flex flex-col items-center w-full border-t-2 border-black" style="background-color: #D9D9D9 py-4">
+          <div class="flex flex-col items-center">
+            <div class="mt-8 mb-4 border border-grey-500 rounded-full">
+              <input type="file" (change)="onFileSelected($event)" accept="image/*" class="hidden" #fileInput>
+              <img *ngIf="selectedFile" 
+                   [src]="previewUrl" 
+                   alt="Profile Picture" 
+                   class="w-36 h-36 rounded-full"
+                   (click)="fileInput.click()">
+              <img *ngIf="!selectedFile && data.profile_picture" 
+                   [src]="data.profile_picture" 
+                   alt="Profile Picture" 
+                   class="w-36 h-36 rounded-full"
+                   (click)="fileInput.click()">
+              <img *ngIf="!selectedFile && !data.profile_picture" 
+                   src="../../assets/illustration/defaultprofile.jpg" 
+                   alt="Profile Picture" 
+                   class="w-36 h-36 rounded-full"
+                   (click)="fileInput.click()">
+              
+            </div>
+            <h2 class="text-center text-2xl font-semibold mb-5">{{data.id}}</h2>
+          </div>
+        </div>
+      
+        <div class="mb-4 mt-6">
+          <label for="name" class="block mb-2 text-sm font-semibold text-gray-900" style="font-size: 18px;">Username</label>
+          <input type="text" [(ngModel)]="data.name" name="name" id="name" placeholder="{{data.name}}" class="bg-white-50 border border-gray-500 text-black-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" />
+        </div>
+      
+        <div class="mb-4">
+          <label for="email" class="block mb-2 text-sm font-semibold text-gray-900" style="font-size: 18px;">Email Address</label>
+          <input type="email" [(ngModel)]="data.email" name="email" id="email" placeholder="{{data.email}}" class="bg-white-50 border border-gray-500 text-black-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" />
+        </div>
+      
+        <div class="mb-8">
+          <label for="phone" class="block mb-2 text-sm font-semibold text-gray-900" style="font-size: 18px;">Address</label>
+          <input type="text" [(ngModel)]="data.address" name="address" id="address" placeholder="{{data.address}}" class="bg-white-50 border border-gray-500 text-black-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" />
+        </div>
+      
+        <div class="mb-8">
+          <label for="" class="block mb-2 text-sm font-semibold text-gray-900" style="font-size: 18px;">Created_At</label>
+          <input type="text" [(ngModel)]="data.created_at" name="created_at" disabled id="created_at" placeholder="{{data.created_at}}" class="bg-white-50 border border-gray-500 text-black-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" />
+        </div>
+      
+        <div class="flex justify-center mb-4">
+          <button type="submit" (click)="dosave()" class="w-32 h-12 py-2 font-bold text-white bg-green-600 rounded-full " style="font-size: 24px;">SAVE</button>
+        </div>
+      </form>
+      
+      
+      
+  </div>
+</ion-content>

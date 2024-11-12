@@ -53,7 +53,7 @@ export class RegisterPage implements OnInit {
           });
         } else {
           this.presentAlert("Registration failed. Please try again.");
-        }
+      }
       },
       (error) => {
         this.presentAlert("An error occurred. Please try again.");

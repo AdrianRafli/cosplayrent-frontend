@@ -15,6 +15,8 @@ export class HomePage implements OnInit{
     name:'',
     email:'',
   }
+  
+  Token:any
 
   query: string = ''
   resp:any;
@@ -46,8 +48,15 @@ export class HomePage implements OnInit{
   //   this.router.navigate(['/product-detail', costumeId]);
   // }
   
-  goToLogin(){
-    this.router.navigate(['/login']);
+  goToLoginOrProfile(){
+    this.Token = localStorage.getItem('userToken')
+    if (this.Token !== null && this.Token.trim() !== '') {
+      console.log('Token exists');
+      this.router.navigate(['profile-change'])
+    } else {
+      console.log('Token is empty or does not exist');
+      this.router.navigate(['/login'])
+    }
   }
   goToCostumeDetail(costumeId:number){
     this.router.navigate(['/detail-product', costumeId]);

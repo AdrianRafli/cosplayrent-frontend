@@ -46,7 +46,7 @@
       <!-- Trending Products -->
         <div *ngFor="let c of costume" class="min-w-[150px]">
           <div (click)="goToCostumeDetail(c.id)">
-            <img [src]="c.picture" class="w-full h-40 object-cover rounded-lg" alt="Trending Item">
+            <img [src]="c.costume_picture" class="w-full h-40 object-cover rounded-lg" alt="Trending Item">
             <p class="mt-2 text-sm font-medium">{{ c.name }}</p>
             <p class="text-sm font-bold">{{ c.price | currency:'IDR':'symbol':'1.0-0' }}</p>
           </div>
@@ -67,7 +67,7 @@
         <!-- Recommended Products -->
         <div *ngFor="let c of costume">
           <div (click)="goToCostumeDetail(c.id)">
-            <img [src]="c.picture" class="w-full h-40 object-cover rounded-lg" alt="Recommended Item">
+            <img [src]="c.costume_picture" class="w-full h-40 object-cover rounded-lg" alt="Recommended Item">
             <p class="mt-2 text-sm font-medium">{{ c.name }}</p>
             <p class="text-sm font-bold">{{ c.price | currency:'IDR':'symbol':'1.0-0' }}</p>
           </div>
@@ -96,7 +96,7 @@
             <ion-label>Transaction</ion-label>
           </ion-tab-button>
 
-          <ion-tab-button tab="profile" (click)="goToLogin()">
+          <ion-tab-button (click)="goToLoginOrProfile()">
             <ion-icon name="person-outline"></ion-icon>
             <ion-label>Profile</ion-label>
           </ion-tab-button>

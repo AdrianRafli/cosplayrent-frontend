@@ -27,7 +27,7 @@
 
     <!-- Product Image -->
     <img
-      [src]="costume.picture"
+      [src]="costume.costume_picture"
       alt="{{ product.name }}"
       class="w-full h-128 object-cover rounded-lg"
     />
@@ -54,12 +54,19 @@
       <div *ngFor="let review of review" class="mt-4">
         <div class="flex items-center">
           <img
-            [src]="review.userAvatar"
+            *ngIf="review.profile_picture"
+            [src]="review.profile_picture"
+            alt="User Avatar"
+            class="w-8 h-8 rounded-full mr-2"
+          />
+          <img
+            *ngIf="!review.profile_picture"
+            src="../../assets/illustration/defaultprofile.jpg"
             alt="User Avatar"
             class="w-8 h-8 rounded-full mr-2"
           />
           <div>
-            <p class="font-semibold">{{ review.userName }}</p>
+            <p class="font-semibold">{{ review.name }}</p>
             <p class="text-sm text-gray-500">{{ review.created_at }}</p>
           </div>
         </div>
@@ -71,10 +78,10 @@
     <div class="mt-6 border-t pt-4">
       <h3 class="text-xl font-bold">Detail Produk</h3>
       <ul class="mt-2 space-y-1">
-        <li><strong>Bahan:</strong> {{ product.material }}</li>
-        <li><strong>Ukuran:</strong> {{ product.size }}</li>
-        <li><strong>Berat:</strong> {{ product.weight }} kg</li>
-        <li><strong>Kategori:</strong> {{ product.category }}</li>
+        <li><strong>Bahan:</strong> {{ costume.bahan }}</li>
+        <li><strong>Ukuran:</strong> {{ costume.ukuran }}</li>
+        <li><strong>Berat:</strong> {{ costume.berat }}</li>
+        <li><strong>Kategori:</strong> {{ costume.kategori }}</li>
       </ul>
     </div>
 
@@ -105,7 +112,7 @@
         <div *ngFor="let costume of Allcostume" class="rounded-lg shadow-lg">
           <div (click)="goToCostumeDetail(costume.id)">
             <img
-              [src]="costume.picture"
+              [src]="costume.costume_picture"
               alt="{{ costume.name }}"
               class="w-full h-34 object-cover rounded-md"
             />

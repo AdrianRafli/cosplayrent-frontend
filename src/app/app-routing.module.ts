@@ -36,21 +36,18 @@ const routes: Routes = [
     loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule)
   },
   {
-    path: 'product-detail',
-    loadChildren: () => import('./product-detail/product-detail.module').then( m => m.ProductDetailPageModule)
-  },
-  {
     path: 'chat',
     loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
   },
   {
-    path: 'profil-change',
-    loadChildren: () => import('./profil-change/profil-change.module').then( m => m.ProfilChangePageModule)
+    path: 'profile-change',
+    loadChildren: () => import('./profile-change/profile-change.module').then( m => m.ProfileChangePageModule)
   },
   {
     path: 'user-profile',
     loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
-  },  {
+  },
+  {
     path: 'toko-product-tambah',
     loadChildren: () => import('./toko-product-tambah/toko-product-tambah.module').then( m => m.TokoProductTambahPageModule)
   },
@@ -78,7 +75,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, onSameUrlNavigation:'reload'})
   ],
   exports: [RouterModule]
 })
