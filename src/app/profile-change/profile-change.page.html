@@ -47,7 +47,7 @@
           <input type="email" [(ngModel)]="data.email" name="email" id="email" placeholder="{{data.email}}" class="bg-white-50 border border-gray-500 text-black-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" />
         </div>
       
-        <div class="mb-8">
+        <div class="mb-4">
           <label for="phone" class="block mb-2 text-sm font-semibold text-gray-900" style="font-size: 18px;">Address</label>
           <input type="text" [(ngModel)]="data.address" name="address" id="address" placeholder="{{data.address}}" class="bg-white-50 border border-gray-500 text-black-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" />
         </div>
@@ -61,8 +61,5 @@
           <button type="submit" (click)="dosave()" class="w-32 h-12 py-2 font-bold text-white bg-green-600 rounded-full " style="font-size: 24px;">SAVE</button>
         </div>
       </form>
-      
-      
-      
   </div>
 </ion-content>

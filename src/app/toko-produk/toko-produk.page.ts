@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ApiService } from '../api.service';
 
 @Component({
   selector: 'app-toko-produk',
@@ -23,9 +25,24 @@ export class TokoProdukPage implements OnInit {
     // Tambahkan produk lainnya
   ];
 
-  constructor() { }
+  resp:any
+  data:any
+
+  constructor(private router: Router, public api: ApiService) { }
 
   ngOnInit() {
-  }
+    this.api.get('verifytoken').subscribe((resp)=> {
+      // console.log("login", resp)
+      this.resp = resp
 
+      if(this.resp.code == "200") {
+        this.data = this.resp.data
+      }
+      else {
+        this.router.navigate(['/home'])
+      }
+    })
+    
+    this.api.get('')
+  }
 }

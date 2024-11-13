@@ -44,8 +44,8 @@ const routes: Routes = [
     loadChildren: () => import('./profile-change/profile-change.module').then( m => m.ProfileChangePageModule)
   },
   {
-    path: 'user-profile',
-    loadChildren: () => import('./user-profile/user-profile.module').then( m => m.UserProfilePageModule)
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
     path: 'toko-product-tambah',
@@ -59,7 +59,6 @@ const routes: Routes = [
     path: 'toko-home-page',
     loadChildren: () => import('./toko-home-page/toko-home-page.module').then( m => m.TokoHomePagePageModule)
   },
-
   {
     path: 'toko-produk',
     loadChildren: () => import('./toko-produk/toko-produk.module').then( m => m.TokoProdukPageModule)
@@ -68,14 +67,15 @@ const routes: Routes = [
     path: 'ubah-sandi',
     loadChildren: () => import('./ubah-sandi/ubah-sandi.module').then( m => m.UbahSandiPageModule)
   },
-
-
-
+  {
+    path: 'test',
+    loadChildren: () => import('./test/test.module').then( m => m.TestPageModule)
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, onSameUrlNavigation:'reload'})
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, onSameUrlNavigation: 'reload'})
   ],
   exports: [RouterModule]
 })

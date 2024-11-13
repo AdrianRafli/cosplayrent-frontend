@@ -52,7 +52,7 @@ export class HomePage implements OnInit{
     this.Token = localStorage.getItem('userToken')
     if (this.Token !== null && this.Token.trim() !== '') {
       console.log('Token exists');
-      this.router.navigate(['profile-change'])
+      this.router.navigate(['profile'])
     } else {
       console.log('Token is empty or does not exist');
       this.router.navigate(['/login'])

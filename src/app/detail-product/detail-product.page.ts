@@ -136,6 +136,10 @@ export class DetailProductPage implements OnInit {
     this.router.navigate(['/checkout']);
   }
 
+  goToChat(){
+    this.router.navigate(['/chat'])
+  }
+
   goToCostumeDetail(costumeId:number){
     this.router.navigate(['/detail-product', costumeId]);
   }
