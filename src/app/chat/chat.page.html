@@ -1,10 +1,30 @@
-<ion-content [fullscreen]="true" class="ion-no-padding" style="font-family: 'Poppins'">
-  <div class="mt-5 border-b-2 border-black">
-    <a href="/home" class="flex items-center mb-5">
-      <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2"></ion-icon>
-      <span class="text-sm font-semibold" style="font-size: 18px;">Chat disini</span>
-    </a>  
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Chat disini
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="container mb-12">
+    <div *ngFor="let msg of messages" class="mb-2">
+      <p class="text-lg font-semibold">
+        <span class="text-blue-600">{{ msg.from }}:</span> 
+        {{ msg.message }}
+      </p>
+    </div>
   </div>
 
-
-</ion-content>  
+  <div class="fixed left-0 bottom-0 right-0 bg-gray-100 border-t border-blue-400 p-4">
+    <form (submit)="sendMessage()">
+      <div class="mb-4">
+        <label class="text-gray-700">
+          Hello <b>{{ username }}</b>. Say something:
+        </label>
+      </div>
+      <input [(ngModel)]="message" name="message" type="text" placeholder="Enter message" class="w-full bg-white border-2 p-2">
+      <button class="w-full bg-blue-500 text-white p-2 mt-  2">Send</button>
+    </form>
+  </div>
+</ion-content>

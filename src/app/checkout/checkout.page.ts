@@ -107,7 +107,7 @@ export class CheckoutPage implements OnInit {
     this.orderRequest.weight = this.selectedWeight;
     this.orderRequest.courier = this.selectedCourier;
 
-    this.rajaOngkirService.postOrder('cekongkir', this.orderRequest).subscribe((resp) => {
+    this.rajaOngkirService.postOrder('checkshippment', this.orderRequest).subscribe((resp) => {
       this.resp = resp;
       console.log(this.resp);
       if (this.resp.code == 200) {
