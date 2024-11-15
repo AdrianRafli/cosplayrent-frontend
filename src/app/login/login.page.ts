@@ -43,15 +43,12 @@ export class LoginPage implements OnInit {
     //   return;
     // }
 
-    console.log(this.data.email)
-    console.log(this.data.password)
+    
 
     this.api.post("login", this.data).subscribe(
       (resp) => {
         // console.log("login", resp)
         this.resp = resp;
-        console.log(this.data.email)
-        console.log(this.data.password)
 
         if (this.resp.code == 200) {
           localStorage.setItem("userToken", this.resp.data.token);

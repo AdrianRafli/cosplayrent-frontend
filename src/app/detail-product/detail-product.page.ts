@@ -133,7 +133,7 @@ export class DetailProductPage implements OnInit {
   }
 
   goToCheckout(){
-    this.router.navigate(['/checkout']);
+    this.router.navigate(['/checkout',this.id]);
   }
 
   goToChat(){

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-toko-product-edit',
@@ -6,15 +9,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toko-product-edit.page.scss'],
 })
 export class TokoProductEditPage implements OnInit {
-  product: any = {nama: "Test",harga: 100000, deskripsi: "Deskripsi", bahan: "koton", ukuran: ["S","M"], berat: "500", kategori: "Naruto", ketersedian: "yes"};
+  product: any = {nama: "",harga: '', deskripsi: "", bahan: "", ukuran: '', berat: '', kategori:'', ketersedian: ''};
 
   selectedFiles: string[] = ["../../assets/illustration/black.jpeg"]; 
   kategori =  ["Naruto", "One Piece", "paket"];
   Ukuran = ['S', 'M', 'L', 'XL'];
-
-  constructor() {}
+  id:any
+  resp:any
+  data:any
+  selectedFile:any
+  previewUrl:any
+  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService ) {}
 
   ngOnInit() {
+    this.id = this.route.snapshot.params['id']
+    console.log(this.id)
+    if (this.id != null) {
+      this.api.getCostumesById('costume/',this.id).subscribe((resp) => {
+        this.resp = resp;
+        if (this.resp.code == "200") {
+         console.log(this.resp)
+         this.data = this.resp.data
+        }
+      })
+    }
   }
 
   handleFileInput(event: any) {
@@ -24,30 +42,59 @@ export class TokoProductEditPage implements OnInit {
         const file = files[i];
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.selectedFiles.push(e.target.result); // Simpan URL gambar ke dalam array
+          this.selectedFiles.push(e.target.result);
         };
-        reader.readAsDataURL(file); // Membaca file sebagai URL
+        reader.readAsDataURL(file);
       }
     }
   }
 
-  removeFile(index: number) {
-    this.selectedFiles.splice(index, 1); // Menghapus file dari array
+  
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      this.selectedFile = file;
+
+     
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.previewUrl = e.target.result; 
+      };
+      reader.readAsDataURL(file); 
+    }
   }
 
   dosave() {
-    const beratDenganUnit = `${this.product.berat} Gram`;
-    const productData = {
-      images: this.selectedFiles,
-      nama: this.product.nama,
-      harga: this.product.harga,
-      deskripsi: this.product.deskripsi,
-      bahan: this.product.bahan,
-      ukuran: this.product.ukuran,
-      berat: beratDenganUnit, 
-      kategori: this.product.kategori,
-      ketersedian: this.product.ketersedian
-    }; 
-    console.log(productData);
+    const formData = new FormData();
+    formData.append('name', this.data.name);
+    formData.append('description', this.data.description);
+    formData.append('bahan', this.data.bahan);
+    formData.append('ukuran', this.data.ukuran)
+    formData.append('berat', this.data.berat)
+    formData.append('kategori', this.data.kategori)
+    formData.append('price', this.data.price)
+
+    if (this.selectedFile) {
+      console.log("Appending selected costume_picture...");
+      formData.append('costume_picture', this.selectedFile, this.selectedFile.name);
+      console.log("Selected file:", this.selectedFile);
+    } else {
+      console.log("No file selected, using existing costume_picture");
+      formData.append('costume_picture', this.data.costume_picture);
+    }
+    
+    formData.append('available', this.data.available)
+
+    console.log(formData)
+  
+    this.api.updateCostumeById('costume/', this.data.id, formData).subscribe((resp) => {
+      this.resp = resp;
+      if (this.resp.code = "200") {
+        console.log("Successfully updated costume");
+      } else {
+        console.log("Failed to update costume");
+      }
+    });
   }
 }

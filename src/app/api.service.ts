@@ -53,4 +53,24 @@ export class ApiService {
     return this.http.put(this.baseUrl+url+id,data,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
+  getUserCostume(url:any,id:any){
+    return this.http.get(this.baseUrl+url+id,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+  getSellerCostumeByCostumeID(url:any,user_UUID:any,costumeID:any){
+    return this.http.put(this.baseUrl+url+user_UUID+costumeID,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+  deleteCostume(url:any,id:any){
+    return this.http.delete(this.baseUrl+url+id,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+  updateCostumeById(url:any,id:any, data:any){
+    return this.http.put(this.baseUrl+url+id,data,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+  createCostume(url:any,data:any){
+    return this.http.post(this.baseUrl+url,data,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
 }

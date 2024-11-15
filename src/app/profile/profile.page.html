@@ -77,15 +77,15 @@
       </ion-label>
     </ion-item>
 
-    <ion-item href="/keluar">
+    <ion-item (click)="removeToken()">
       <ion-icon name="log-out-outline" slot="start"></ion-icon>
       <ion-label>
         <h3 class="font-bold">Keluar Akun</h3>
       </ion-label>
     </ion-item>
 
-    <ion-item href="/toko-produk">
-      <ion-icon name="storefront-outline" slot="start"></ion-icon>
+    <ion-item (click)="goToTokoProduk()">
+      <ion-icon name="storefront-outline" slot="start" ></ion-icon>
       <ion-label>
         <h3 class="font-bold">Pindah ke Toko</h3>
       </ion-label>

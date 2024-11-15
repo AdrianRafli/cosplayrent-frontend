@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-toko-product-tambah',
@@ -6,33 +9,45 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./toko-product-tambah.page.scss'],
 })
 export class TokoProductTambahPage implements OnInit {
-  kategori: any[] = ["Naruto", "One Piece", "paket"];
-  Ukuran: any[] = ["S", "M", "L", "XL"];
-  pictures: File[] = [];  // Array untuk menyimpan file gambar yang diunggah
-  selectedFiles: string[] = []; // Ubah menjadi array string untuk menyimpan URL gambar
-  product: any ={nama:"",harga:"",deskripsi:"",bahan:"",ukuran:[],berat:"",kategori:"",ketersedian:""}
+  product: any = {nama: "",harga: '', deskripsi: "", bahan: "", ukuran: '', berat: '', kategori:'', ketersedian: ''};
 
-
-  constructor() { }
+  selectedFiles: string[] = ["../../assets/illustration/black.jpeg"]; 
+  kategori =  ["Naruto", "One Piece", "paket"];
+  Ukuran = ['S', 'M', 'L', 'XL'];
+  id:any
+  resp:any
+  data:any = {
+    available: '',
+    bahan: '',
+    berat: '',
+    costume_picture: '',
+    created_at: '',
+    description: '',
+    id: null,
+    kategori: '',
+    name: '',
+    price: null,
+    profile_picture: null,
+    ukuran: '',
+    updated_at: null,
+    user_id: '',
+    username: ''
+  }
+  userData:any
+  selectedFile:any
+  previewUrl:any
+  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService ) {}
 
   ngOnInit() {
+    this.api.verifyAndRetrieve('verifytoken').subscribe((resp)=> {
+      // console.log("login", resp)
+      this.resp = resp
+      if (this.resp.code == "200"){
+        this.userData = this.resp.data
+        console.log(this.userData)
+      }
+    })
   }
-  dosave() {
-    const beratDenganUnit = `${this.product.berat} Gram`;
-    const productData = {
-      images: this.selectedFiles, // Menyimpan URL gambar yang terpilih
-      nama: this.product.nama,
-      harga: this.product.harga,
-      deskripsi: this.product.deskripsi,
-      bahan: this.product.bahan,
-      ukuran: this.product.ukuran,
-      berat: beratDenganUnit,
-      kategori: this.product.kategori,
-      ketersedian: this.product.ketersedian
-    }; 
-    console.log(productData);
-}
-
 
   handleFileInput(event: any) {
     const files = event.target.files;
@@ -41,14 +56,58 @@ export class TokoProductTambahPage implements OnInit {
         const file = files[i];
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.selectedFiles.push(e.target.result); // Simpan URL gambar ke dalam array
+          this.selectedFiles.push(e.target.result);
         };
-        reader.readAsDataURL(file); // Membaca file sebagai URL
+        reader.readAsDataURL(file);
       }
     }
   }
 
-  removeFile(index: number) {
-    this.selectedFiles.splice(index, 1); // Menghapus file dari array
+  
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      this.selectedFile = file;
+
+     
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.previewUrl = e.target.result; 
+      };
+      reader.readAsDataURL(file); 
+    }
+  }
+
+  dosave() {
+    const formData = new FormData();
+    formData.append('user_id', this.userData.id)
+    formData.append('name', this.data.name);
+    formData.append('description', this.data.description);
+    formData.append('bahan', this.data.bahan);
+    formData.append('ukuran', this.data.ukuran)
+    formData.append('berat', this.data.berat)
+    formData.append('kategori', this.data.kategori)
+    formData.append('price', this.data.price)
+
+    if (this.selectedFile) {
+      console.log("Appending selected costume_picture...");
+      formData.append('costume_picture', this.selectedFile, this.selectedFile.name);
+      console.log("Selected file:", this.selectedFile);
+    } else {
+      console.log("No file selected, using existing costume_picture");
+      formData.append('costume_picture', this.data.costume_picture);
+    }
+
+    console.log(formData)
+  
+    this.api.createCostume('costume', formData).subscribe((resp) => {
+      this.resp = resp;
+      if (this.resp.code = "200") {
+        console.log("Successfully updated costume");
+      } else {
+        console.log("Failed to update costume");
+      }
+    });
   }
 }

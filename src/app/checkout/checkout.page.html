@@ -16,7 +16,7 @@
       <h2 class="text-lg font-bold">Pengiriman</h2>
     </div>
     <!-- Bagian Alamat Pengiriman -->
-    <div class="mb-4">
+    <!-- <div class="mb-4">
       <div class="flex items-center">
         <i class="fas fa-map-marker-alt mr-2"></i>
         <p>
@@ -24,26 +24,29 @@
         </p>
         <a href="#" class="ml-auto text-blue-500">Ubah</a>
       </div>
-    </div>
+    </div> -->
 
     <!-- Detail Pesanan -->
     <div class="mb-4 bg-white rounded shadow">
       <h3 class="text-lg font-bold">Pesanan</h3>
-      <div class="flex gap-2">
-        <img
-          src="/assets/product/kostum-2.png"
-          class="w-32 h-32 object-cover ml-4"
-        />
-        <div class="mt-2">
-          <h4 class="font-semibold">Toko Cosplay Jaya</h4>
-          <p>Costum Naruto</p>
-          <p>Ukuran : L</p>
-          <p class="font-semibold text-xl">Rp 10.000.000</p>
+      <div *ngIf="costume?.data" class="mb-4 bg-white rounded shadow">
+        <div class="flex gap-2 mt-2">
+          <img
+            [src]="costume.data.costume_picture"
+            class="w-32 h-32 object-cover ml-4"
+          />
+          <div class="mt-2">
+            <h4 class="font-semibold">{{costume.data.username}}</h4>
+            <p>{{costume.data.name}}</p>
+            <p>Ukuran: {{costume.data.ukuran}}</p>
+            <p class="font-semibold text-xl">{{costume.data.price}}</p>
+          </div>
         </div>
       </div>
+      
 
       <!-- Pilihan Shipping -->
-      <div class="mt-4">
+      <!-- <div class="mt-4">
         <label class="block font-semibold mb-1">Pilihan Pengiriman</label>
         <select class="w-full p-2 border rounded">
           <option>Reguler</option>
@@ -59,28 +62,99 @@
           </select>
           <span class="ml-2">Estimasi tiba 12 - 14 Nov</span>
         </div>
-      </div>
+      </div> -->
 
       <!-- Tambah Catatan -->
-      <div class="mt-4">
+      <!-- <div class="mt-4">
         <label class="block font-semibold mb-1">Tambahkan Catatan</label>
         <textarea
           class="w-full p-2 border rounded"
           placeholder="Tambahkan catatan untuk penjual"
         ></textarea>
-      </div>
+      </div> -->
+      <form (ngSubmit)="doOrder()">
+      <ion-item>
+        <ion-label>Asal Provinsi</ion-label>
+        <ion-select [(ngModel)]="asalProvinsi" (ionChange)="onAsalProvinsiChange()" placeholder="Pilih provinsi asal" [ngModelOptions]="{standalone: true}">
+          <!-- Loop through the provinces array and display options -->
+          <ion-select-option *ngFor="let province of provinces" [value]="province.province_id">
+            {{ province.province }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Provinsi Tujuan</ion-label>
+        <ion-select [(ngModel)]="provinsiTujuan" (ionChange)="onTujuanProvinsiChange()" placeholder="Pilih provinsi tujuan" [ngModelOptions]="{standalone: true}">
+          <!-- Loop through the provinces array and display options -->
+          <ion-select-option *ngFor="let province of provinces" [value]="province.province_id">
+            {{ province.province }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+  
+      <ion-item *ngIf="asalProvinsi">
+        <ion-label>Kota Asal</ion-label>
+        <ion-select [(ngModel)]="asalKota" placeholder="Pilih kota asal" [ngModelOptions]="{standalone: true}">
+          <!-- Loop through the provinces array and display options -->
+          <ion-select-option *ngFor="let city of listKotaAsal" [value]="city.city_id">
+            {{ city.city_name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+  
+      <ion-item *ngIf="provinsiTujuan">
+        <ion-label>Kota Tujuan</ion-label>
+        <ion-select [(ngModel)]="kotaTujuan" placeholder="Pilih kota tujuan" [ngModelOptions]="{standalone: true}">
+          <!-- Loop through the provinces array and display options -->
+          <ion-select-option *ngFor="let city of listKotaTujuan" [value]="city.city_id">
+            {{ city.city_name }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Berat</ion-label>
+        <input type="number" [(ngModel)]="selectedWeight" [ngModelOptions]="{standalone: true}">
+      </ion-item>
+  
+      <ion-item>
+        <ion-label>Pilih Kurir</ion-label>
+        <ion-select [(ngModel)]="selectedCourier" placeholder="Pilih Kurir" [ngModelOptions]="{standalone: true}">
+          <ion-select-option value="jne">JNE</ion-select-option>
+          <ion-select-option value="pos">POS</ion-select-option>
+          <ion-select-option value="tiki">TIKI</ion-select-option>
+        </ion-select>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label>
+          <button type="submit" class="bg-green-600 text-white rounded-md p-2">Klik untuk pilih jasa</button>
+        </ion-label>
+        <ion-select [(ngModel)]="selectedCourier"  placeholder="Pilih Kurir" [ngModelOptions]="{standalone: true}">
+          <!-- Loop through each courier in costData -->
+          <ng-container *ngFor="let courier of costData">
+            <!-- For each courier, loop through each cost and create a select option -->
+            <ion-select-option *ngFor="let cost of courier.costs" [value]="cost">
+              {{ courier.name }} - {{ cost.service }} - {{ cost.description }} (ETD: {{ cost.cost[0].etd }})
+            </ion-select-option>
+          </ng-container>
+        </ion-select>
+      </ion-item>
+      
+      </form>
     </div>
 
     <!-- Tambah Promo -->
-    <div class="mb-4 bg-white rounded shadow">
+    <!-- <div class="mb-4 bg-white rounded shadow">
       <h3 class="text-lg font-bold">Tambahkan Promo</h3>
       <div class="mt-2">
         <select class="w-full p-2 border rounded">
-          <option>Pilih Promo</option>
+          <option>Pilih Promo</option> -->
           <!-- Promo Options -->
-        </select>
+        <!-- </select>
       </div>
-    </div>
+    </div> -->
 
     <!-- Ringkasan Pesanan -->
     <div class="mb-4 bg-white rounded shadow">
@@ -88,11 +162,13 @@
       <div class="mt-2">
         <div class="flex justify-between">
           <span>Total Harga</span>
-          <span>Rp 10.000.000</span>
+          <span *ngIf="costume?.data">Rp {{costume.data.price}}</span>
         </div>
         <div class="flex justify-between">
           <span>Total Ongkos Kirim</span>
-          <span>Rp 26.000</span>
+          <span *ngIf="selectedCourier?.cost?.length">
+            Rp {{ selectedCourier.cost[0]?.value }}
+          </span>          
         </div>
         <div class="flex justify-between">
           <span>Biaya Jasa Aplikasi</span>
@@ -101,12 +177,11 @@
         <hr class="my-4" />
         <div class="flex justify-between font-bold text-xl mb-4">
           <span>Total Sewa</span>
-          <span>Rp 10.027.000</span>
+          <span>Rp {{totalSewa}}</span>
         </div>
       </div>
     </div>
 
-    <!-- Tombol Pilih Pembayaran -->
     <div class="p-2">
       <button class="w-full bg-green-600 text-white p-3 rounded-lg">
         Pilih Pembayaran

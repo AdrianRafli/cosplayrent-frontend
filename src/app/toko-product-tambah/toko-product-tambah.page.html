@@ -4,99 +4,92 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-no-padding" style="font-family: 'Poppins'">
+<ion-content class="ion-no-padding" style="font-family: 'Poppins'">
   <div class="mt-5">
     <a href="/home" class="flex items-center mb-5">
       <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2"></ion-icon> 
-      <span class="text-sm font-bold" style="font-size: 18px;">Tambah Produk</span>
+      <span class="text-sm font-bold" style="font-size: 18px;">Edit Produk</span>
     </a>
 
     <form class="px-4">
-      <div class="mb-4 flex items-center justify-between">
+      <div class="mb-4 items-center justify-between">
         <label for="product-images" class="block text-sm font-semibold text-gray-900" style="font-size: 16px;">Foto Produk *</label>
-        <div>
-          <input type="file" id="product-images" accept="image/*" multiple required (change)="handleFileInput($event)" class="hidden" />
-          <label for="product-images" 
-                 class="flex items-center justify-center bg-green-600 text-white font-bold rounded-full cursor-pointer p-2" 
-                 style="font-size: 14px;"> 
-            Tambah Foto
-          </label>
+          <!-- <div>
+            <input type="file" id="product-images" accept="image/*" multiple required (change)="handleFileInput($event)" class="hidden" />
+            <label for="product-images" 
+                  class="flex items-center justify-center bg-green-600 text-white font-bold rounded-full cursor-pointer p-2" 
+                  style="font-size: 14px;"> 
+              Tambah Foto
+            </label>
+          </div> -->
+        <div class="">
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" class="hidden" #fileInput>
+          <img *ngIf="selectedFile" 
+            [src]="previewUrl" 
+            alt="Costume Picture" 
+            class="w-36 h-36"
+            (click)="fileInput.click()">
+          <img *ngIf="!selectedFile && data.costume_picture" 
+            [src]="data.costume_picture" 
+            alt="Costume Picture" 
+            class="w-36 h-36"
+            (click)="fileInput.click()">
+          <img *ngIf="!selectedFile && !data.costume_picture" 
+            src="../../assets/illustration/defaultcostume.jpg" 
+            alt="Profile Picture" 
+            class="w-36 h-36"
+            (click)="fileInput.click()">
         </div>
       </div>
-  
+
       <!-- Preview Gambar -->
       <div class="image-preview">
-        <div *ngFor="let file of selectedFiles; let i = index" class="relative inline-block mr-2">
-            <img [src]="file" alt="Preview" style="width: 100px; height: 100px; object-fit: cover;"/>
-            <button (click)="removeFile(i)" class="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1">X</button>
+        <div class="relative inline-block">
+          <input type="file" (change)="onFileSelected($event)" accept="image/*" class="hidden" #fileInput>
         </div>
-    </div>
-    
-    
-  
+      </div>
+
       <div class="mb-4">
         <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Nama Produk *</label>
-        <input type="text" id="product-name" placeholder="Isi nama produk yang kamu sewa" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" 
-               [(ngModel)]="product.nama" name="productName"/>
+        <input type="text" [(ngModel)]="data.name" name="name" id="name" placeholder="{{data.name}}" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
       </div>
-  
+
       <div class="mb-4">
-        <label for="product-price" class="block mb-2 text-sm font-semibold text-gray-900">Harga *</label>
-        <input type="number" id="product-price" placeholder="Harga produk" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" 
-               [(ngModel)]="product.harga" name="productPrice"/>
+        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Harga *</label>
+        <input type="number" [(ngModel)]="data.price" name="price" id="price" placeholder="{{data.price}}" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
       </div>
-  
+
       <div class="mb-4">
         <label for="product-description" class="block mb-2 text-sm font-semibold text-gray-900">Deskripsi Produk *</label>
-        <textarea id="product-description" placeholder="Tulis deskripsi produk yang kamu sewa" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-24" 
-                  [(ngModel)]="product.deskripsi" name="productDescription"></textarea>
+        <textarea [(ngModel)]="data.description" name="description" id="description" placeholder="{{data.description}}" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-24"></textarea>
       </div>
-  
+
       <div class="mb-4">
         <label for="product-material" class="block mb-2 text-sm font-semibold text-gray-900">Bahan</label>
-        <input type="text" id="product-material" placeholder="Tuliskan bahan produk" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" 
-               [(ngModel)]="product.bahan" name="productMaterial"/>
+        <input type="text" [(ngModel)]="data.bahan" name="bahan" id="bahan" placeholder="{{data.bahan}}" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12">
       </div>
-  
+
       <div class="mb-4">
         <label for="product-dimensions" class="block mb-2 text-sm font-semibold text-gray-900">Ukuran Produk *</label>
-        <ion-select id="product-dimensions" multiple required class="bg-white-50 border border-black text-black-900 rounded-lg w-full h-12 flex items-center" interface="popover"
-                    [(ngModel)]="product.ukuran" name="productSize" style="padding-left: 0.5rem; padding-right: 0.5rem; font-size: 12px; font-family: 'Poppins', sans-serif;">
+        <input type="text" [(ngModel)]="data.ukuran" name="ukuran" id="ukuran" placeholder="{{data.ukuran}}" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12">
+        <!-- <ion-select id="product-dimensions" multiple required class="bg-white-50 border border-black text-black-900 rounded-lg w-full h-12" interface="popover" style="font-size: 12px; font-family: 'Poppins', sans-serif; padding: 0; display: flex; align-items: center; justify-content: center;padding-left: 0.5rem"
+                    [(ngModel)]="product.ukuran" name="productSize">
             <ion-select-option *ngFor="let size of Ukuran" [value]="size" style="font-size: 10px; font-family: 'Poppins', sans-serif;">
                 {{ size }}
             </ion-select-option>
-        </ion-select>
+        </ion-select> -->
       </div>
     
-  
       <div class="mb-4">
-        <label for="product-weight" class="block mb-2 text-sm font-semibold text-gray-900">Berat *</label>
-        <div class="relative">
-          <input type="number" id="product-weight" placeholder="Tulis berat produk" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12 pl-3 pr-16" 
-                 [(ngModel)]="product.berat" name="productWeight"/>
-          <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-900 font-semibold">Gram</span>
-        </div>
-      </div>
-  
-      <div class="mb-4">
-        <label for="product-category" class="block mb-2 text-sm font-semibold text-gray-900">Kategori *</label>
-        <ion-select id="product-category" required class="bg-white-50 border border-black text-black-900 rounded-lg w-full h-12" interface="popover" style="font-size: 12px; font-family: 'Poppins', sans-serif;padding-left: 0.5rem"
-                    [(ngModel)]="product.kategori" name="productCategory">
-          <ion-select-option *ngFor="let item of kategori" [value]="item">
-            {{ item }}
-          </ion-select-option>
-        </ion-select>
-      </div>
-  
-      <div class="mb-4">
-        <label for="product-availability" class="block mb-2 text-sm font-semibold text-gray-900">Ketersediaan Produk *</label>
-        <ion-select id="product-availability" required class="bg-white-50 border border-black text-black-900 rounded-lg w-full h-12" interface="popover"  style="font-size: 12px; font-family: 'Poppins', sans-serif;padding-left: 0.5rem"
-                    [(ngModel)]="product.ketersedian" name="productAvailability">
-            <ion-select-option value="yes">Ya</ion-select-option>
-            <ion-select-option value="no">Tidak</ion-select-option>
-        </ion-select>
+        <label for="product-price" class="block mb-2 text-sm font-semibold text-gray-900">Berat *</label>
+        <input type="text" [(ngModel)]="data.berat" name="price" id="berat" placeholder="{{data.berat}}" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
       </div>
 
+      <div class="mb-4">
+        <label for="product-category" class="block mb-2 text-sm font-semibold text-gray-900">Kategori *</label>
+        <input type="text" [(ngModel)]="data.kategori" name="kategori" id="kategori" placeholder="{{data.kategori}}" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12">
+      </div>
+      
       <div class="flex justify-center mb-4">
           <button type="submit" (click)="dosave()" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Simpan</button>
       </div>

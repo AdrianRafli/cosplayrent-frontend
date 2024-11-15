@@ -28,7 +28,7 @@ const routes: Routes = [
     loadChildren: () => import('./detail-product/detail-product.module').then( m => m.DetailProductPageModule)
   },
   {
-    path: 'checkout',
+    path: 'checkout/:costumeID',
     loadChildren: () => import('./checkout/checkout.module').then( m => m.CheckoutPageModule)
   },
   {
@@ -52,7 +52,7 @@ const routes: Routes = [
     loadChildren: () => import('./toko-product-tambah/toko-product-tambah.module').then( m => m.TokoProductTambahPageModule)
   },
   {
-    path: 'toko-product-edit',
+    path: 'toko-product-edit/:id',
     loadChildren: () => import('./toko-product-edit/toko-product-edit.module').then( m => m.TokoProductEditPageModule)
   },
   {
