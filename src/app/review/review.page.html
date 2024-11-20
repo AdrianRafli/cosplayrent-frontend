@@ -1,0 +1,83 @@
+<ion-header [translucent]="true">
+  <!-- <ion-toolbar>
+    <ion-title style="font-family: 'Poppins', sans-serif;">Review</ion-title>
+  </ion-toolbar> -->
+</ion-header>
+
+<ion-content [fullscreen]="true" class="" style="font-family: 'Poppins'">
+  <div class="mt-5 mx-4">
+    <header class="flex">
+      <a (click)="goToOrder()" class="flex items-center mb-5">
+        <ion-icon name="arrow-back-outline" slot="start" class="mr-2"></ion-icon> 
+      </a>
+      <span class="text-sm font-bold" style="font-size: 18px;">Review Produk</span>
+    </header>
+
+    <form action="#">
+      <div class="ion-card shadow-md p-4">
+        <div class="review-product flex gap-6 mb-4">
+          <img src="../../assets/product/kostum-1.png" class="w-10" alt="review image">
+          <div class="review-product-detail">
+            <h4 class="text-lg font-extrabold">Kostum Naruto</h4>
+            <h6 class="text-sm font-thin">Raja Cosplay</h6>
+          </div>
+        </div>
+  
+        <hr>
+  
+        <div class="review-rating my-4">
+          <h4 class="text-base font-extrabold">Nilai Produk</h4>
+          <div class="stars-review flex align-center justify-end flex-row-reverse gap-1 mt-2">
+            <ion-icon [class.rated]="rating >= 5" name="star" (click)="setRating(5)"></ion-icon>
+            <ion-icon [class.rated]="rating >= 4" name="star" (click)="setRating(4)"></ion-icon>
+            <ion-icon [class.rated]="rating >= 3" name="star" (click)="setRating(3)"></ion-icon>
+            <ion-icon [class.rated]="rating >= 2" name="star" (click)="setRating(2)"></ion-icon>
+            <ion-icon [class.rated]="rating >= 1" name="star" (click)="setRating(1)"></ion-icon>
+          </div>
+        </div>
+  
+        <div class="review-photo my-4">
+          <h4 class="text-base font-extrabold">Tambahkan Foto</h4>
+          <div class="mt-2 border border-dashed border-grey-500 rounded w-20 h-20">
+            <input type="file" accept="image/*" class="hidden" #fileInput>
+            <!-- <img *ngIf="selectedFile" 
+                 [src]="previewUrl" 
+                 alt="Profile Picture" 
+                 class="w-20 h-20 rounded-full"
+                 (click)="fileInput.click()">
+            <img *ngIf="!selectedFile && data.profile_picture" 
+                 [src]="data.profile_picture" 
+                 alt="Profile Picture" 
+                 class="w-20 h-20 rounded-full"
+                 (click)="fileInput.click()">
+            <img *ngIf="!selectedFile && !data.profile_picture" 
+                 src="../../assets/illustration/defaultprofile.jpg" 
+                 alt="Profile Picture" 
+                 class="w-20 h-20 rounded-full"
+                 (click)="fileInput.click()"> -->
+            <img src="../../assets/illustration/defaultprofile.jpg" 
+                 alt="Image Review"
+                 class="w-20 h-20 rounded"
+                 (click)="fileInput.click()">
+          </div>
+        </div>
+  
+        <div class="review-comment my-4">
+          <h4 class="text-base font-extrabold">Tulis Ulasan</h4>
+          <textarea 
+          class="w-full bg-gray-200 rounded mt-2"
+          placeholder="Bagikan penilaianmu dan bantu Pengguna lain membuat pilihan yang lebih baik"
+          rows="4"
+          required
+          [(ngModel)]="data.review_comment"
+          name="review_comment"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="fixed bottom-0 left-0 w-11/12 flex justify-center m-4">
+        <button type="submit" class="w-full h-12 py-2 font-bold text-white bg-green-600 rounded " style="font-size: 24px;">SAVE</button>
+      </div>
+    </form>
+  </div>
+</ion-content>

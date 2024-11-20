@@ -1,0 +1,115 @@
+<ion-menu side="end" contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Menu Content</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding" class="goToLogin()">
+    <button class="px-10 py-2 font-bold text-white bg-green-600 rounded-lg">Login</button>
+  </ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-searchbar slot="start" placeholder="Kostum Naruto" class="shadow-none rounded-lg" show-clear-button="focus"></ion-searchbar>
+      <ion-buttons slot="end">
+        <a href="/chat">
+          <ion-button>
+            <ion-icon name="chatbubbles-outline"></ion-icon>
+          </ion-button>
+        </a>
+        <ion-button>
+          <ion-icon name="cart-outline"></ion-icon>
+        </ion-button>
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <div class="mx-4 mt-4">
+      <div class="filter-section flex justify-between gap-2">
+        <ion-select placeholder="Semua Status" class="px-2 border border-gray-400 rounded">
+          <ion-select-option value="belum-dikembalikan">Belum Dikembalikan</ion-select-option>
+          <ion-select-option value="selesai">Selesai</ion-select-option>
+        </ion-select>
+    
+        <ion-select placeholder="Semua Tanggal" class="px-2 border border-gray-400 rounded">
+          <ion-select-option value="bulan-ini">Bulan Ini</ion-select-option>
+          <ion-select-option value="tahun-ini">Tahun Ini</ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="transaction-cards">
+        <ion-card class="mx-0"> <!--*ngFor="let transaction of transactions"-->
+          <ion-card-header>
+            <div class="card-header flex justify-between">
+              <div class="toko flex gap-1 items-center">
+                <img src="../../assets/product/kostum-1.png" class="w-8 h-8 rounded-full" alt="Toko Image">
+                <h3 class="font-bold">Raja Cosplay</h3>
+              </div>
+              <div class="info flex gap-1 items-center">
+                <p class="">9 Oct 2024 - 16 Oct 2024</p>
+                <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+              </div>
+            </div>
+          </ion-card-header>
+    
+          <hr>
+
+          <ion-card-content>
+            <div class="flex justify-between items-center">
+              <div class="product-info flex gap-2 items-center">
+                <img src="../../assets/product/kostum-2.png" class="transaction-product-image" alt="Costume Image">
+                <div>
+                  <h4>Kostum Naruto</h4>
+                  <p>Ukuran: XL</p>
+                  <p>Durasi Sewa: 7 hari</p>
+                </div>
+              </div>
+              <div class="cost-info">
+                <p>Total 1 Costume</p>
+                <h4>Rp10.000.000</h4>
+                <p> <!--[ngClass]="{'status-completed': transaction.status === 'Selesai', 'status-pending': transaction.status === 'Belum Dikembalikan'}"-->
+                  Belum Dikembalikan
+                </p>
+              </div>
+            </div>
+            <div class="flex gap-1 my-2 float-end"> <!--*ngIf="transaction.status === 'Selesai'" class="action-buttons"-->
+              <ion-button size="small" fill="outline" class="h-10" (click)="goToReview()">Nilai</ion-button>
+              <ion-button size="small" class="h-10">Sewa Lagi</ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </div>
+  </ion-content>
+  
+  <ion-footer>
+    <ion-toolbar>
+      <ion-tabs>
+        <ion-tab-bar slot="bottom">
+          <ion-tab-button tab="home" (click)="goToHome()">
+            <ion-icon name="home-outline"></ion-icon>
+            <ion-label>Home</ion-label>
+          </ion-tab-button>
+  
+          <ion-tab-button tab="wishlist">
+            <ion-icon name="heart-outline"></ion-icon>
+            <ion-label>Wishlist</ion-label>
+          </ion-tab-button>
+  
+          <ion-tab-button tab="order" class="tab-active">
+            <ion-icon name="receipt-outline"></ion-icon>
+            <ion-label>Order</ion-label>
+          </ion-tab-button>
+
+          <ion-tab-button (click)="goToLoginOrProfile()">
+            <ion-icon name="person-outline"></ion-icon>
+            <ion-label>Profile</ion-label>
+          </ion-tab-button>
+        </ion-tab-bar>
+      </ion-tabs>
+    </ion-toolbar>
+  </ion-footer>
+</div>
