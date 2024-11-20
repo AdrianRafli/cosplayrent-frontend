@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <a class="mx-4 flex items-center gap-2">
+      <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+      <span class="text-sm font-semibold" style="font-size: 18px;">Pembayaran</span>
+    </a>  
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-no-padding" style="font-family: 'Poppins'">
+  <div class="background-layer"></div>
+  <div class="h-3/4 content">
+    <div class="h-full mx-4 flex justify-center items-center flex-col gap-10">
+      <img src="../../assets/illustration/unpaid.png" class="w-30 h-30" alt="Belum Dibayar">
+      <!-- <img [src]="transaction.status === 'unpaid' 
+      ? '../../assets/illustration/unpaid.png' 
+      : '../../assets/illustration/paid.png'" 
+       class="w-30 h-30" alt="Belum Dibayar">  -->
+      <div class="w-full flex flex-col gap-4">
+        <button class="w-full h-12 py-2 font-bold text-white rounded paid" style="font-size: 24px;">Bayar</button>
+        <button class="w-full h-12 py-2 font-bold text-white rounded paid" style="font-size: 24px;">Cek Status</button>
+      </div>
+    </div>
+  </div>
+</ion-content>
