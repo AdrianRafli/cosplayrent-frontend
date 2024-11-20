@@ -81,7 +81,7 @@
     <ion-toolbar>
       <ion-tabs>
         <ion-tab-bar slot="bottom">
-          <ion-tab-button tab="home">
+          <ion-tab-button tab="home" class="tab-active">
             <ion-icon name="home-outline"></ion-icon>
             <ion-label>Home</ion-label>
           </ion-tab-button>
@@ -91,9 +91,9 @@
             <ion-label>Wishlist</ion-label>
           </ion-tab-button>
   
-          <ion-tab-button tab="transaction">
+          <ion-tab-button tab="order" (click)="goToOrder()">
             <ion-icon name="receipt-outline"></ion-icon>
-            <ion-label>Transaction</ion-label>
+            <ion-label>Order</ion-label>
           </ion-tab-button>
 
           <ion-tab-button (click)="goToLoginOrProfile()">

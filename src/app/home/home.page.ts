@@ -61,6 +61,9 @@ export class HomePage implements OnInit{
   goToCostumeDetail(costumeId:number){
     this.router.navigate(['/detail-product', costumeId]);
   }
+  goToOrder(){
+    this.router.navigate(['/order']);
+  }
 
     // this.api.get('user').subscribe((resp: any) => {
     //   if (resp && resp.success) {
