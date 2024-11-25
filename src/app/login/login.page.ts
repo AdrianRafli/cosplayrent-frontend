@@ -36,14 +36,34 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  doLogin() {
-    // if (!this.data.email || !this.data.password) {
-    //   // Jika form login kosong, tampilkan alert
-    //   this.presentAlert('Email and password are required.');
-    //   return;
-    // }
+  
+  validateFields(): boolean {
+    const { email, password } = this.data;
 
-    
+    // Validasi Email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex untuk format email
+    if (!email || email.length < 5 || email.length > 254 || !emailRegex.test(email)) {
+      this.presentAlert(
+        "Email must be between 5 and 254 characters and in a valid format."
+      );
+      return false;
+    }
+
+    // Validasi Password
+    if (!password || password.length < 5 || password.length > 20) {
+      this.presentAlert(
+        "Password must be between 5 and 20 characters."
+      );
+      return false;
+    }
+
+    return true;
+  }
+
+  doLogin() {
+    if (!this.validateFields()) {
+      return;
+    }
 
     this.api.post("login", this.data).subscribe(
       (resp) => {

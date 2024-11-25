@@ -33,10 +33,39 @@ export class RegisterPage implements OnInit {
     await alert.present();
   }
 
+  validateFields(): boolean {
+    const { name, email, password } = this.data;
+
+    // Validasi Username
+    if (!name || name.length < 5 || name.length > 20) {
+      this.presentAlert(
+        "Username must be between 5 and 20 characters."
+      );
+      return false;
+    }
+
+    // Validasi Email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex untuk format email
+    if (!email || email.length < 5 || email.length > 254 || !emailRegex.test(email)) {
+      this.presentAlert(
+        "Email must be between 5 and 254 characters and in a valid format."
+      );
+      return false;
+    }
+
+    // Validasi Password
+    if (!password || password.length < 5 || password.length > 20) {
+      this.presentAlert(
+        "Password must be between 5 and 20 characters."
+      );
+      return false;
+    }
+
+    return true;
+  }
+
   doRegister() {
-    // console.log(this.data);
-    if (!this.data.name || !this.data.email || !this.data.password) {
-      this.presentAlert("All fields are required.");
+    if (!this.validateFields()) {
       return;
     }
 
@@ -44,6 +73,12 @@ export class RegisterPage implements OnInit {
       (resp) => {
         // console.log('register', resp);
         this.resp = resp;
+
+        // Cek jika username atau email duplikat
+        // if (this.resp.code === 409) {
+        //   this.presentAlert("Username or email already exists.");
+        //   return;
+        // }
 
         if (this.resp.code == 200) {
           localStorage.setItem("userToken", this.resp.data.token);
@@ -57,8 +92,12 @@ export class RegisterPage implements OnInit {
       }
       },
       (error) => {
-        this.presentAlert("An error occurred. Please try again.");
-      },
+        // Menangani error dari server
+        console.error("Error during registration:", error);
+        this.presentAlert(
+          "An error occurred during registration. Please try again."
+        );
+      }
     );
   }
 }

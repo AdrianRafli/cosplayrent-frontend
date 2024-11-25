@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../api.service";
 import { Router } from "@angular/router";
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-profile-change',
@@ -15,7 +16,7 @@ export class ProfileChangePage implements OnInit {
 
   resp: any;
 
-  constructor(public api: ApiService, public router: Router) { }
+  constructor(public api: ApiService, public router: Router, private alertController: AlertController) { }
 
   ngOnInit() {
     this.Token = localStorage.getItem('userToken')
@@ -33,7 +34,64 @@ export class ProfileChangePage implements OnInit {
     }
   }
 
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: "Update Profile Failed",
+      message: message,
+      buttons: ["OK"],
+    });
+    await alert.present();
+  }
+
+  validateFields(): boolean {
+    const {name, email, address, password, profile_picture } = this.data;
+
+    if (!name || name.length < 5 || name.length > 20) {
+      this.presentAlert(
+        "Username must be between 5 and 20 characters."
+      );
+      return false;
+    }
+
+    // Validasi Email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regex untuk format email
+    if (!email || email.length < 5 || email.length > 254 || !emailRegex.test(email)) {
+      this.presentAlert(
+        "Email must be between 5 and 254 characters and in a valid format."
+      );
+      return false;
+    }
+
+    if (!address || address.length < 5 || address.length > 100) {
+      this.presentAlert(
+        "Address must be between 5 and 100 characters."
+      );
+      return false;
+    }
+
+    // Validasi Password
+    if (!password || password.length < 5 || password.length > 20) {
+      this.presentAlert(
+        "Password must be between 5 and 20 characters."
+      );
+      return false;
+    }
+
+    if (!profile_picture || profile_picture.length < 5 || profile_picture.length > 255) {
+      this.presentAlert(
+        "Profile Picture must be between 5 and 255 characters."
+      );
+      return false;
+    }
+
+    return true;
+  }
+
   dosave() {
+    if (!this.validateFields()) {
+      return;
+    }
+
     const formData = new FormData();
     formData.append('name', this.data.name);
     formData.append('email', this.data.email);

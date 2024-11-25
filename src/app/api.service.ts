@@ -18,7 +18,7 @@ export class ApiService {
     return this.http.post(this.baseUrl+url,data,
     {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
-
+  
   get(url:any) {
     return this.http.get(this.baseUrl+url,
     {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })

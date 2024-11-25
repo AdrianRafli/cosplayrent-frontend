@@ -34,7 +34,7 @@ export class ProfilePage implements OnInit {
   }
 
   goToTokoProduk(){
-    this.router.navigate(['/toko-produk'])
+    this.router.navigate(['/toko-home-page'])
   }
 
   removeToken(){

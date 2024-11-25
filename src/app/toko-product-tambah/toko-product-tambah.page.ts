@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-toko-product-tambah',
@@ -36,7 +37,12 @@ export class TokoProductTambahPage implements OnInit {
   userData:any
   selectedFile:any
   previewUrl:any
-  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService ) {}
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute, 
+    public api:ApiService,
+    private alertController: AlertController
+  ) {}
 
   ngOnInit() {
     this.api.verifyAndRetrieve('verifytoken').subscribe((resp)=> {
@@ -79,7 +85,75 @@ export class TokoProductTambahPage implements OnInit {
     }
   }
 
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: "Add Product Failed",
+      message: message,
+      buttons: ["OK"],
+    });
+    await alert.present();
+  }
+
+  validateFields(): boolean {
+    const {name, description, bahan, ukuran, berat, kategori, price} = this.data;
+
+    if (!name || name.length < 5 || name.length > 50) {
+      this.presentAlert(
+        "Username must be between 5 and 20 characters."
+      );
+      return false;
+    }
+
+    if (!description || description.length < 5 || description.length > 1000) {
+      this.presentAlert(
+        "Description must be between 5 and 100 characters."
+      );
+      return false;
+    }
+
+    if (!bahan || bahan.length < 5 || bahan.length > 30) {
+      this.presentAlert(
+        "Bahan must be between 5 and 20 characters."
+      );
+      return false;
+    }
+
+    if (!ukuran || ukuran.length < 5 || ukuran.length > 30) {
+      this.presentAlert(
+        "Ukuran must be between 5 and 255 characters."
+      );
+      return false;
+    }
+
+    if (!berat || berat.length < 5 || berat.length > 30) {
+      this.presentAlert(
+        "Berat must be between 5 and 255 characters."
+      );
+      return false;
+    }
+
+    if (!kategori || kategori.length < 5 || kategori.length > 30) {
+      this.presentAlert(
+        "Kategori must be between 5 and 255 characters."
+      );
+      return false;
+    }
+    
+    if (!price || !Number.isInteger(Number(price))) {
+      this.presentAlert(
+        "Input must be an integer."
+      );
+      return false;
+    }
+
+    return true;
+  }
+
   dosave() {
+    if (!this.validateFields()) {
+      return;
+    }
+
     const formData = new FormData();
     formData.append('user_id', this.userData.id)
     formData.append('name', this.data.name);
@@ -109,5 +183,9 @@ export class TokoProductTambahPage implements OnInit {
         console.log("Failed to update costume");
       }
     });
+  }
+
+  goToTokoProduk(){
+    this.router.navigate(['/toko-produk'])
   }
 }

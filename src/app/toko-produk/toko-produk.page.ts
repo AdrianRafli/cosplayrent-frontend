@@ -77,6 +77,10 @@ export class TokoProdukPage implements OnInit {
     })
   }
 
+  goToTokoHome(){
+    this.router.navigate(['/toko-home-page'])
+  }
+
   goToTambahProduk(){
     this.router.navigate(['/toko-product-tambah'])
   }
