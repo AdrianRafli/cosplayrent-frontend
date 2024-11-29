@@ -61,6 +61,9 @@ export class HomePage implements OnInit{
   goToCostumeDetail(costumeId:number){
     this.router.navigate(['/detail-product', costumeId]);
   }
+  goToWishlist(){
+    this.router.navigate(['/wishlist']);
+  }
   goToOrder(){
     this.router.navigate(['/order']);
   }

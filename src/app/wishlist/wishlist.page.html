@@ -1,0 +1,72 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+    </ion-toolbar>
+  </ion-header> -->
+
+  <div class="p-2">
+    <div class="flex items-center justify-between gap-6 mb-4">
+      <h1 class="font-extrabold text-xl">Wishlist</h1>
+    </div>
+  </div>
+
+  <ion-searchbar placeholder="Cari produk"></ion-searchbar>
+  <!-- <div *ngFor="let wishlist of wishlist" class="product-item"> -->
+    <ion-card class="flex flex-col">
+      <div class="flex gap-4">
+        <img src="../../assets/product/kostum-1.png" class="p-2 produk-image" alt="Produk Image">
+        <div class="flex flex-col gap-2">
+          <div class="produk-info pt-2">
+            <h2 class="font-bold">Kostum Naruto</h2>
+            <p>Rp 100.000</p>
+            <p>Size: L</p>
+          </div>
+          <div class="action-buttons pb-2 pe-2 flex justify-end">
+            <ion-button size="small" class="button-color">Keranjang</ion-button> <!--(click)="editProduct(product)"-->
+            <ion-button size="small" color="danger">Hapus</ion-button> <!--(click)="deleteProduct(product)"-->
+          </div>
+        </div>
+      </div>
+    </ion-card>
+  <!-- </div> -->
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="home" (click)="goToHome()">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>Home</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="wishlist" class="tab-active">
+          <ion-icon name="heart-outline"></ion-icon>
+          <ion-label>Wishlist</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="topup">
+          <ion-icon name="add-circle-outline"></ion-icon>
+          <ion-label>Top Up</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="order" (click)="goToOrder()">
+          <ion-icon name="receipt-outline"></ion-icon>
+          <ion-label>Order</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button (click)="goToLoginOrProfile()">
+          <ion-icon name="person-outline"></ion-icon>
+          <ion-label>Profile</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>
