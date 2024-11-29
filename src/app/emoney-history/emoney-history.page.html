@@ -1,0 +1,35 @@
+<ion-header [hidden]="true" [translucent]="true">
+  <ion-toolbar>
+    <ion-title>emoney-history</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-no-padding" style="font-family: 'Poppins'">
+  <div class="border-b-2 border-black mb-2 mt-5">
+    <a href="/emoney" class="flex items-center mb-5">
+      <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2"></ion-icon>
+      <span class="text-sm font-semibold" style="font-size: 18px;">Top Up History</span>
+    </a>
+  </div> 
+  <div class="mt-2 w-full">
+    <div *ngFor="let transaction of transactions" class="flex items-center justify-between p-2 mb-2">
+      <div class="flex items-center">
+        <div style="background-color: #f0efef; border-radius: 100%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+          <ion-icon 
+            [name]="transaction.type === 'Transfer' ? 'swap-horizontal' : 'wallet'" 
+            [style.color]="transaction.type === 'Transfer' ? '#8B2635' : '#226F54'" 
+            style="font-size: 20px;">
+          </ion-icon>
+        </div>
+        <div class="flex flex-col ml-2">
+          <span class="font-bold" style="font-family: 'Poppins', sans-serif;" [style.color]="transaction.type === 'Transfer' ? '#8B2635' : '#226F54'">{{ transaction.type }}</span>
+          <span class="text-gray-500" style="font-size: 11px;">{{ transaction.time }}</span>
+        </div>
+      </div>
+      <span class="font-semibold" [style.color]="transaction.type === 'Transfer' ? '#8B2635' : '#226F54'">
+        {{ transaction.type === 'Transfer' ? '-' : '+' }} {{ transaction.amount | currency:'Rp':'symbol':'1.0-0' }}
+      </span>
+    </div>
+  </div>
+</ion-content>
+

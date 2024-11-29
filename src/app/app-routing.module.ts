@@ -90,6 +90,22 @@ const routes: Routes = [
     path: 'verifikasi-user',
     loadChildren: () => import('./verifikasi-user/verifikasi-user.module').then( m => m.VerifikasiUserPageModule)
   },
+  {
+    path: 'pembayaran-status',
+    loadChildren: () => import('./pembayaran-status/pembayaran-status.module').then( m => m.PembayaranStatusPageModule)
+  },
+  {
+    path: 'emoney',
+    loadChildren: () => import('./emoney/emoney.module').then( m => m.EmoneyPageModule)
+  },
+  {
+    path: 'emoney-history',
+    loadChildren: () => import('./emoney-history/emoney-history.module').then( m => m.EmoneyHistoryPageModule)
+  },
+  {
+    path: 'see-comment',
+    loadChildren: () => import('./see-comment/see-comment.module').then( m => m.SeeCommentPageModule)
+  },
 
 
 

@@ -1,0 +1,39 @@
+<ion-header [hidden]="true" [translucent]="true">
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-back-button></ion-back-button>
+      </ion-buttons>
+      <ion-title style="font-family: 'Poppins', sans-serif;">Pembayaran</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-no-padding">
+  <div class="mt-5 border-b-2 border-black">
+    <a href="/home" class="flex items-center mb-5">
+      <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2"></ion-icon>
+      <span class="text-sm font-semibold" style="font-size: 18px;">Pembayaran</span>
+    </a>  
+  </div>
+  <div class="flex flex-col items-center " style="padding: 0 20px; margin-top: 150px;"> 
+    <div class="mb-16">
+      <img 
+        [src]="isPaymentSuccess ? '../../assets/illustration/paid.png' : '../../assets/illustration/unpaid.png'" 
+        alt="Payment Status" 
+        style="width: 150px; height: 150px;"
+      >
+    </div>
+    <div class="mb-8">
+      <h2 class="font-bold text-lg" [style.color]="isPaymentSuccess ? '#004d40' : 'red'" style="font-size: 20px;">
+          {{ isPaymentSuccess ? 'Pembayaran Berhasil!' : 'Pembayaran Gagal!' }}
+      </h2>
+    </div>
+    <div class="flex flex-col gap-4 mt-6">
+      <button (click)="handlePayment()" class="w-32 h-12 font-bold text-white bg-green-600 rounded-full" [style.backgroundColor]="isPaymentSuccess ? '#226F54' : '#8B2635'" [style.color]="'white'">
+        Bayar
+      </button>
+      <button  class="w-32 h-12 font-bold text-white bg-green-600 rounded-full" style="border: none;" [style.backgroundColor]="isPaymentSuccess ? '#226F54' : '#8B2635'" [style.color]="'white'">
+        Cek Status
+      </button>
+    </div>
+  </div>
+</ion-content>

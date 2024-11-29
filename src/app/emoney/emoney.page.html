@@ -1,0 +1,85 @@
+<ion-header [hidden]="true" [translucent]="true">
+  <ion-toolbar>
+    <ion-title>eMoney</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-no-padding" style="display: flex; flex-direction: column;">
+  <div class="flex justify-between items-center px-6 mt-8">
+    <span class="text-sm font-bold" style="font-size: 20px; margin-top: 4px;">Top Up</span>
+    <span class="text-sm font-semibold" style="font-size: 20px; margin-top: 4px;">{{ username }}</span>
+  </div>
+  
+  <div class="flex flex-col items-center" style="padding: 0 20px; margin-top: 40px;"> 
+    <div class="mb-8 text-center">
+      <span class="text-lg" style="font-family: 'Poppins', sans-serif; color: #226F54;">Your Balance</span>
+      <h2 class="font-bold text-3xl" style="font-family: 'Poppins', sans-serif; color: #226F54;">
+        {{ emoney | currency:'Rp':'symbol':'1.0-0' }}
+      </h2>
+    </div>
+    
+    <div class="flex flex-col gap-4 w-full"> 
+      <button class="h-12 font-bold text-white" style="font-size: 26px; background-color: #226F54; border-radius: 15px;">
+        Top Up
+      </button>
+    </div>
+    
+    <div class="mt-6 w-full">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="font-bold text-lg" style="font-family: 'Poppins', sans-serif;">Latest Transactions</h3>
+        <a href="/emoney-history" style="color: #226F54; font-size: 14px; text-decoration: none;">See all</a> <!-- Link to emoney-history -->
+      </div>
+      <div *ngFor="let transaction of transactions" class="flex items-center justify-between p-2 mb-2">
+        <div class="flex items-center">
+          <div style="background-color: #f0efef; border-radius: 100%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+            <ion-icon 
+              [name]="transaction.type === 'Transfer' ? 'swap-horizontal' : 'wallet'" 
+              [style.color]="transaction.type === 'Transfer' ? '#8B2635' : '#226F54'" 
+              style="font-size: 20px;">
+            </ion-icon>
+          </div>
+          <div class="flex flex-col ml-2">
+            <span class="font-bold" style="font-family: 'Poppins', sans-serif;" [style.color]="transaction.type === 'Transfer' ? '#8B2635' : '#226F54'">{{ transaction.type }}</span>
+            <span class="text-gray-500" style="font-size: 11px;">{{ transaction.time }}</span>
+          </div>
+        </div>
+        <span class="font-semibold" [style.color]="transaction.type === 'Transfer' ? '#8B2635' : '#226F54'">
+          {{ transaction.type === 'Transfer' ? '-' : '+' }} {{ transaction.amount | currency:'Rp':'symbol':'1.0-0' }}
+        </span>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer style="background-color: black;">
+  <ion-toolbar>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom" style="background-color: black;">
+        <ion-tab-button tab="home" class="tab-active" style="color: black;">
+          <ion-icon name="home-outline" style="color: black;"></ion-icon>
+          <ion-label style="color: black;">Home</ion-label>
+        </ion-tab-button>
+  
+        <ion-tab-button tab="wishlist" style="color: black;">
+          <ion-icon name="heart-outline" style="color: black;"></ion-icon>
+          <ion-label style="color: black;">Wishlist</ion-label>
+        </ion-tab-button>
+  
+        <ion-tab-button tab="topup" style="color: black;">
+          <ion-icon name="add-circle-outline" style="color: black;"></ion-icon>
+          <ion-label style="color: black;">Top Up</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="order" style="color: black;">
+          <ion-icon name="receipt-outline" style="color: black;"></ion-icon>
+          <ion-label style="color: black;">Order</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button style="color: black;">
+          <ion-icon name="person-outline" style="color: black;"></ion-icon>
+          <ion-label style="color: black;">Profile</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>
