@@ -69,21 +69,6 @@ export class ProfileChangePage implements OnInit {
       return false;
     }
 
-    // Validasi Password
-    if (!password || password.length < 5 || password.length > 20) {
-      this.presentAlert(
-        "Password must be between 5 and 20 characters."
-      );
-      return false;
-    }
-
-    if (!profile_picture || profile_picture.length < 5 || profile_picture.length > 255) {
-      this.presentAlert(
-        "Profile Picture must be between 5 and 255 characters."
-      );
-      return false;
-    }
-
     return true;
   }
 
@@ -116,7 +101,12 @@ export class ProfileChangePage implements OnInit {
       } else {
         console.log("Failed to update profile");
       }
-    });
+    },
+    (error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },
+  );
   }
 
   onFileSelected(event: Event): void {

@@ -92,12 +92,9 @@ export class RegisterPage implements OnInit {
       }
       },
       (error) => {
-        // Menangani error dari server
-        console.error("Error during registration:", error);
-        this.presentAlert(
-          "An error occurred during registration. Please try again."
-        );
-      }
+        const errormessage = error.error?.data || "An error occurred. Please try again."
+        this.presentAlert(errormessage);
+      },
     );
   }
 }

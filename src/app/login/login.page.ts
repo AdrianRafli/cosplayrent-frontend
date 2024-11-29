@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../api.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertController } from "@ionic/angular";
+import { catchError, throwError } from 'rxjs';
+
 
 @Component({
   selector: "app-login",
@@ -78,7 +80,8 @@ export class LoginPage implements OnInit {
         }
       },
       (error) => {
-        this.presentAlert("An error occurred. Please try again.");
+        const errormessage = error.error?.data || "An error occurred. Please try again."
+        this.presentAlert(errormessage);
       },
     );
   }

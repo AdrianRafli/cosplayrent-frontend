@@ -182,7 +182,12 @@ export class TokoProductTambahPage implements OnInit {
       } else {
         console.log("Failed to update costume");
       }
-    });
+    }, (error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },
+  );
+    
   }
 
   goToTokoProduk(){
