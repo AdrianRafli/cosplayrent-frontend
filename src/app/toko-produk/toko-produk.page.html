@@ -12,7 +12,7 @@
 
   <div class="p-2">
     <div class="flex items-center justify-between gap-6 mb-4">
-      <h1 class="font-extrabold text-xl" (click)="goToHome()">CosplayRent</h1>
+      <h1 class="font-extrabold text-xl" (click)="goToTokoHome()">CosplayRent</h1>
       <ion-button size="small" (click)="goToTambahProduk()" class="font-sm button-color flex" >
         <h1>Tambah</h1>
         <ion-icon name="add-circle-outline"></ion-icon>
@@ -21,23 +21,25 @@
   </div>
 
   <ion-searchbar placeholder="Cari produk"></ion-searchbar>
-  <div *ngFor="let costume of costume" class="product-item">
-    <ion-card class="flex flex-col">
-      <div class="flex gap-4">
-        <img [src]="costume.costume_picture" class="p-2 produk-image" alt="Produk Image">
-        <div class="flex flex-col gap-2">
-          <div class="produk-info pt-2">
-            <h2 class="font-bold">{{ costume.name }}</h2>
-            <p>Rp {{ costume.price }}</p>
-            <p>Size: {{ costume.ukuran }}</p>
-          </div>
-          <div class="action-buttons pb-2 pe-2 flex justify-end">
-            <ion-button size="small" class="button-color" (click)="editProduct(costume.id)">Edit</ion-button> <!--(click)="editProduct(product)"-->
-            <ion-button size="small" color="danger" (click)="deleteProduct(costume.id)">Hapus</ion-button> <!--(click)="deleteProduct(product)"-->
+  <div *ngIf="costume?.data">
+    <div *ngFor="let costume of costume" class="product-item">
+      <ion-card class="flex flex-col">
+        <div class="flex gap-4">
+          <img [src]="costume.costume_picture" class="p-2 produk-image" alt="Produk Image">
+          <div class="flex flex-col gap-2">
+            <div class="produk-info pt-2">
+              <h2 class="font-bold" *ngIf="costume?.data">{{ costume.name }}</h2>
+              <p>Rp {{ costume.price }}</p>
+              <p>Size: {{ costume.ukuran }}</p>
+            </div>
+            <div class="action-buttons pb-2 pe-2 flex justify-end">
+              <ion-button size="small" class="button-color" (click)="editProduct(costume.id)">Edit</ion-button> 
+              <ion-button size="small" color="danger" (click)="deleteProduct(costume.id)">Hapus</ion-button>
+            </div>
           </div>
         </div>
-      </div>
-    </ion-card>
+      </ion-card>
+    </div>
   </div>
 
 </ion-content>

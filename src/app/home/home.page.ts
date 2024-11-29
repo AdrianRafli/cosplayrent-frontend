@@ -35,13 +35,13 @@ export class HomePage implements OnInit{
         this.userData.name = this.resp.data.name
       }})
 
-   this.api.getCostumes('costume').subscribe((resp)=>{  
-    this.resp = resp
-     if(this.resp.code == "200") {
-       this.costume = this.resp.data
-       console.log(this.costume)
-     }
-   })
+    this.api.getCostumes('costume').subscribe((resp)=>{  
+      this.resp = resp
+      if(this.resp.code == "200") {
+        this.costume = this.resp.data
+        console.log(this.costume)
+      }
+    })
   }
 
   // goToCostumeDetail(costumeId:number){

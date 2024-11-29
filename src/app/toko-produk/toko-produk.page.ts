@@ -8,23 +8,6 @@ import { ApiService } from '../api.service';
   styleUrls: ['./toko-produk.page.scss'],
 })
 export class TokoProdukPage implements OnInit {
-
-  products = [
-    {
-      name: 'Costume Naruto',
-      price: '10.000.000',
-      sizes: ['S', 'M', 'L', 'XL'],
-      image: '../../assets/product/kostum-1.png',
-    },
-    {
-      name: 'Costume Naruto',
-      price: '10.000.000',
-      sizes: ['S', 'M', 'L', 'XL'],
-      image: '../../assets/product/kostum-2.png',
-    },
-    // Tambahkan produk lainnya
-  ];
-
   resp:any
   data:any= {
     id:'',
@@ -34,7 +17,7 @@ export class TokoProdukPage implements OnInit {
     profile_picture:'',
     created_at:'',
   }
-  costume:any = {
+  costume:any = [{
       available: '',
       bahan: '',
       berat: '',
@@ -50,7 +33,7 @@ export class TokoProdukPage implements OnInit {
       updated_at: null,
       user_id: '',
       username: ''
-    }
+  }]
   
   constructor(private router: Router, public api: ApiService,  private activatedRoute: ActivatedRoute) { }
 
@@ -66,7 +49,7 @@ export class TokoProdukPage implements OnInit {
           this.resp = resp
     
           if(this.resp.code == "200") {
-            this.costume = this.resp.data
+            this.costume = this.resp.data;
             console.log(this.costume)
           }
           else {
