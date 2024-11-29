@@ -36,6 +36,9 @@ export class ProfilePage implements OnInit {
   goToTokoProduk(){
     this.router.navigate(['/toko-home-page'])
   }
+  goToVerification(){
+    this.router.navigate(['/verifikasi-user'])
+  }
 
   removeToken(){
     this.router.navigate(['home'])
