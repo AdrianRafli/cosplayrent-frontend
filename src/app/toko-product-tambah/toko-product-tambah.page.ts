@@ -45,7 +45,7 @@ export class TokoProductTambahPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.api.verifyAndRetrieve('verifytoken').subscribe((resp)=> {
+    this.api.getUserDetail('userdetail').subscribe((resp)=> {
       // console.log("login", resp)
       this.resp = resp
       if (this.resp.code == "200"){

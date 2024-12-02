@@ -15,9 +15,20 @@ export class VerifikasiUserPage implements OnInit {
 
   resp: any;
 
+  identityCardPicture:any
+
   constructor(public api: ApiService, public router: Router) { }
 
   ngOnInit() {
+    this.api.getIdentityCard('identitycard').subscribe((resp) => {
+      this.resp = resp;
+      if (this.resp.code = "200") {
+        console.log(this.resp)
+        this.identityCardPicture = this.resp.data.identitycard_picture
+      } else {
+        console.log("Failed to get identity card picture");
+      }
+    });
   }
 
   dosave() {

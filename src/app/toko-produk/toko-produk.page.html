@@ -21,26 +21,31 @@
   </div>
 
   <ion-searchbar placeholder="Cari produk"></ion-searchbar>
-  <div *ngIf="costume?.data">
-    <div *ngFor="let costume of costume" class="product-item">
+  <div *ngIf="costume?.length > 0; else noData">
+    <div *ngFor="let costumeItem of costume" class="product-item">
       <ion-card class="flex flex-col">
         <div class="flex gap-4">
-          <img [src]="costume.costume_picture" class="p-2 produk-image" alt="Produk Image">
+          <img [src]="costumeItem.costume_picture" class="p-2 produk-image" alt="Produk Image">
           <div class="flex flex-col gap-2">
             <div class="produk-info pt-2">
-              <h2 class="font-bold" *ngIf="costume?.data">{{ costume.name }}</h2>
-              <p>Rp {{ costume.price }}</p>
-              <p>Size: {{ costume.ukuran }}</p>
+              <h2 class="font-bold">{{ costumeItem.name }}</h2>
+              <p>Rp {{ costumeItem.price }}</p>
+              <p>Size: {{ costumeItem.ukuran }}</p>
             </div>
             <div class="action-buttons pb-2 pe-2 flex justify-end">
-              <ion-button size="small" class="button-color" (click)="editProduct(costume.id)">Edit</ion-button> 
-              <ion-button size="small" color="danger" (click)="deleteProduct(costume.id)">Hapus</ion-button>
+              <ion-button size="small" class="button-color" (click)="editProduct(costumeItem.id)">Edit</ion-button> 
+              <ion-button size="small" color="danger" (click)="deleteProduct(costumeItem.id)">Hapus</ion-button>
             </div>
           </div>
         </div>
       </ion-card>
     </div>
   </div>
+  
+  <ng-template #noData>
+    <p class="text-center">No products available.</p>
+  </ng-template>
+  
 
 </ion-content>
 
@@ -48,27 +53,27 @@
   <ion-toolbar>
     <ion-tabs>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home" (click)="goToTokoHome()">
+        <ion-tab-button tab="" (click)="goToHome()">
           <ion-icon name="home-outline"></ion-icon>
           <ion-label>Home</ion-label>
         </ion-tab-button>
     
-        <ion-tab-button tab="produk">
+        <ion-tab-button tab="" (click)="goToProduct()">
           <ion-icon name="albums-outline"></ion-icon>
           <ion-label>Produk</ion-label>
         </ion-tab-button>
     
-        <ion-tab-button tab="chat">
+        <ion-tab-button tab="" (click)="goToChat()">
           <ion-icon name="chatbubbles-outline"></ion-icon>
           <ion-label>Chat</ion-label>
         </ion-tab-button>
     
-        <ion-tab-button tab="pesanan">
+        <ion-tab-button tab="" (click)="goToOrder()">
           <ion-icon name="clipboard-outline"></ion-icon>
           <ion-label>Pesanan</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="keluar">
+        <ion-tab-button tab="" (click)="goToProfile()">
           <ion-icon name="exit-outline"></ion-icon>
           <ion-label>Kembali</ion-label>
         </ion-tab-button>

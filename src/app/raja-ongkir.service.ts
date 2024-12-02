@@ -9,7 +9,7 @@ export class RajaOngkirService {
   //private baseUrl = 'http://localhost:8081/api/'; // Update with your Go server URL
   //private baseUrl = 'http://localhost:8080/api/provinces'; // Update with your Go server URL
   private baseUrl = 'https://cosplayrent.site/api/'
-  constructor(private http: HttpClient) {}
+  constructor(private   http: HttpClient) {}
 
   getProvinces(url:any){
     return this.http.get(this.baseUrl+url)

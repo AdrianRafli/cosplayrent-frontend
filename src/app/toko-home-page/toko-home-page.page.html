@@ -29,27 +29,27 @@
   <ion-toolbar>
     <ion-tabs>
       <ion-tab-bar slot="bottom">
-        <ion-tab-button tab="home">
+        <ion-tab-button tab="" (click)="goToHome()">
           <ion-icon name="home-outline"></ion-icon>
           <ion-label>Home</ion-label>
         </ion-tab-button>
     
-        <ion-tab-button tab="produk" (click)="goToProduct()">
+        <ion-tab-button tab="" (click)="goToProduct()">
           <ion-icon name="albums-outline"></ion-icon>
           <ion-label>Produk</ion-label>
         </ion-tab-button>
     
-        <ion-tab-button tab="chat">
+        <ion-tab-button tab="" (click)="goToChat()">
           <ion-icon name="chatbubbles-outline"></ion-icon>
           <ion-label>Chat</ion-label>
         </ion-tab-button>
     
-        <ion-tab-button tab="pesanan">
+        <ion-tab-button tab="" (click)="goToOrder()">
           <ion-icon name="clipboard-outline"></ion-icon>
           <ion-label>Pesanan</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="keluar">
+        <ion-tab-button tab="" (click)="goToProfile()">
           <ion-icon name="exit-outline"></ion-icon>
           <ion-label>Kembali</ion-label>
         </ion-tab-button>

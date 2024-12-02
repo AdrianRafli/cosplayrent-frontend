@@ -19,4 +19,16 @@ export class TokoHomePagePage implements OnInit {
   goToProduct(){
     this.router.navigate(['/toko-produk']);
   }
+
+  goToChat(){
+    this.router.navigate(['/home'])
+  }
+  
+  goToOrder(){
+    this.router.navigate(['/home'])
+  }
+  
+  goToProfile(){
+    this.router.navigate(['/profile'])
+  }
 }

@@ -23,12 +23,12 @@
                alt="Profile Picture" 
                class="w-full h-auto rounded-md"
                (click)="fileInput.click()">
-          <img *ngIf="!selectedFile && data.profile_picture" 
-               [src]="data.profile_picture" 
+          <img *ngIf="!selectedFile && identityCardPicture" 
+               [src]="identityCardPicture" 
                alt="Profile Picture" 
                class="w-full h-auto rounded-md"
                (click)="fileInput.click()">
-          <img *ngIf="!selectedFile && !data.profile_picture" 
+          <img *ngIf="!selectedFile && !identityCardPicture" 
                src="../../assets/illustration/ktp-watermark.png" 
                alt="Profile Picture" 
                class="w-full h-auto rounded-md"

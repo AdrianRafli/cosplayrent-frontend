@@ -9,18 +9,10 @@ import { Router } from "@angular/router";
 })
 export class ProfilePage implements OnInit {
 
-  constructor(public api: ApiService, public router: Router) { }
-  Token:any
-  resp:any
-  data: any ={
-    name:'',
-    id:''
-  }
-
-  ngOnInit() {
+  constructor(public api: ApiService, public router: Router) { 
     this.Token = localStorage.getItem('userToken')
     if (this.Token !== null && this.Token.trim() !== '') {
-      this.api.verifyAndRetrieve('verifytoken').subscribe((resp) => {
+      this.api.getUserDetail('userdetail').subscribe((resp) => {
         this.resp = resp;
         if (this.resp.code == "200") {
           this.data = this.resp.data;
@@ -31,6 +23,16 @@ export class ProfilePage implements OnInit {
       console.log('Token is empty or does not exist');
       this.router.navigate(['/login'])
     }
+  }
+  Token:any
+  resp:any
+  data: any ={
+    name:'',
+    id:''
+  }
+
+  ngOnInit() {
+    
   }
 
   goToTokoProduk(){

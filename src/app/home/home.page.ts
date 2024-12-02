@@ -27,13 +27,13 @@ export class HomePage implements OnInit{
   constructor(private router: Router, public api: ApiService) { }
 
   ngOnInit() {
-    this.api.get('verifytoken').subscribe((resp)=> {
-      // console.log("login", resp)
-      this.resp = resp
+    // this.api.get('verifytoken').subscribe((resp)=> {
+    //   // console.log("login", resp)
+    //   this.resp = resp
 
-      if(this.resp.code == "200") {
-        this.userData.name = this.resp.data.name
-      }})
+    //   if(this.resp.code == "200") {
+    //     this.userData.name = this.resp.data.name
+    //   }})
 
     this.api.getCostumes('costume').subscribe((resp)=>{  
       this.resp = resp
@@ -66,6 +66,9 @@ export class HomePage implements OnInit{
   }
   goToOrder(){
     this.router.navigate(['/order']);
+  }
+  goToEmoney(){
+    this.router.navigate(['/emoney']);
   }
 
     // this.api.get('user').subscribe((resp: any) => {

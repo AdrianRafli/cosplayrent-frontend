@@ -5,8 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  baseUrl = 'https://cosplayrent.site/api/'
-  //baseUrl = 'http://localhost:8081/api/'
+  //baseUrl = 'https://cosplayrent.site/api/'
+  baseUrl = 'http://localhost:8081/api/'
 
   token:any = ''
   constructor(private http: HttpClient) {
@@ -44,7 +44,16 @@ export class ApiService {
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
 
-  verifyAndRetrieve(url:any){
+  getUserDetail(url:any){
+    return this.http.get(this.baseUrl+url,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
+  getIdentityCard(url:any){
+    return this.http.get(this.baseUrl+url,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+  getBalance(url:any){
     return this.http.get(this.baseUrl+url,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
@@ -59,6 +68,10 @@ export class ApiService {
   }
   getSellerCostumeByCostumeID(url:any,user_UUID:any,costumeID:any){
     return this.http.put(this.baseUrl+url+user_UUID+costumeID,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+  getSellerCostume(url:any){
+    return this.http.get(this.baseUrl+url,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
   deleteCostume(url:any,id:any){

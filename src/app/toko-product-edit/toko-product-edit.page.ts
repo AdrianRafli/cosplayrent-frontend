@@ -17,7 +17,24 @@ export class TokoProductEditPage implements OnInit {
   Ukuran = ['S', 'M', 'L', 'XL'];
   id:any
   resp:any
-  data:any
+  data: any = {
+    id: 0,
+    user_id: '',
+    username: '',
+    profile_picture: '', // Assuming it can be null
+    name: '',
+    description: '',
+    bahan: '',
+    ukuran: '',
+    berat: '',
+    kategori: '',
+    price: 0,
+    costume_picture: '',
+    available: '', // Assuming it's a string as per the response
+    created_at: '',
+    updated_at: ''
+  };
+  
   selectedFile:any
   previewUrl:any
   constructor(
@@ -31,7 +48,7 @@ export class TokoProductEditPage implements OnInit {
     this.id = this.route.snapshot.params['id']
     console.log(this.id)
     if (this.id != null) {
-      this.api.getCostumesById('costume/',this.id).subscribe((resp) => {
+      this.api.getCostumesById('seller/',this.id).subscribe((resp) => {
         this.resp = resp;
         if (this.resp.code == "200") {
          console.log(this.resp)
@@ -162,13 +179,17 @@ export class TokoProductEditPage implements OnInit {
 
     console.log(formData)
   
-    this.api.updateCostumeById('costume/', this.data.id, formData).subscribe((resp) => {
+    this.api.updateCostumeById('seller/', this.data.id, formData).subscribe((resp) => {
       this.resp = resp;
       if (this.resp.code = "200") {
         console.log("Successfully updated costume");
       } else {
         console.log("Failed to update costume");
       }
-    });
+    },(error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },
+  );
   }
 }

@@ -17,7 +17,7 @@ export class TokoProdukPage implements OnInit {
     profile_picture:'',
     created_at:'',
   }
-  costume:any = [{
+  costume:any = {
       available: '',
       bahan: '',
       berat: '',
@@ -33,29 +33,16 @@ export class TokoProdukPage implements OnInit {
       updated_at: null,
       user_id: '',
       username: ''
-  }]
+  }
   
   constructor(private router: Router, public api: ApiService,  private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.api.get('verifytoken').subscribe((resp)=> {
-      // console.log("login", resp)
+    this.api.getSellerCostume('seller').subscribe((resp) => {
       this.resp = resp
-
-      if(this.resp.code == "200") {
-        this.data = this.resp.data
-        console.log(this.data)
-        this.api.getUserCostume('find/user/costume/',this.data.id).subscribe((resp)=> {
-          this.resp = resp
-    
-          if(this.resp.code == "200") {
-            this.costume = this.resp.data;
-            console.log(this.costume)
-          }
-          else {
-            this.router.navigate(['/home'])
-          }
-        })
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.costume = this.resp.data
       }
     })
   }
@@ -69,7 +56,7 @@ export class TokoProdukPage implements OnInit {
   }
 
   deleteProduct(id:number){
-    this.api.deleteCostume('costume/',id).subscribe((resp) => {
+    this.api.deleteCostume('seller/',id).subscribe((resp) => {
       this.resp = resp;
       if (this.resp.code == "200") {
        console.log(this.resp)
@@ -82,6 +69,21 @@ export class TokoProdukPage implements OnInit {
   }
   
   goToHome(){
-    this.router.navigate(['home'])
+    this.router.navigate(['/toko-home-page']);
+  }
+  goToProduct(){
+    this.router.navigate(['/toko-home-page']);
+  }
+
+  goToChat(){
+    this.router.navigate(['/toko-home-page'])
+  }
+  
+  goToOrder(){
+    this.router.navigate(['/toko-home-page'])
+  }
+  
+  goToProfile(){
+    this.router.navigate(['/toko-home-page'])
   }
 }

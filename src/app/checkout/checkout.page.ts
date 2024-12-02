@@ -37,22 +37,22 @@ export class CheckoutPage implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['costumeID']
-    console.log(this.id)
-    this.api.get('verifytoken').subscribe((resp)=> {
-      console.log(resp)
-      this.resp = resp
-      if(this.resp.code == "200") {
-        this.userData = this.resp
-        this.api.getCostumesById('costume/', this.id).subscribe((resp)=> {
-          this.costume = resp
-          console.log("ini costume")
-          console.log(this.costume)
-        })
-        this.fetchProvinces();
-      } else {
-        this.router.navigate(['/profile'])
-      }
-    })
+    // console.log(this.id)
+    // this.api.get('verifytoken').subscribe((resp)=> {
+    //   console.log(resp)
+    //   this.resp = resp
+    //   if(this.resp.code == "200") {
+    //     this.userData = this.resp
+    //     this.api.getCostumesById('costume/', this.id).subscribe((resp)=> {
+    //       this.costume = resp
+    //       console.log("ini costume")
+    //       console.log(this.costume)
+    //     })
+    //     this.fetchProvinces();
+    //   } else {
+    //     this.router.navigate(['/profile'])
+    //   }
+    // })
   }
 
   fetchProvinces() {
