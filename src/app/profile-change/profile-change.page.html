@@ -51,6 +51,27 @@
           <label for="phone" class="block mb-2 text-sm font-semibold text-gray-900" style="font-size: 18px;">Address</label>
           <input type="text" [(ngModel)]="data.address" name="address" id="address" placeholder="{{data.address}}" class="bg-white-50 border border-gray-500 text-black-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" />
         </div>
+
+        <!-- <div class="mb-4">
+          <label for="phone" class="block mb-2 text-sm font-semibold text-gray-900" style="font-size: 18px;">Provinsi Asal</label>
+          <input type="text" [(ngModel)]="data.origin_province_name" name="origin_province_name" id="origin_province_name" placeholder="{{data.origin_province_name}}" class="bg-white-50 border border-gray-500 text-black-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" />
+        </div> -->
+
+        <div class="mb-4">
+          <label for="phone" class="block mb-2 text-sm font-semibold text-gray-900" style="font-size: 18px;">Provinsi Asal</label>
+          <select name="" id="" [(ngModel)]="asalProvinsi" [ngModelOptions]="{standalone: true}" placeholder="Pilih provinsi asal" (ionChange)="onAsalProvinsiChange()" class="bg-white-50 border border-gray-500 text-black-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" >
+            <option [value]="province.province_id" *ngFor="let province of provinces">{{province.province}}</option>
+          </select>
+          <!-- <input type="text" [(ngModel)]="data.origin_city_name" name="origin_city_name" id="origin_city_name" placeholder="{{data.origin_city_name}}" class="bg-white-50 border border-gray-500 text-black-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" /> -->
+        </div>
+
+        <div class="mb-4">
+          <label for="phone" class="block mb-2 text-sm font-semibold text-gray-900" style="font-size: 18px;">Kota Asal</label>
+          <select name="" id="" [(ngModel)]="asalKota" [ngModelOptions]="{standalone: true}" placeholder="Pilih kota asal" (ionChange)="onAsalProvinsiChange()" class="bg-white-50 border border-gray-500 text-black-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" >
+            <option value="" *ngFor="let city of cities">{{city.city_id}}</option>
+          </select>
+          <!-- <input type="text" [(ngModel)]="data.origin_city_name" name="origin_city_name" id="origin_city_name" placeholder="{{data.origin_city_name}}" class="bg-white-50 border border-gray-500 text-black-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5" /> -->
+        </div>
       
         <div class="mb-8">
           <label for="" class="block mb-2 text-sm font-semibold text-gray-900" style="font-size: 18px;">Created_At</label>

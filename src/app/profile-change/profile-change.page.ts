@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from "../api.service";
 import { Router } from "@angular/router";
 import { AlertController } from '@ionic/angular';
+import { RajaOngkirService } from '../raja-ongkir.service';
 
 @Component({
   selector: 'app-profile-change',
@@ -9,15 +10,19 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./profile-change.page.scss'],
 })
 export class ProfileChangePage implements OnInit {
-  data: any = { id: '', name: '', email: '', address: '', profile_picture: '', created_at: '' };
+  data: any = { id: '', name: '', email: '', address: '', profile_picture: '', created_at: '', updated_at:'', origin_city_name:'', origin_province_name:'', };
   selectedFile: File | null = null;
   previewUrl: string | null = null;
   Token:any
   staticusername:any
+  asalProvinsi:any
+  provinces:any
+  asalKota:any
+  cities:any
 
   resp: any;
 
-  constructor(public api: ApiService, public router: Router, private alertController: AlertController) { }
+  constructor(public api: ApiService, public router: Router, private alertController: AlertController, private rajaOngkirService: RajaOngkirService) { }
 
   ngOnInit() {
     this.Token = localStorage.getItem('userToken')
@@ -28,12 +33,44 @@ export class ProfileChangePage implements OnInit {
           this.data = this.resp.data;
           this.staticusername = this.resp.data.name
           console.log(this.data);
+          this.asalProvinsi = this.data.origin_province_name
+          console.log(this.asalProvinsi)
+          this.fetchProvinces()
         }
       })
     } else {
       console.log('Token is empty or does not exist');
       this.router.navigate(['/login'])
     }
+  }
+
+  fetchProvinces() {
+    this.rajaOngkirService.getProvinces('provinces').subscribe((resp) => {
+      this.resp = resp;
+      console.log(this.resp);
+      if (this.resp.code == 200) {
+        this.provinces = this.resp.data;
+      } else {
+        console.error('Failed to load provinces');
+      }
+    });
+  }
+
+  onAsalProvinsiChange() {
+    this.fetchCity();
+    console.log('fetchAsal');
+  }
+
+  fetchCity() {
+    this.rajaOngkirService.getCity('city/', this.asalProvinsi).subscribe((resp) => {
+      this.resp = resp;
+      console.log(this.resp);
+      if (this.resp.code == 200) {
+        this.cities = this.resp.data;
+      } else {
+        console.error('Failed to load city');
+      }
+    });
   }
 
   async presentAlert(message: string) {
