@@ -18,12 +18,19 @@ export class EmoneyPage implements OnInit {
  
   username = "User123";
   emoney = 0; // Example initial value
-  transactions = [
-      { type: 'Transfer', time: '2023-11-29T19:12:00', amount: 600000 }, // ISO 8601 format
-      { type: 'Top Up', time: '2023-11-29T18:12:00', amount: 260000 },
-      { type: 'Top Up', time: '2024-11-28T19:12:00', amount: 260000 },
-  ]
   resp:any
+
+  transaction:any = [{
+    transaction_type : "",
+    transaction_date: "",
+    transaction_amount: 0,
+  }]
+
+  transactions = [
+    { type: 'Transfer', time: '2023-11-29T19:12:00', amount: 600000 }, // ISO 8601 format
+    { type: 'Top Up', time: '2023-11-29T18:12:00', amount: 260000 },
+    { type: 'Top Up', time: '2024-11-28T19:12:00', amount: 260000 },
+]
 
   constructor(private router: Router, public api: ApiService){
     this.api.getUserDetail('userdetail').subscribe((resp) => {
@@ -42,6 +49,15 @@ export class EmoneyPage implements OnInit {
       if (this.resp.code == "200"){
         console.log(this.resp)
         this.emoney = this.resp.data.emoney_amount
+      }
+    })
+
+    this.api.getHistoryBalance('emoneyhistory').subscribe((resp) => {
+      this.resp = resp
+
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.transaction = this.resp.data
       }
     })
     // Sort transactions by date and time in descending order

@@ -13,6 +13,7 @@ export class ProfileChangePage implements OnInit {
   selectedFile: File | null = null;
   previewUrl: string | null = null;
   Token:any
+  staticusername:any
 
   resp: any;
 
@@ -25,6 +26,7 @@ export class ProfileChangePage implements OnInit {
         this.resp = resp;
         if (this.resp.code == "200") {
           this.data = this.resp.data;
+          this.staticusername = this.resp.data.name
           console.log(this.data);
         }
       })

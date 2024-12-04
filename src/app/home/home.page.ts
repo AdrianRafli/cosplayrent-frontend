@@ -62,13 +62,34 @@ export class HomePage implements OnInit{
     this.router.navigate(['/detail-product', costumeId]);
   }
   goToWishlist(){
-    this.router.navigate(['/wishlist']);
+    this.Token = localStorage.getItem('userToken')
+    if (this.Token !== null && this.Token.trim() !== '') {
+      console.log('Token exists');
+      this.router.navigate(['/wishlist'])
+    } else {
+      console.log('Token is empty or does not exist');
+      this.router.navigate(['/login'])
+    }
   }
   goToOrder(){
-    this.router.navigate(['/order']);
+    this.Token = localStorage.getItem('userToken')
+    if (this.Token !== null && this.Token.trim() !== '') {
+      console.log('Token exists');
+      this.router.navigate(['/order'])
+    } else {
+      console.log('Token is empty or does not exist');
+      this.router.navigate(['/login'])
+    }
   }
   goToEmoney(){
-    this.router.navigate(['/emoney']);
+    this.Token = localStorage.getItem('userToken')
+    if (this.Token !== null && this.Token.trim() !== '') {
+      console.log('Token exists');
+      this.router.navigate(['/emoney'])
+    } else {
+      console.log('Token is empty or does not exist');
+      this.router.navigate(['/login'])
+    }
   }
 
     // this.api.get('user').subscribe((resp: any) => {
