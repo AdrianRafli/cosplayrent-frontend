@@ -59,6 +59,11 @@ export class ApiService {
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
 
+  updateUserDetail(url:any, data:any){
+    return this.http.put(this.baseUrl+url,data,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
   getBalance(url:any){
     return this.http.get(this.baseUrl+url,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
