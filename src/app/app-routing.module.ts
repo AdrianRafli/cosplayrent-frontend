@@ -106,7 +106,11 @@ const routes: Routes = [
   {
     path: 'see-comment',
     loadChildren: () => import('./see-comment/see-comment.module').then( m => m.SeeCommentPageModule)
+  },  {
+    path: 'topup-payment',
+    loadChildren: () => import('./topup-payment/topup-payment.module').then( m => m.TopupPaymentPageModule)
   },
+
 
 
 

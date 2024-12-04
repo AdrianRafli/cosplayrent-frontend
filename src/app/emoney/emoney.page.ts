@@ -41,6 +41,7 @@ export class EmoneyPage implements OnInit {
       }
     })
   }
+  
 
   ngOnInit() {
     this.api.getBalance('emoney').subscribe((resp) => {
@@ -77,7 +78,14 @@ export class EmoneyPage implements OnInit {
   //   return dateB - dateA; // This will also sort by time since we are using the same date comparison
   // });
 
+  
+
   goToHome(){
     this.router.navigate(['/home'])
   }
+
+  goToTopUp() {
+    this.router.navigate(['/topup-payment'])
+    // window.open('https://app.sandbox.midtrans.com/snap/v4/redirection/ff0385f4-1b3f-4df1-a703-7f33a7f2bea7', '_blank');
+  }  
 }
