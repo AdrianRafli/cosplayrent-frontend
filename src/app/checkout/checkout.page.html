@@ -72,75 +72,194 @@
           placeholder="Tambahkan catatan untuk penjual"
         ></textarea>
       </div> -->
-      <form (ngSubmit)="doOrder()">
-      <ion-item>
-        <ion-label>Asal Provinsi</ion-label>
-        <ion-select [(ngModel)]="asalProvinsi" (ionChange)="onAsalProvinsiChange()" placeholder="Pilih provinsi asal" [ngModelOptions]="{standalone: true}">
-          <!-- Loop through the provinces array and display options -->
-          <ion-select-option *ngFor="let province of provinces" [value]="province.province_id">
+      <form (ngSubmit)="doOrder()" class="py-2">
+        <!-- <div class="mb-4">
+          <label for="phone" class="block mb-2 text-sm font-semibold text-gray-900" style="font-size: 18px;">
+            Provinsi Asal
+          </label>
+          <select 
+          id="provinsi-asal" 
+          [(ngModel)]="asalProvinsi" 
+          [ngModelOptions]="{standalone: true}" 
+          placeholder="Pilih provinsi asal" 
+          (change)="onAsalProvinsiChange()" 
+          class="bg-white-50 border border-gray-500 text-black-900 text-sm rounded-lg focus:ring-green-500 focus:border-green-500 block w-full p-2.5"
+          >
+          <option *ngFor="let province of provinces" [value]="province.province_id">
             {{ province.province }}
-          </ion-select-option>
-        </ion-select>
-      </ion-item>
+          </option>
+          </select>
+        </div> -->
+
+        <div class="mb-4 flex mx-3">
+          <label for="phone" class="flex items-center" style="font-size: 18px;">
+            Provinsi Asal
+          </label>
+          <select 
+          id="provinsi-asal" 
+          [(ngModel)]="asalProvinsi" 
+          [ngModelOptions]="{standalone: true}" 
+          placeholder="Pilih provinsi asal" 
+          (change)="onAsalProvinsiChange()" 
+          class="ml-auto w-1/2"
+          >
+          <option class="text-sm" *ngFor="let province of provinces" [value]="province.province_id">
+            {{ province.province }}
+          </option>
+          </select>
+        </div>
+
+        <div class="mb-4 flex mx-3">
+          <label for="phone" class="flex items-center" style="font-size: 18px;">
+            Kota Asal
+          </label>
+          <select 
+            id="provinsi-asal" 
+            [(ngModel)]="asalKota" 
+            [ngModelOptions]="{standalone: true}"
+            (change)="onCityChange()" 
+            placeholder="Pilih kota asal" 
+            class="ml-auto w-1/2"
+          >
+            <option class="text-sm" *ngFor="let city of cities" [value]="city.city_id">
+              {{ city.city_name }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-4 flex mx-3">
+          <label for="phone" class="flex items-center" style="font-size: 18px;">
+            Provinsi Tujuan
+          </label>
+          <input type="text" name="" value="{{provinsiTujuanNama}}" disabled  class="ml-auto w-1/2" id="">
+        </div>
+
+        <div class="mb-4 flex mx-3">
+          <label for="phone" class="flex items-center" style="font-size: 18px;">
+            Kota Tujuan
+          </label>
+          <input type="text" name="" value="{{kotaTujuanNama}}" disabled  class="ml-auto w-1/2" id="">
+        </div>
+
+        <div class="mb-4 flex mx-3" *ngIf="costume?.data">
+          <label for="kota-tujuan" class="flex items-center" style="font-size: 18px;">
+            Berat Kostum
+          </label>
+          <input 
+            type="number"
+            disabled 
+            id="kota-tujuan" 
+            name="kotaTujuan" 
+            class="ml-auto w-1/2 border p-2 text-sm" 
+            placeholder="{{costume.data.berat}}" 
+          />
+        </div>
+
+        <div class="mb-4 flex mx-3">
+          <label for="kurir" class="flex items-center" style="font-size: 18px;">
+            Pilih Kurir
+          </label>
+          <select 
+            id="kurir" 
+            [(ngModel)]="selectedCourier" 
+            [ngModelOptions]="{standalone: true}" 
+            (change)="onCourierChange()"
+            class="ml-auto w-1/2 p-2 text-sm"
+          >
+            <option class="text-sm" value="jne">JNE</option>
+            <option class="text-sm" value="pos" selected>POS</option>
+            <option class="text-sm" value="tiki">TIKI</option>
+          </select>
+        </div>
+        
+        <div class="mb-4 flex mx-3">
+          <label for="kurir" class="flex items-center" style="font-size: 18px;">
+            Pilih Jasa
+          </label>
+          <select 
+          id="kurir" 
+          [(ngModel)]="selectedService"
+          (change)="onServiceChange()" 
+          [ngModelOptions]="{standalone: true}" 
+          class="ml-auto w-1/2 border p-2 text-sm"
+        >
+          <ng-container *ngFor="let courier of costData">
+            <option 
+              class="text-sm" 
+              *ngFor="let cost of courier.costs" 
+              [ngValue]="cost"
+            >
+              <h1>{{ cost.service }} - {{ cost.description }} (ETD: {{ cost.cost[0].etd }})</h1>
+            </option>
+
+          </ng-container>
+        </select>
+        </div>
+
+        <!-- <ion-select [(ngModel)]="selectedCourier"  placeholder="Pilih Kurir" [ngModelOptions]="{standalone: true}">
+          <ng-container *ngFor="let courier of costData">
+            <ion-select-option *ngFor="let cost of courier.costs" [value]="cost">
+              {{ courier.name }} - {{ cost.service }} - {{ cost.description }} (ETD: {{ cost.cost[0].etd }})
+            </ion-select-option>
+          </ng-container>
+        </ion-select> -->
+        
+        
+        
   
-      <ion-item>
+      <!-- <ion-item>
         <ion-label>Provinsi Tujuan</ion-label>
         <ion-select [(ngModel)]="provinsiTujuan" (ionChange)="onTujuanProvinsiChange()" placeholder="Pilih provinsi tujuan" [ngModelOptions]="{standalone: true}">
-          <!-- Loop through the provinces array and display options -->
           <ion-select-option *ngFor="let province of provinces" [value]="province.province_id">
             {{ province.province }}
           </ion-select-option>
         </ion-select>
-      </ion-item>
+      </ion-item> -->
   
-      <ion-item *ngIf="asalProvinsi">
+      <!-- <ion-item *ngIf="asalProvinsi">
         <ion-label>Kota Asal</ion-label>
         <ion-select [(ngModel)]="asalKota" placeholder="Pilih kota asal" [ngModelOptions]="{standalone: true}">
-          <!-- Loop through the provinces array and display options -->
           <ion-select-option *ngFor="let city of listKotaAsal" [value]="city.city_id">
             {{ city.city_name }}
           </ion-select-option>
         </ion-select>
-      </ion-item>
+      </ion-item> -->
   
-      <ion-item *ngIf="provinsiTujuan">
+      <!-- <ion-item *ngIf="provinsiTujuan">
         <ion-label>Kota Tujuan</ion-label>
         <ion-select [(ngModel)]="kotaTujuan" placeholder="Pilih kota tujuan" [ngModelOptions]="{standalone: true}">
-          <!-- Loop through the provinces array and display options -->
           <ion-select-option *ngFor="let city of listKotaTujuan" [value]="city.city_id">
             {{ city.city_name }}
           </ion-select-option>
         </ion-select>
-      </ion-item>
+      </ion-item> -->
   
-      <ion-item>
+      <!-- <ion-item>
         <ion-label>Berat</ion-label>
         <input type="number" [(ngModel)]="selectedWeight" [ngModelOptions]="{standalone: true}">
-      </ion-item>
+      </ion-item> -->
   
-      <ion-item>
+      <!-- <ion-item>
         <ion-label>Pilih Kurir</ion-label>
         <ion-select [(ngModel)]="selectedCourier" placeholder="Pilih Kurir" [ngModelOptions]="{standalone: true}">
           <ion-select-option value="jne">JNE</ion-select-option>
           <ion-select-option value="pos">POS</ion-select-option>
           <ion-select-option value="tiki">TIKI</ion-select-option>
         </ion-select>
-      </ion-item>
+      </ion-item> 
       
       <ion-item>
         <ion-label>
           <button type="submit" class="bg-green-600 text-white rounded-md p-2">Klik untuk pilih jasa</button>
         </ion-label>
         <ion-select [(ngModel)]="selectedCourier"  placeholder="Pilih Kurir" [ngModelOptions]="{standalone: true}">
-          <!-- Loop through each courier in costData -->
           <ng-container *ngFor="let courier of costData">
-            <!-- For each courier, loop through each cost and create a select option -->
             <ion-select-option *ngFor="let cost of courier.costs" [value]="cost">
               {{ courier.name }} - {{ cost.service }} - {{ cost.description }} (ETD: {{ cost.cost[0].etd }})
             </ion-select-option>
           </ng-container>
         </ion-select>
-      </ion-item>
+      </ion-item> -->
       
       </form>
     </div>
@@ -166,13 +285,13 @@
         </div>
         <div class="flex justify-between">
           <span>Total Ongkos Kirim</span>
-          <span *ngIf="selectedCourier?.cost?.length">
-            Rp {{ selectedCourier.cost[0]?.value }}
+          <span *ngIf="selectedService?.cost?.length">
+            Rp {{ selectedService.cost[0]?.value }}
           </span>          
         </div>
         <div class="flex justify-between">
           <span>Biaya Jasa Aplikasi</span>
-          <span>Rp 1.000</span>
+          <span>Rp 3000</span>
         </div>
         <hr class="my-4" />
         <div class="flex justify-between font-bold text-xl mb-4">
@@ -183,8 +302,8 @@
     </div>
 
     <div class="p-2">
-      <button class="w-full bg-green-600 text-white p-3 rounded-lg">
-        Pilih Pembayaran
+      <button class="w-full bg-green-600 text-white p-3 rounded-lg" (click)="goToPayment()">
+        Bayar
       </button>
       <p class="text-center text-gray-500 text-sm mt-2">
         Dengan melanjutkan pembayaran, kamu menyetujui

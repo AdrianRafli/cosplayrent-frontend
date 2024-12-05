@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <a class="mx-4 flex items-center gap-2">
+    <a class="mx-4 flex items-center gap-2" (click)="goToHome()">
       <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
       <span class="text-sm font-semibold" style="font-size: 18px;">Pembayaran</span>
     </a>  
@@ -17,8 +17,8 @@
       : '../../assets/illustration/paid.png'" 
        class="w-30 h-30" alt="Belum Dibayar">  -->
       <div class="w-full flex flex-col gap-4">
-        <button class="w-full h-12 py-2 font-bold text-white rounded paid" style="font-size: 24px;">Bayar</button>
-        <button class="w-full h-12 py-2 font-bold text-white rounded paid" style="font-size: 24px;">Cek Status</button>
+        <button class="w-full h-12 py-2 font-bold text-white rounded paid" style="font-size: 24px;" (click)="goToMidtrans()">Bayar</button>
+        <button class="w-full h-12 py-2 font-bold text-white rounded paid" style="font-size: 24px;" (click)="goToCheckOrder()">Cek Status</button>
       </div>
     </div>
   </div>

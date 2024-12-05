@@ -126,7 +126,7 @@ export class ProfileChangePage implements OnInit {
   }
 
   validateFields(): boolean {
-    const {name, email, address, password, profile_picture } = this.data;
+    const {name, email, password, profile_picture } = this.data;
 
     if (!name || name.length < 5 || name.length > 20) {
       this.presentAlert(
@@ -144,12 +144,12 @@ export class ProfileChangePage implements OnInit {
       return false;
     }
 
-    if (!address || address.length < 5 || address.length > 100) {
-      this.presentAlert(
-        "Address must be between 5 and 100 characters."
-      );
-      return false;
-    }
+    // if (!address || address.length < 5 || address.length > 100) {
+    //   this.presentAlert(
+    //     "Address must be between 5 and 100 characters."
+    //   );
+    //   return false;
+    // }
 
     return true;
   }

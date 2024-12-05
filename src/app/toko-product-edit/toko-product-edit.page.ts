@@ -26,7 +26,7 @@ export class TokoProductEditPage implements OnInit {
     description: '',
     bahan: '',
     ukuran: '',
-    berat: '',
+    berat: 0,
     kategori: '',
     price: 0,
     costume_picture: '',
@@ -128,9 +128,9 @@ export class TokoProductEditPage implements OnInit {
       return false;
     }
 
-    if (!berat || berat.length < 5 || berat.length > 30) {
+    if (!berat || berat.length < 1 || berat.length > 30) {
       this.presentAlert(
-        "Berat must be between 5 and 255 characters."
+        "Berat must be between 1 and 30 characters."
       );
       return false;
     }

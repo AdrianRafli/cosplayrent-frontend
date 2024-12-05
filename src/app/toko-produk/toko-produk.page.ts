@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute,Router } from '@angular/router';
 import { ApiService } from '../api.service';
+import { AlertController } from "@ionic/angular";
 
 @Component({
   selector: 'app-toko-produk',
@@ -35,7 +36,7 @@ export class TokoProdukPage implements OnInit {
       username: ''
   }
   
-  constructor(private router: Router, public api: ApiService,  private activatedRoute: ActivatedRoute) { }
+  constructor(private router: Router, public api: ApiService,  private activatedRoute: ActivatedRoute,  private alertController: AlertController,) { }
 
   ngOnInit() {
     this.api.getSellerCostume('seller').subscribe((resp) => {
@@ -51,8 +52,28 @@ export class TokoProdukPage implements OnInit {
     this.router.navigate(['/toko-home-page'])
   }
 
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: "Login Failed",
+      message: message,
+      buttons: ["OK"],
+    });
+    await alert.present();
+  }
+
   goToTambahProduk(){
-    this.router.navigate(['/toko-product-tambah'])
+    this.api.getUserStatusToBeSeller('checksellerstatus').subscribe((resp) => {
+      this.resp = resp
+
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.router.navigate(['/toko-product-tambah'])
+      }
+    },(error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },)
+   
   }
 
   deleteProduct(id:number){

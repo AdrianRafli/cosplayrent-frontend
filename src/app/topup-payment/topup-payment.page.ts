@@ -67,4 +67,8 @@ export class TopupPaymentPage implements OnInit {
       this.presentAlert(errormessage);
     },)
   }
+
+  goToEmoney(){
+    this.router.navigate(['/emoney'])
+  }
 }

@@ -5,8 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  //baseUrl = 'https://cosplayrent.site/api/'
-  baseUrl = 'http://localhost:8081/api/'
+  baseUrl = 'https://cosplayrent.site/api/'
+  //baseUrl = 'http://localhost:8081/api/'
 
   token:any = ''
   constructor(private http: HttpClient) {
@@ -69,8 +69,23 @@ export class ApiService {
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
 
+  getSellerAddress(url:any,id:any){
+    return this.http.get(this.baseUrl+url+id,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
   getUserToOrderStatus(url:any, id:any){
     return this.http.get(this.baseUrl+url+id,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+  
+  getUserStatusToBeSeller(url:any){
+    return this.http.get(this.baseUrl+url,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
+  createOrderDirectlyToMidtrans(url:any, data:any){
+    return this.http.post(this.baseUrl+url,data,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
 
@@ -84,6 +99,11 @@ export class ApiService {
   }
 
   getTopUpOrderStatus(url:any, id:any){
+    return this.http.get(this.baseUrl+url+id,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
+  checkOrderStatus(url:any,id:any){
     return this.http.get(this.baseUrl+url+id,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
