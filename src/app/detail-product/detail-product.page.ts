@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
+import { AlertController } from "@ionic/angular";
 
 @Component({
   selector: 'app-detail-product',
@@ -9,6 +10,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./detail-product.page.scss'],
 })
 export class DetailProductPage implements OnInit {
+  
+  statusToOrder : any
 
   product = {
     name: 'Costum Naruto',
@@ -100,7 +103,7 @@ export class DetailProductPage implements OnInit {
   review: any = []
   ids = this.costume.id
 
-  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService ) { }
+  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService, private alertController: AlertController, ) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id']
@@ -132,8 +135,28 @@ export class DetailProductPage implements OnInit {
      })
   }
 
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: "Process Failed",
+      message: message,
+      buttons: ["OK"],
+    });
+    await alert.present();
+  }
+
   goToCheckout(){
-    this.router.navigate(['/checkout',this.id]);
+    this.api.getUserToOrderStatus('checkuserstatus/',this.id).subscribe((resp) => {
+      this.resp = resp
+      if (this.resp.code == "200"){
+        this.statusToOrder = this.resp.data.status
+        console.log(this.statusToOrder)
+
+        this.router.navigate(['/checkout',this.id]);
+      }
+    },(error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },)
   }
 
   goToChat(){

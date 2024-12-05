@@ -69,6 +69,11 @@ export class ApiService {
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
 
+  getUserToOrderStatus(url:any, id:any){
+    return this.http.get(this.baseUrl+url+id,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
   getHistoryBalance(url:any){
     return this.http.get(this.baseUrl+url,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
