@@ -5,9 +5,9 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-no-padding" style="font-family: 'Poppins'">
-  <div class="mt-5 border-b-2 border-black">
-    <a href="/home" class="flex items-center mb-5">
-      <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2"></ion-icon>
+  <div class="mt-5 shadow-md pb-1">
+    <a class="flex items-center mb-5">
+      <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2" (click)="goToHome()"></ion-icon>
       <span class="text-sm font-semibold" style="font-size: 18px;">Ubah Profilemu disini!</span>
     </a>  
   </div>
@@ -28,7 +28,7 @@
     <!-- <img src="path/to/profile/image.jpg" alt="Profile Picture" class="rounded-full h-16 w-16 mr-4 ml-4">  -->
     <div class="flex-grow"> 
       <div class="font-bold text-lg">{{data.name}}
-        <a href="/profile-change">
+        <a (click)="goToProfileChange()">
          <ion-icon name="create-outline" class="ml-4"></ion-icon>
         </a>
       </div>
@@ -46,7 +46,7 @@
       </ion-label>
     </ion-item> -->
 
-    <ion-item href="/keamanan">
+    <ion-item (click)="goToSandi()">
       <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
       <ion-label>
         <h3 class="font-bold">Keamanan Akun</h3>
@@ -70,7 +70,7 @@
       </ion-label>
     </ion-item> -->
 
-    <ion-item href="/hapus-akun">
+    <ion-item>
       <ion-icon name="trash-outline" slot="start"></ion-icon>
       <ion-label>
         <h3 class="font-bold">Hapus Akun</h3>

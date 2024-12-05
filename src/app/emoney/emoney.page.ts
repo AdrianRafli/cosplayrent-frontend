@@ -85,7 +85,7 @@ export class EmoneyPage implements OnInit {
   }
 
   goToTopUp() {
-    this.router.navigate(['/topup-payment'])
+    this.router.navigate(['/topup'])
     // window.open('https://app.sandbox.midtrans.com/snap/v4/redirection/ff0385f4-1b3f-4df1-a703-7f33a7f2bea7', '_blank');
   }  
 }

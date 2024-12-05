@@ -38,6 +38,10 @@ export class TopupPaymentPage implements OnInit {
   ngOnInit() {
   }
 
+  goToTopup(){
+    this.router.navigate(['/topup']);
+  }
+
   doOrder(){
     console.log("hi")
     this.api.SendTopUpOrder('topup',this.data).subscribe((resp) => {

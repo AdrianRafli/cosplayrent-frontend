@@ -63,6 +63,10 @@ export class ProfileChangePage implements OnInit {
       this.router.navigate(['/login']);
     }
   }
+
+  goToProfile(){
+    this.router.navigate(['/profile'])
+  }
   
   fetchProvinces() {
     this.rajaOngkirService.getProvinces('provinces').subscribe((resp) => {
