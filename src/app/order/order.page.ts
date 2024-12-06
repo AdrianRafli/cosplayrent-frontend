@@ -36,4 +36,15 @@ export class OrderPage implements OnInit {
   goToReview(){
     this.router.navigate(['/review']);
   }
+
+  goToEmoney(){
+    this.Token = localStorage.getItem('userToken')
+    if (this.Token !== null && this.Token.trim() !== '') {
+      console.log('Token exists');
+      this.router.navigate(['/emoney'])
+    } else {
+      console.log('Token is empty or does not exist');
+      this.router.navigate(['/login'])
+    }
+  }
 }

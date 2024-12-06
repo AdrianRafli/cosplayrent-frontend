@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-ubah-sandi',
@@ -10,9 +12,13 @@ export class UbahSandiPage implements OnInit {
   passwordsMatch: boolean = true; // To track if passwords match
   errorMessage: string = ""; // Untuk menampilkan pesan kesalahan
 
-  constructor() { }
+  constructor(public api: ApiService, public router: Router) { }
 
   ngOnInit() { }
+
+  goToProfile(){
+    this.router.navigate(['/profile'])
+  }
 
   togglePasswordVisibility(inputId: string) {
     const inputElement = document.getElementById(inputId) as HTMLInputElement; 

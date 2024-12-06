@@ -35,6 +35,15 @@ export class ProfilePage implements OnInit {
     }
   }
 
+  goToHome(){
+    this.router.navigate(['/home'])
+  }
+  goToProfileChange(){
+    this.router.navigate(['/profile-change'])
+  }
+  goToSandi(){
+    this.router.navigate(['/ubah-sandi'])
+  }
   goToTokoProduk(){
     this.router.navigate(['/toko-home-page'])
   }
