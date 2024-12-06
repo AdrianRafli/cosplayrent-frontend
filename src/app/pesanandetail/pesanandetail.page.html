@@ -1,0 +1,86 @@
+<ion-header [hidden]="true" [translucent]="true">
+  <ion-toolbar>
+    <ion-title style="font-family: 'Poppins', sans-serif;">edit Produk</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-no-padding" style="font-family: 'Poppins'">
+  <div class="mt-5">
+    <a href="/home" class="flex items-center mb-5">
+      <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2"></ion-icon> 
+      <span class="text-sm font-bold" style="font-size: 18px;">Order Detail</span>
+    </a>
+
+    <form class="px-4">
+      <div class="mb-4 items-center justify-between">
+        <label for="product-images" class="block text-sm font-semibold text-gray-900" style="font-size: 16px;">Foto Produk *</label>
+
+        <div class="mb-4">
+          <img 
+            [src]="order.costume_picture" 
+            alt="Costume Picture" 
+            class="w-36 h-36"
+          >
+        </div>
+  
+        <div class="mb-4">
+          <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Nama Kostum</label>
+          <input type="text" name="name" id="name" value="{{order.costume_name}}" disabled required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
+        </div>
+  
+        <div class="mb-4">
+          <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Harga Kostum</label>
+          <input type="text" name="name" id="name" value="{{order.costume_price}}" disabled required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
+        </div>
+  
+        <div class="mb-4">
+          <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Ukuran Kostum</label>
+          <input type="text" name="name" id="name" value="{{order.costume_size}}" disabled required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
+        </div>
+
+        <div class="mb-4">
+          <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Identitas Costumer</label>
+          <img 
+            [src]="order.costumer_identity_card" 
+            alt="Costume Picture" 
+            class="w-36 h-36"
+          >
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Nama Costumer</label>
+        <input type="text" name="name" id="name" value="{{order.costumer_name}}" disabled required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
+      </div>
+
+      <div class="mb-4">
+        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Alamat Costumer</label>
+        <input type="text" name="name" id="name" value="{{order.costumer_address}}" disabled required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
+      </div>
+
+      <div class="mb-4">
+        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Alamat Costumer (Provinsi)</label>
+        <input type="text" name="name" id="name" value="{{order.costumer_origin_province}}" disabled required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
+      </div>
+
+      <div class="mb-4">
+        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Alamat Costumer (Kota)</label>
+        <input type="text" name="name" id="name" value="{{order.costumer_origin_city}}" disabled required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
+      </div>
+
+      <div class="mb-4">
+        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Response</label>
+        <textarea type="text" name="name" id="name" [(ngModel)]="description" placeholder="Type your response here" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12"></textarea>
+      </div>
+
+      <div class="flex mt-5">
+        <div class="flex justify-center mb-4 w-full">
+          <button type="submit" (click)="doAccept()" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Accept</button>
+      </div>
+      <div class="flex justify-center mb-4 w-full">
+        <button type="submit" (click)="doReject()" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Reject</button>
+      </div>
+      </div>
+    </form>
+  </div>
+</ion-content>

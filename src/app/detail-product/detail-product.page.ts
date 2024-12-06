@@ -103,7 +103,7 @@ export class DetailProductPage implements OnInit {
   review: any = []
   ids = this.costume.id
 
-  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService, private alertController: AlertController, ) { }
+  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService, private alertController: AlertController) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id']

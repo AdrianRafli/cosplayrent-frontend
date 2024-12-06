@@ -43,18 +43,20 @@
   </ng-template> -->
 
   <div *ngIf="status else noData">
-    <div *ngFor="let costumeItem of costume" class="product-item">
+    <div *ngFor="let orderItem of order" class="product-item">
       <ion-card class="flex flex-col">
         <div class="flex gap-4">
-          <img [src]="costumeItem.costume_picture" class="p-2 produk-image" alt="Produk Image">
+          <img [src]="orderItem.costume_picture" class="p-2 produk-image" alt="Produk Image">
           <div class="flex flex-col gap-2 ">
             <div class="pt-2 ">
-              <h2 class="font-bold">{{ costumeItem.name }}</h2>
-              <p>Rp {{ costumeItem.price }}</p>
-              <p>Size: {{ costumeItem.ukuran }}</p>
+              <h2 class="font-bold">{{ orderItem.costume_name }}</h2>
+              <p class="mt-1">Rp {{ orderItem.costume_price }}</p>
+              <p>Size: {{ orderItem.costume_size }}</p>
+              <p>Price: {{orderItem.total}}</p>
+              <p>Status: {{orderItem.status_order}}</p>
             </div>
             <div class="action-buttons pb-2 pe-2 flex">
-              <ion-button size="small" class="button-color">Detail Order</ion-button> 
+              <ion-button size="small" class="button-color" (click)="goToOrderDetail(orderItem.id)">Detail Order</ion-button> 
             </div>
           </div>
         </div>

@@ -14,30 +14,25 @@ export class PesananPage implements OnInit {
 
   status:any //default false
   resp:any
-  costume:any = {
-    available: '',
-    bahan: '',
-    berat: '',
-    costume_picture: '',
-    created_at: '',
-    description: '',
-    id: null,
-    kategori: '',
-    name: '',
-    price: null,
-    profile_picture: null,
-    ukuran: '',
-    updated_at: null,
-    user_id: '',
-    username: ''
-}
+  order: any = {
+    id: "",
+    status_order: "",
+    costume_id: 0,
+    costume_name: "",
+    costume_price: 0,
+    costume_size: "",
+    costume_picture: "",
+    total: 0,
+    updated_at: "",
+  };
+  
 
   ngOnInit() {
-    this.api.getSellerCostume('seller').subscribe((resp) => {
+    this.api.getSellerOrder('order/seller').subscribe((resp) => {
       this.resp = resp
       if (this.resp.code == "200"){
         console.log(this.resp)
-        this.costume = this.resp.data
+        this.order = this.resp.data
         this.status = true
       }
     })
@@ -64,5 +59,9 @@ export class PesananPage implements OnInit {
   }
   goToProfile(){
     this.router.navigate(['/toko-home-page'])
+  }
+
+  goToOrderDetail(id:any){
+    this.router.navigate(['/pesanandetail',id])
   }
 }

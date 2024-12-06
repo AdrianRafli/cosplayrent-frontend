@@ -94,13 +94,34 @@ export class ApiService {
     return this.http.get(this.baseUrl+url,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
+  
   SendTopUpOrder(url:any, data:any){
+    return this.http.put(this.baseUrl+url,data,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
+  updateSellerOrder(url:any,data:any){
     return this.http.put(this.baseUrl+url,data,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
 
   getTopUpOrderStatus(url:any, id:any){
     return this.http.get(this.baseUrl+url+id,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
+  getSellerOrder(url:any){
+    return this.http.get(this.baseUrl+url,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
+  getOrderDetailByOrderId(url:any,id:any){
+    return this.http.get(this.baseUrl+url+id,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
+  sendOrderDetailClientResponse(url:any,id:any,data:any){
+    return this.http.put(this.baseUrl+url+id,data,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
 
