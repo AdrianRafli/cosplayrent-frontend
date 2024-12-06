@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
+import { AlertController } from "@ionic/angular";
+
 
 @Component({
   selector: 'app-home',
@@ -23,10 +25,33 @@ export class HomePage implements OnInit{
 
   costume: any[] = []
   filteredCostume : any[] = []
+  appversion:string = "0.7"
 
-  constructor(private router: Router, public api: ApiService) { }
+  constructor(private router: Router, public api: ApiService, private alertController: AlertController,) {
+    this.api.getCheckApp('checkappversion').subscribe((resp)=> {
+      this.resp = resp
+      console.log("hi")
+      if(this.resp.code == "200"){
+        console.log(this.resp.data)
+        if(this.appversion != "0.7"){
+          this.presentAlert("Versi app tidak sama, mohon update aplikasinya");
+        }
+      }
+    })
+   }
+
+   async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: "Process Failed",
+      message: message,
+      buttons: [],
+      backdropDismiss:false,
+    });
+    await alert.present();
+  }
 
   ngOnInit() {
+    
     // this.api.get('verifytoken').subscribe((resp)=> {
     //   // console.log("login", resp)
     //   this.resp = resp
