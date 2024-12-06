@@ -27,7 +27,7 @@ export class TokoHomePagePage implements OnInit {
   }
   
   goToOrder(){
-    this.router.navigate(['/home'])
+    this.router.navigate(['/pesanan'])
   }
   
   goToProfile(){

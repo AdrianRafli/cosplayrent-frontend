@@ -4,9 +4,9 @@ import { ApiService } from '../api.service';
 
 // Define the Transaction interface
 interface Transaction {
-  type: string;
-  time: string; // Time should be in a format that can be parsed
-  amount: number;
+  transaction_type: string;
+  transaction_date: string; // Time should be in a format that can be parsed
+  transaction_amount: number;
 }
 
 @Component({
@@ -20,17 +20,13 @@ export class EmoneyPage implements OnInit {
   emoney = 0; // Example initial value
   resp:any
 
-  transaction:any = [{
-    transaction_type : "",
-    transaction_date: "",
-    transaction_amount: 0,
-  }]
-
-  transactions = [
-    { type: 'Transfer', time: '2023-11-29T19:12:00', amount: 600000 }, // ISO 8601 format
-    { type: 'Top Up', time: '2023-11-29T18:12:00', amount: 260000 },
-    { type: 'Top Up', time: '2024-11-28T19:12:00', amount: 260000 },
-]
+  transaction: Transaction[] = [
+    {
+      transaction_type: "",
+      transaction_date: "",
+      transaction_amount: 0,
+    },
+  ];
 
   constructor(private router: Router, public api: ApiService){
     this.api.getUserDetail('userdetail').subscribe((resp) => {

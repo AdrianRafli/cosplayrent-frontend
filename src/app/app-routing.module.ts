@@ -114,6 +114,10 @@ const routes: Routes = [
     path: 'topup',
     loadChildren: () => import('./topup/topup.module').then( m => m.TopupPageModule)
   },
+  {
+    path: 'pesanan',
+    loadChildren: () => import('./pesanan/pesanan.module').then( m => m.PesananPageModule)
+  },
 
 
 

@@ -82,10 +82,8 @@ export class RegisterPage implements OnInit {
 
         if (this.resp.code == 200) {
           localStorage.setItem("userToken", this.resp.data.token);
-          this.router.navigate(["/home"], {
-            queryParams: {
-              successMessage: "Registration successful! Please log in.",
-            },
+          this.router.navigate(["/home"]).then(() => {
+            window.location.reload();
           });
         } else {
           this.presentAlert("Registration failed. Please try again.");

@@ -145,17 +145,22 @@ export class DetailProductPage implements OnInit {
   }
 
   goToCheckout(){
-    this.api.getUserToOrderStatus('checkuserstatus/',this.id).subscribe((resp) => {
+    this.api.getUserToOrderStatus('checkuserstatus/',this.id).subscribe((resp) => { 
       this.resp = resp
       if (this.resp.code == "200"){
         this.statusToOrder = this.resp.data.status
         console.log(this.statusToOrder)
-
+        
         this.router.navigate(['/checkout',this.id]);
       }
     },(error) => {
       const errormessage = error.error?.data || "An error occurred. Please try again."
-      this.presentAlert(errormessage);
+      if (errormessage == "Token format is not match"){
+        this.presentAlert("Please relogin first or login first")
+      }
+      else {
+        this.presentAlert(errormessage);
+      }
     },)
   }
 

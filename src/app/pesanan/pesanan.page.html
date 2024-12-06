@@ -1,0 +1,98 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+    </ion-toolbar>
+  </ion-header> -->
+
+  <div class="p-2">
+    <div class="flex items-center justify-between gap-6 mb-4">
+      <h1 class="font-extrabold text-xl" (click)="goToTokoHome()">CosplayRent</h1>
+    </div>
+  </div>
+
+  <ion-searchbar placeholder="Cari produk"></ion-searchbar>
+  <!-- <div *ngIf="costume?.length > 0; else noData">
+    <div *ngFor="let costumeItem of costume" class="product-item">
+      <ion-card class="flex flex-col">
+        <div class="flex gap-4">
+          <img [src]="costumeItem.costume_picture" class="p-2 produk-image" alt="Produk Image">
+          <div class="flex flex-col gap-2 ">
+            <div class="pt-2 ">
+              <h2 class="font-bold">{{ costumeItem.name }}</h2>
+              <p>Rp {{ costumeItem.price }}</p>
+              <p>Size: {{ costumeItem.ukuran }}</p>
+            </div>
+            <div class="action-buttons pb-2 pe-2 flex">
+              <ion-button size="small" class="button-color" (click)="editProduct(costumeItem.id)">Edit</ion-button> 
+              <ion-button size="small" color="danger">Hapus</ion-button>
+            </div>
+          </div>
+        </div>
+      </ion-card>
+    </div>
+  </div>
+  
+  <ng-template #noData>
+    <p class="text-center">No products available.</p>
+  </ng-template> -->
+
+  <div *ngIf="status else noData">
+    <div *ngFor="let costumeItem of costume" class="product-item">
+      <ion-card class="flex flex-col">
+        <div class="flex gap-4">
+          <img [src]="costumeItem.costume_picture" class="p-2 produk-image" alt="Produk Image">
+          <div class="flex flex-col gap-2 ">
+            <div class="pt-2 ">
+              <h2 class="font-bold">{{ costumeItem.name }}</h2>
+              <p>Rp {{ costumeItem.price }}</p>
+              <p>Size: {{ costumeItem.ukuran }}</p>
+            </div>
+            <div class="action-buttons pb-2 pe-2 flex">
+              <ion-button size="small" class="button-color">Detail Order</ion-button> 
+            </div>
+          </div>
+        </div>
+      </ion-card>
+    </div>
+  </div>
+
+  <ng-template #noData>
+    <p class="text-center">No order is available.</p>
+  </ng-template>
+  
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-tabs>
+      <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="" (click)="goToHome()">
+          <ion-icon name="home-outline"></ion-icon>
+          <ion-label>Home</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="" (click)="goToProduct()">
+          <ion-icon name="albums-outline"></ion-icon>
+          <ion-label>Produk</ion-label>
+        </ion-tab-button>
+    
+        <ion-tab-button tab="" (click)="goToOrder()">
+          <ion-icon name="clipboard-outline"></ion-icon>
+          <ion-label>Pesanan</ion-label>
+        </ion-tab-button>
+
+        <ion-tab-button tab="" (click)="goToProfile()">
+          <ion-icon name="exit-outline"></ion-icon>
+          <ion-label>Kembali</ion-label>
+        </ion-tab-button>
+      </ion-tab-bar>
+    </ion-tabs>
+  </ion-toolbar>
+</ion-footer>

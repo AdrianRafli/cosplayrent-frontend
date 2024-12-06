@@ -67,6 +67,11 @@ export class PaymentPage implements OnInit {
         if (this.resp.data.status_payment ==  true){
           this.statuspayment = true
           console.log("Status payment is true")
+          setTimeout(() => {
+            this.router.navigate(['/home']).then(() => {
+              window.location.reload();
+            });
+          }, 1000);
         } else {
           console.log("Stauts payment is false")
         }

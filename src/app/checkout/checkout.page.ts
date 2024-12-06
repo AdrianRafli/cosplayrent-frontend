@@ -68,7 +68,7 @@ export class CheckoutPage implements OnInit {
   cities:any
   selectedCityName: any
   selectedProvinceName:any
-  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService, private rajaOngkirService: RajaOngkirService,  private alertController: AlertController,) { }
+  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService, private rajaOngkirService: RajaOngkirService,  private alertController: AlertController) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['costumeID']
