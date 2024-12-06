@@ -5,9 +5,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class RajaOngkirService {
-  //private baseUrl = 'http://localhost:8081/api/' // Update with your Go server URL
+  private baseUrl = 'http://localhost:8081/api/' // Update with your Go server URL
   //private baseUrl = 'http://localhost:8080/api/provinces'; // Update with your Go server URL
-  private baseUrl = 'https://cosplayrent.site/api/'
+  //private baseUrl = 'https://cosplayrent.site/api/'
   token:any = ''
   constructor(private http: HttpClient) {
     this.token = localStorage.getItem('userToken') || ''

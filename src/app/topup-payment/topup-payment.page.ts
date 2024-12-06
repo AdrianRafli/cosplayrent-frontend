@@ -28,7 +28,7 @@ export class TopupPaymentPage implements OnInit {
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      header: "Login Failed",
+      header: "Process Failed",
       message: message,
       buttons: ["OK"],
     });

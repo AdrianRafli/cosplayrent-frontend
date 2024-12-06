@@ -31,7 +31,7 @@ export class PaymentPage implements OnInit {
     created_at: "",
     updated_at: "",
   };
-  
+  statuspayment:any
 
   constructor(private location: Location, private router: Router,  public api:ApiService) {}
 
@@ -65,6 +65,7 @@ export class PaymentPage implements OnInit {
       if (this.resp.code == "200"){
         console.log(this.resp)
         if (this.resp.data.status_payment ==  true){
+          this.statuspayment = true
           console.log("Status payment is true")
         } else {
           console.log("Stauts payment is false")

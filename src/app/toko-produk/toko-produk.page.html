@@ -26,13 +26,13 @@
       <ion-card class="flex flex-col">
         <div class="flex gap-4">
           <img [src]="costumeItem.costume_picture" class="p-2 produk-image" alt="Produk Image">
-          <div class="flex flex-col gap-2">
-            <div class="produk-info pt-2">
+          <div class="flex flex-col gap-2 ">
+            <div class="pt-2 ">
               <h2 class="font-bold">{{ costumeItem.name }}</h2>
               <p>Rp {{ costumeItem.price }}</p>
               <p>Size: {{ costumeItem.ukuran }}</p>
             </div>
-            <div class="action-buttons pb-2 pe-2 flex justify-end">
+            <div class="action-buttons pb-2 pe-2 flex">
               <ion-button size="small" class="button-color" (click)="editProduct(costumeItem.id)">Edit</ion-button> 
               <ion-button size="small" color="danger" (click)="deleteProduct(costumeItem.id)">Hapus</ion-button>
             </div>
@@ -61,11 +61,6 @@
         <ion-tab-button tab="" (click)="goToProduct()">
           <ion-icon name="albums-outline"></ion-icon>
           <ion-label>Produk</ion-label>
-        </ion-tab-button>
-    
-        <ion-tab-button tab="" (click)="goToChat()">
-          <ion-icon name="chatbubbles-outline"></ion-icon>
-          <ion-label>Chat</ion-label>
         </ion-tab-button>
     
         <ion-tab-button tab="" (click)="goToOrder()">

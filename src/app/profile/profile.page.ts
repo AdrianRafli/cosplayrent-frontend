@@ -20,6 +20,7 @@ export class ProfilePage implements OnInit {
   
   ngOnInit() {
     this.Token = localStorage.getItem('userToken')
+   
     if (this.Token !== null && this.Token.trim() !== '') {
       this.api.getUserDetail('userdetail').subscribe((resp) => {
         this.resp = resp;
@@ -42,7 +43,9 @@ export class ProfilePage implements OnInit {
   }
 
   removeToken(){
-    this.router.navigate(['home'])
+    this.router.navigate(['/home']).then(() => {
+      window.location.reload();
+    });
     localStorage.removeItem('userToken');
   }
 

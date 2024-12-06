@@ -5,8 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  baseUrl = 'https://cosplayrent.site/api/'
-  //baseUrl = 'http://localhost:8081/api/'
+  //baseUrl = 'https://cosplayrent.site/api/'
+  baseUrl = 'http://localhost:8081/api/'
 
   token:any = ''
   constructor(private http: HttpClient) {
@@ -75,6 +75,7 @@ export class ApiService {
   }
 
   getUserToOrderStatus(url:any, id:any){
+    console.log(this.token)
     return this.http.get(this.baseUrl+url+id,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }

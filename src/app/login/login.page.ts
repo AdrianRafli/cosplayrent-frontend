@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
 
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
-      header: "Login Failed",
+      header: "Process Failed",
       message: message,
       buttons: ["OK"],
     });
@@ -73,7 +73,11 @@ export class LoginPage implements OnInit {
 
         if (this.resp.code == 200) {
           localStorage.setItem("userToken", this.resp.data.token);
-          this.router.navigateByUrl("/home");
+          this.router.navigate(['/home'])
+          .then(() => {
+            window.location.reload();
+          });
+          
         } else {
           this.presentAlert("Invalid email or password.");
         }
@@ -86,6 +90,7 @@ export class LoginPage implements OnInit {
   }
 
   doLogout() {
-    localStorage.removeItem("userToken");
+    localStorage.removeItem("userToken")
+    window.location.reload();
   }
 }
