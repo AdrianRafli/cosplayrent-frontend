@@ -123,6 +123,11 @@ const routes: Routes = [
     path: 'pesanandetail/:id',
     loadChildren: () => import('./pesanandetail/pesanandetail.module').then( m => m.PesanandetailPageModule)
   },
+  {
+    path: 'orderdetail/:id',
+    loadChildren: () => import('./orderdetail/orderdetail.module').then( m => m.OrderdetailPageModule)
+  },
+
 
 
 

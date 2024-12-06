@@ -211,6 +211,7 @@ export class CheckoutPage implements OnInit {
         "You need to choose pilih jasa first"
       );
     }
+    else {
     console.log(this.totalSewa)
     this.orderToMidtransRequest.seller_id = this.costume.data.user_id
     this.orderToMidtransRequest.costume_id = this.costume.data.id
@@ -222,16 +223,6 @@ export class CheckoutPage implements OnInit {
     console.log(this.orderToMidtransRequest)
     this.api.createOrderDirectlyToMidtrans('order/midtrans',this.orderToMidtransRequest).subscribe((resp) => {
       this.resp = resp
-
-      //   this.router.navigate(['/payment'],
-      //     {
-      //       state: {
-              
-      //       }
-      //     }
-      //   )
-      // }
-
       if (this.resp.code == "200"){
         console.log(this.resp)
         this.router.navigate(['/payment'],
@@ -244,6 +235,7 @@ export class CheckoutPage implements OnInit {
         )
       }
     })
+    }
   }
 }
 

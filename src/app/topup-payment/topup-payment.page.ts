@@ -49,7 +49,7 @@ export class TopupPaymentPage implements OnInit {
     console.log('Location state:', this.location.getState());
 
     const navigation = this.location.getState() as NavigationState;
-
+    
     if (navigation && navigation.data && navigation.data1) {
       this.receivedData = navigation.data;
       this.receivedData1 = navigation.data1;

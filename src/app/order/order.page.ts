@@ -12,10 +12,39 @@ export class OrderPage implements OnInit {
 
   query: string = ''
   resp:any;
+  status:any
+  order: any = {
+    id: "",
+    status_order: "",
+    costume_id: 0,
+    costume_name: "",
+    costume_price: 0,
+    costume_size: "",
+    costume_picture: "",
+    total: 0,
+    updated_at: "",
+  };
 
   constructor(private router: Router, public api: ApiService) { }
 
   ngOnInit() {
+    this.api.getUserOrder('alluserorder').subscribe((resp) => {
+      this.resp = resp
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.order = this.resp.data
+        this.status = true
+      }
+    })
+  }
+
+  goToOrderDetail(id:any,status_order:any){
+    this.router.navigate(['/orderdetail',id],
+      {
+        state: {
+          data: status_order,
+        }
+      })
   }
 
   goToLoginOrProfile(){

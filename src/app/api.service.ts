@@ -115,6 +115,16 @@ export class ApiService {
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
 
+  getUserOrder(url:any){
+    return this.http.get(this.baseUrl+url,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+  
+  getUserOrderDetail(url:any,id:any){
+    return this.http.get(this.baseUrl+url+id,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
   getOrderDetailByOrderId(url:any,id:any){
     return this.http.get(this.baseUrl+url+id,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })

@@ -1,24 +1,10 @@
-.product-info h4, .product-info p, .cost-info h4, .cost-info p, .card-header p {
-    font-size: 12px !important;
+.product-item {
+    margin-bottom: 16px;
 }
-.product-info h4, .cost-info h4 {
-    font-weight: 800;
+.produk-image {
+    width: 120px;
+    height: 120px;
 }
-.card-header h3 {
-    font-size: 14px;
-}
-.status-completed {
-    color: #226F54;
-}
-.status-pending {
-    color: red;
-}
-
-.transaction-product-image {
-    width: 60px !important;
-    height: 60px !important;
-}
-
-.tab-active {
-    --color: #226F54;
+.button-color {
+    --background: #226F54;
 }
