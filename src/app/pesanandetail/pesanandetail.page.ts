@@ -56,7 +56,28 @@ export class PesanandetailPage implements OnInit {
   }
 
   doAccept(){
-    this.orderResponseClient.status_order = "true"
+    this.orderResponseClient.status_order = "Process"
+    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
+      this.resp = resp
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.router.navigate(['/pesanan'])
+          .then(() => {
+            window.location.reload();
+          });
+      }
+    },(error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },)
+  }
+
+  doFinish(){
+    
+  }
+
+  doReject(){
+    this.orderResponseClient.status_order = "Cancel"
     this.orderResponseClient.description = this.description
     this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
       this.resp = resp
@@ -73,22 +94,11 @@ export class PesanandetailPage implements OnInit {
     },)
   }
 
-  doReject(){
-    this.orderResponseClient.status_order = "false"
-    this.orderResponseClient.description = this.description
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
-      this.resp = resp
-      if (this.resp.code == "200"){
-        console.log(this.resp)
-        this.router.navigate(['/pesanan'])
+  goToPesanan(){
+    this.router.navigate(['/pesanan'])
           .then(() => {
             window.location.reload();
           });
-      }
-    },(error) => {
-      const errormessage = error.error?.data || "An error occurred. Please try again."
-      this.presentAlert(errormessage);
-    },)
   }
 
 }

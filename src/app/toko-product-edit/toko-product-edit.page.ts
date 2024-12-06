@@ -183,6 +183,9 @@ export class TokoProductEditPage implements OnInit {
       this.resp = resp;
       if (this.resp.code = "200") {
         console.log("Successfully updated costume");
+        this.router.navigate(['toko-produk']).then(() => {
+        window.location.reload();
+        });
       } else {
         console.log("Failed to update costume");
       }

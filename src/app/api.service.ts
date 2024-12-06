@@ -40,7 +40,7 @@ export class ApiService {
   }
 
   getReviewByCostumeId(url:any,costumeId:any) {
-    return this.http.get(this.baseUrl+url+costumeId,
+    return this.http.get(this.baseUrl+url+costumeId+"/review",
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
 

@@ -35,10 +35,10 @@ const routes: Routes = [
     path: 'cart',
     loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule)
   },
-  {
-    path: 'chat',
-    loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
-  },
+  // {
+  //   path: 'chat',
+  //   loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
+  // },
   {
     path: 'profile-change',
     loadChildren: () => import('./profile-change/profile-change.module').then( m => m.ProfileChangePageModule)
@@ -83,10 +83,10 @@ const routes: Routes = [
     path: 'payment',
     loadChildren: () => import('./payment/payment.module').then( m => m.PaymentPageModule)
   },
-  {
-    path: 'wishlist',
-    loadChildren: () => import('./wishlist/wishlist.module').then( m => m.WishlistPageModule)
-  },
+  // {
+  //   path: 'wishlist',
+  //   loadChildren: () => import('./wishlist/wishlist.module').then( m => m.WishlistPageModule)
+  // },
   {
     path: 'verifikasi-user',
     loadChildren: () => import('./verifikasi-user/verifikasi-user.module').then( m => m.VerifikasiUserPageModule)

@@ -116,7 +116,7 @@ export class DetailProductPage implements OnInit {
         console.log(this.costume)
       }
 
-      this.api.getReviewByCostumeId('review/',this.costume.id).subscribe((resp)=>{
+      this.api.getReviewByCostumeId('costume/',this.costume.id).subscribe((resp)=>{
         console.log(this.costume.id)
         this.resp = resp
         if(this.resp.code == "200") {

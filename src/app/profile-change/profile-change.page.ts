@@ -162,7 +162,7 @@ export class ProfileChangePage implements OnInit {
     if (!this.validateFields()) {
       return;
     }
-
+    
     const formData = new FormData();
     formData.append('name', this.data.name);
     formData.append('email', this.data.email);
@@ -197,6 +197,9 @@ export class ProfileChangePage implements OnInit {
       this.resp = resp;
       if (this.resp.code = "200") {
         console.log("Successfully updated profile");
+        this.router.navigate(['profile']).then(() => {
+          window.location.reload();
+        });
       } else {
         console.log("Failed to update profile");
       }

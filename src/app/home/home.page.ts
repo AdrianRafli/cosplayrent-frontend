@@ -34,8 +34,8 @@ export class HomePage implements OnInit{
     //   if(this.resp.code == "200") {
     //     this.userData.name = this.resp.data.name
     //   }})
-    this.Token = localStorage.getItem('userToken')
-    console.log(this.Token)
+    // this.Token = localStorage.getItem('userToken')
+    // console.log(this.Token)
     this.api.getCostumes('costume').subscribe((resp)=>{  
       this.resp = resp
       if(this.resp.code == "200") {

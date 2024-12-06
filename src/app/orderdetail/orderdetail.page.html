@@ -1,7 +1,7 @@
 
 <ion-content class="ion-no-padding" style="font-family: 'Poppins'">
   <div class="mt-5">
-    <a href="/home" class="flex items-center mb-5">
+    <a href="/order" class="flex items-center mb-5">
       <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2"></ion-icon> 
       <span class="text-sm font-bold" style="font-size: 18px;">Order Detail</span>
     </a>
@@ -73,7 +73,7 @@
 
       <div *ngIf="status === 'pending' || status === 'Pending'">
         <div class="flex justify-center mb-4 w-full">
-        <button type="submit" (click)="doAccept()" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
+        <button type="submit" (click)="doReject()" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
         </div>
       </div>
     </form>

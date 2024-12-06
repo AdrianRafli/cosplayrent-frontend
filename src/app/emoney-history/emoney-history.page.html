@@ -12,22 +12,22 @@
     </a>
   </div> 
   <div class="mt-2 w-full">
-    <div *ngFor="let transaction of transactions" class="flex items-center justify-between p-2 mb-2">
+    <div *ngFor="let transaction of transaction | slice:0:8" class="flex items-center justify-between p-2 mb-2">
       <div class="flex items-center">
         <div style="background-color: #f0efef; border-radius: 100%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
           <ion-icon 
-            [name]="transaction.type === 'Transfer' ? 'swap-horizontal' : 'wallet'" 
-            [style.color]="transaction.type === 'Transfer' ? '#8B2635' : '#226F54'" 
+            [name]="transaction.transaction_type === 'Order (Buyer)' ? 'swap-horizontal' : 'wallet'" 
+            [style.color]="transaction.transaction_type === 'Order (Buyer)' ? '#8B2635' : '#226F54'" 
             style="font-size: 20px;">
           </ion-icon>
         </div>
         <div class="flex flex-col ml-2">
-          <span class="font-bold" style="font-family: 'Poppins', sans-serif;" [style.color]="transaction.type === 'Transfer' ? '#8B2635' : '#226F54'">{{ transaction.type }}</span>
-          <span class="text-gray-500" style="font-size: 11px;">{{ transaction.time }}</span>
+          <span class="font-bold" style="font-family: 'Poppins', sans-serif;" [style.color]="transaction.transaction_type === 'Order (Buyer)' ? '#8B2635' : '#226F54'">{{ transaction.transaction_type }}</span>
+          <span class="text-gray-500" style="font-size: 11px;">{{ transaction.transaction_date }}</span>
         </div>
       </div>
-      <span class="font-semibold" [style.color]="transaction.type === 'Transfer' ? '#8B2635' : '#226F54'">
-        {{ transaction.type === 'Transfer' ? '-' : '+' }} {{ transaction.amount | currency:'Rp':'symbol':'1.0-0' }}
+      <span class="font-semibold" [style.color]="transaction.transaction_type === 'Order (Buyer)' ? '#8B2635' : '#226F54'">
+        {{ transaction.transaction_type === 'Order (Buyer)' ? '-' : '+' }} {{ transaction.transaction_amount | currency:'Rp':'symbol':'1.0-0' }}
       </span>
     </div>
   </div>

@@ -80,6 +80,9 @@ export class TokoProdukPage implements OnInit {
     this.api.deleteCostume('seller/',id).subscribe((resp) => {
       this.resp = resp;
       if (this.resp.code == "200") {
+        this.router.navigate(['toko-produk']).then(() => {
+          window.location.reload();
+        });
        console.log(this.resp)
       }
     })

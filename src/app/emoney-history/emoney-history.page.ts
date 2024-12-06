@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ApiService } from '../api.service';
 
 interface Transaction {
-  type: string;
-  time: string; // Time should be in a format that can be parsed
-  amount: number;
+  transaction_type: string;
+  transaction_date: string; 
+  transaction_amount: number;
 }
 
 @Component({
@@ -12,30 +14,28 @@ interface Transaction {
   styleUrls: ['./emoney-history.page.scss'],
 })
 export class EmoneyHistoryPage implements OnInit {
-  transactions: Transaction[];
-
-  constructor() { 
-    this.transactions = [
-      { type: 'Transfer', time: '2023-11-29T19:12:00', amount: 600000 }, // ISO 8601 format
-      { type: 'Top Up', time: '2023-11-29T18:12:00', amount: 260000 },
-      { type: 'Top Up', time: '2023-11-29T19:16:00', amount: 260000 },
-      { type: 'Transfer', time: '2023-11-29T19:15:00', amount: 150000 }, // Same day, different time
-    ];
+  resp:any
+  transaction: Transaction[] = [
+    {
+      transaction_type: "",
+      transaction_date: "",
+      transaction_amount: 0,
+    },
+  ];
+  
+  constructor(private router: Router, public api: ApiService){ 
+   
   }
 
   ngOnInit() {
-    // Sort transactions by date and time in descending order
-    this.transactions.sort((a, b) => {
-      const dateA = new Date(a.time).getTime();
-      const dateB = new Date(b.time).getTime();
+    this.api.getHistoryBalance('emoneyhistory').subscribe((resp) => {
+      this.resp = resp
 
-      // First compare by date
-      if (dateB !== dateA) {
-        return dateB - dateA; // Sort by date descending
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.transaction = this.resp.data
       }
-
-      // If dates are the same, compare by time
-      return dateB - dateA; // This will also sort by time since we are using the same date comparison
-    });
+    })
+    
   }
 }

@@ -67,39 +67,38 @@ export class OrderdetailPage implements OnInit {
   }
 
   doAccept(){
-    // this.orderResponseClient.status_order = "true"
-    // this.orderResponseClient.description = this.description
-    // this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
-    //   this.resp = resp
-    //   if (this.resp.code == "200"){
-    //     console.log(this.resp)
-    //     this.router.navigate(['/pesanan'])
-    //       .then(() => {
-    //         window.location.reload();
-    //       });
-    //   }
-    // },(error) => {
-    //   const errormessage = error.error?.data || "An error occurred. Please try again."
-    //   this.presentAlert(errormessage);
-    // },)
+    this.orderResponseClient.status_order = "Finish"
+    this.orderResponseClient.description = this.description
+    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
+      this.resp = resp
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.router.navigate(['/order'])
+          .then(() => {
+            window.location.reload();
+          });
+      }
+    },(error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },)
   }
 
   doReject(){
-    // this.orderResponseClient.status_order = "false"
-    // this.orderResponseClient.description = this.description
-    // this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
-    //   this.resp = resp
-    //   if (this.resp.code == "200"){
-    //     console.log(this.resp)
-    //     this.router.navigate(['/pesanan'])
-    //       .then(() => {
-    //         window.location.reload();
-    //       });
-    //   }
-    // },(error) => {
-    //   const errormessage = error.error?.data || "An error occurred. Please try again."
-    //   this.presentAlert(errormessage);
-    // },)
+    this.orderResponseClient.status_order = "Cancel"
+    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
+      this.resp = resp
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.router.navigate(['/order'])
+          .then(() => {
+            window.location.reload();
+          });
+      }
+    },(error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },)
   }
 
 }
