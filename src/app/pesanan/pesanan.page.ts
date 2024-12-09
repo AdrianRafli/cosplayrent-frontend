@@ -61,7 +61,12 @@ export class PesananPage implements OnInit {
     this.router.navigate(['/toko-home-page'])
   }
 
-  goToOrderDetail(id:any){
-    this.router.navigate(['/pesanandetail',id])
+  goToOrderDetail(id:any, status_order:any){
+    this.router.navigate(['/pesanandetail',id],
+      {
+        state: {
+          data: status_order,
+        }
+      })
   }
 }

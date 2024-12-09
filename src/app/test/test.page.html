@@ -1,89 +1,13 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Provinces</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <form (ngSubmit)="doOrder()">
-    <ion-item>
-      <ion-label>Asal Provinsi</ion-label>
-      <ion-select [(ngModel)]="asalProvinsi" (ionChange)="onAsalProvinsiChange()" placeholder="Select a Province" [ngModelOptions]="{standalone: true}">
-        <!-- Loop through the provinces array and display options -->
-        <ion-select-option *ngFor="let province of provinces" [value]="province.province_id">
-          {{ province.province }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
+<form (ngSubmit)="onSearch()" #searchForm="ngForm">
+  <input
+    type="text"
+    name="query"
+    [(ngModel)]="searchQuery"
+    placeholder="Search..."
+    required
+  />
+  <button type="submit" hidden>Submit</button>
+</form>
 
-    <ion-item>
-      <ion-label>Provinsi Tujuan</ion-label>
-      <ion-select [(ngModel)]="provinsiTujuan" (ionChange)="onTujuanProvinsiChange()" placeholder="Select a Province" [ngModelOptions]="{standalone: true}">
-        <!-- Loop through the provinces array and display options -->
-        <ion-select-option *ngFor="let province of provinces" [value]="province.province_id">
-          {{ province.province }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item *ngIf="asalProvinsi">
-      <ion-label>Kota Asal</ion-label>
-      <ion-select [(ngModel)]="asalKota" placeholder="Select a City" [ngModelOptions]="{standalone: true}">
-        <!-- Loop through the provinces array and display options -->
-        <ion-select-option *ngFor="let city of listKotaAsal" [value]="city.city_id">
-          {{ city.city_name }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item *ngIf="provinsiTujuan">
-      <ion-label>Kota Tujuan</ion-label>
-      <ion-select [(ngModel)]="kotaTujuan" placeholder="Select a City" [ngModelOptions]="{standalone: true}">
-        <!-- Loop through the provinces array and display options -->
-        <ion-select-option *ngFor="let city of listKotaTujuan" [value]="city.city_id">
-          {{ city.city_name }}
-        </ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Berat</ion-label>
-      <input type="number" [(ngModel)]="selectedWeight" [ngModelOptions]="{standalone: true}">
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Pilih Kurir</ion-label>
-      <ion-select [(ngModel)]="selectedCourier" placeholder="Select a courier" [ngModelOptions]="{standalone: true}">
-        <ion-select-option value="jne">JNE</ion-select-option>
-        <ion-select-option value="pos">POS</ion-select-option>
-        <ion-select-option value="tiki">TIKI</ion-select-option>
-      </ion-select>
-    </ion-item>
-
-    <h1>{{asalKota}}</h1>
-    <h1>{{kotaTujuan}}</h1>
-    <h1>{{selectedWeight}}</h1>
-    <h1>{{selectedCourier}}</h1>
-
-    <button type="submit">Submit</button>
-  </form>
-
-  <div *ngIf="costData && costData.length > 0">
-    <h3>Shipping Options</h3>
-    <div *ngFor="let courier of costData">
-      <h4>{{ courier.name }} ({{ courier.code }})</h4>
-      <div *ngFor="let service of courier.costs">
-        <h5>{{ service.service }} - {{ service.description }}</h5>
-        <ul>
-          <li *ngFor="let cost of service.cost">
-            <strong>Cost:</strong> {{ cost.value | currency }}
-            <br>
-            <strong>ETA:</strong> {{ cost.etd }}
-            <br>
-            <strong>Note:</strong> {{ cost.note || 'No additional note' }}
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
 </ion-content>

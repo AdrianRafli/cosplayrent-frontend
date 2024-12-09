@@ -5,8 +5,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ApiService {
-  baseUrl = 'https://cosplayrent.site/api/'
-  //baseUrl = 'http://localhost:8081/api/'
+  //baseUrl = 'https://cosplayrent.site/api/'
+  baseUrl = 'http://localhost:8081/api/'
 
   token:any = ''
   constructor(private http: HttpClient) {
@@ -71,6 +71,11 @@ export class ApiService {
 
   getBalance(url:any){
     return this.http.get(this.baseUrl+url,
+      {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
+  }
+
+  checkUserBalanceWithOrderAmount(url:any,data:any){
+    return this.http.post(this.baseUrl+url,data,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
 

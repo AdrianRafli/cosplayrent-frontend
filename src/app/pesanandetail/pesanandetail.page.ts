@@ -3,6 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
 import { AlertController } from "@ionic/angular";
+import { Location } from '@angular/common';
+
+interface NavigationState {
+  data: string;   
+}
 
 @Component({
   selector: 'app-pesanandetail',
@@ -11,7 +16,7 @@ import { AlertController } from "@ionic/angular";
 })
 export class PesanandetailPage implements OnInit {
 
-  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService, private alertController: AlertController) { }
+  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService, private alertController: AlertController,  private location: Location,) { }
 
   id:any
   resp:any
@@ -31,11 +36,17 @@ export class PesanandetailPage implements OnInit {
     status_order:'',
     description:'',
   }
+  status:any
 
   description:any
+
+  nomorresi:any
   
 
   ngOnInit() {
+    const navigation = this.location.getState() as NavigationState;
+    this.status = navigation.data
+    console.log(this.status)
     this.id = this.route.snapshot.params['id']
     this.api.getOrderDetailByOrderId('orderdetail/',this.id).subscribe((resp) => {
       this.resp = resp
@@ -56,7 +67,7 @@ export class PesanandetailPage implements OnInit {
   }
 
   doAccept(){
-    this.orderResponseClient.status_order = "Process"
+    this.orderResponseClient.status_order = "Proses"
     this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
       this.resp = resp
       if (this.resp.code == "200"){
@@ -73,11 +84,61 @@ export class PesanandetailPage implements OnInit {
   }
 
   doFinish(){
-    
+    this.orderResponseClient.status_order = "Selesai"
+    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
+      this.resp = resp
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.router.navigate(['/pesanan'])
+          .then(() => {
+            window.location.reload();
+          });
+      }
+    },(error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },)
+  }
+
+  doKembalikan(){
+    this.orderResponseClient.status_order = "Dikembalikan (Penyedia Sewa)"
+    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
+      this.resp = resp
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.router.navigate(['/pesanan'])
+          .then(() => {
+            window.location.reload();
+          });
+      }
+    },(error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },)
   }
 
   doReject(){
-    this.orderResponseClient.status_order = "Cancel"
+    this.orderResponseClient.status_order = "Dibatalkan"
+    this.orderResponseClient.description = this.description
+    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
+      this.resp = resp
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.router.navigate(['/pesanan'])
+          .then(() => {
+            window.location.reload();
+          });
+      }
+    },(error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },)
+  }
+
+  
+
+  doShipping(){
+    this.orderResponseClient.status_order = "Dikirim (Penyedia Sewa)"
     this.orderResponseClient.description = this.description
     this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
       this.resp = resp

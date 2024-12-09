@@ -54,27 +54,58 @@
         <input type="text" name="name" id="name" value="{{order.seller_origin_city}}" disabled required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
       </div>
 
-      <div *ngIf="status === 'Rejected'" class="mb-4">
+      <div *ngIf="status === 'Dibatalkan'" class="mb-4">
         <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Response</label>
-        <textarea type="text" name="name" id="name" [(ngModel)]="description" [value]="order.seller_response" placeholder="Type your response here" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12"></textarea>
+        <textarea type="text" name="name" id="name" disabled [(ngModel)]="description" [value]="order.seller_response" placeholder="Type your response here" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12"></textarea>
       </div>
 
-      <div *ngIf="status === 'Process'" class="flex mt-5">
-        <div class="flex justify-center mb-4 w-full">
-        <button type="submit" (click)="doAccept()" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Selesaikan pesanan</button>
-        </div>
+      <div *ngIf="status === 'Proses'" class="flex mt-5">
         <div class="flex justify-center mb-4 w-full">
           <button type="submit" (click)="doReject()" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
-          </div>
+        </div>
       </div>
 
-      <div *ngIf="status === 'Rejected'" class="flex mt-5">
+      <div *ngIf="status === 'Dikirim (Penyedia Sewa)'" class="mb-4">
+        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Nomor Resi</label>
+        <input type="number" name="name" id="name" value=""  [(ngModel)]="nomorresi"  required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
       </div>
 
-      <div *ngIf="status === 'pending' || status === 'Pending'">
+      <div *ngIf="status === 'Dikirim (Penyedia Sewa)'" class="flex mt-5">
+        <div class="flex justify-center mb-4 w-full">
+        <button type="submit" (click)="doTerima()" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Terima Pesanan</button>
+        </div>
+        <div class="flex justify-center mb-4 w-full">
+          <button type="submit" (click)="doKembalikan()" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Kembalikan Pesanan</button>
+        </div>
+      </div>
+
+      <div *ngIf="status === 'Diterima'" class="mt-5">
+        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Nomor Resi</label>
+        <input type="number" name="name" id="name" value=""  [(ngModel)]="nomorresi"  required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
+      </div>
+
+      <div *ngIf="status === 'Diterima'" class="mt-5">
+        <div class="flex justify-center mb-4 w-full">
+        <button type="submit" (click)="doKembalikanKeSeller()" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Kirim balik ke penyedia sewa</button>
+        </div>
+      </div>
+      
+      <div *ngIf="status === 'Pending'">
         <div class="flex justify-center mb-4 w-full">
         <button type="submit" (click)="doReject()" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
         </div>
+      </div>
+
+      <div *ngIf="status === 'Dikembalikan (Customer)'">
+        <div class="flex justify-center mb-4 w-full">
+        <button type="submit" (click)="doReject()" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
+        </div>
+      </div>
+
+      <div *ngIf="status === 'Dikembalikan (Penyedia Sewa)'">
+        <div class="flex justify-center mb-4 w-full">
+          <button type="submit" (click)="doKembalikanKeSeller()" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Kirim balik ke penyedia sewa</button>
+          </div>
       </div>
     </form>
   </div>

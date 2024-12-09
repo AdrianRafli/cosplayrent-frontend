@@ -63,6 +63,10 @@ export class CheckoutPage implements OnInit {
     created_at: "",
     updated_at: "",
   };
+
+  orderRequestStatus: any = {
+    order_amount:0
+  }
   
   selectedServicePrice:any
   cities:any
@@ -212,8 +216,12 @@ export class CheckoutPage implements OnInit {
       );
     }
     else {
-    console.log(this.totalSewa)
-    this.orderToMidtransRequest.seller_id = this.costume.data.user_id
+      this.orderRequestStatus.order_amount = this.totalSewa
+      console.log(this.orderRequestStatus.order_amount)
+      this.api.checkUserBalanceWithOrderAmount('checkbalancewithorderamount',this.orderRequestStatus).subscribe((resp) => {
+        this.resp = resp
+        if (this.resp.code == "200"){
+          this.orderToMidtransRequest.seller_id = this.costume.data.user_id
     this.orderToMidtransRequest.costume_id = this.costume.data.id
     this.orderToMidtransRequest.costume_name = this.costume.data.name
     this.orderToMidtransRequest.costume_category = this.costume.data.kategori
@@ -235,8 +243,14 @@ export class CheckoutPage implements OnInit {
         )
       }
     })
+        }
+      },(error) => {
+        const errormessage = error.error?.data || "An error occurred. Please try again."
+        this.presentAlert(errormessage);
+      },)
     }
   }
 }
+
 
 

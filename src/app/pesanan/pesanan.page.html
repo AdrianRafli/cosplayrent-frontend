@@ -31,7 +31,7 @@
               <p>Status: {{orderItem.status_order}}</p>
             </div>
             <div class="action-buttons pb-2 pe-2 flex">
-              <ion-button size="small" class="button-color" (click)="goToOrderDetail(orderItem.id)">Detail Order</ion-button> 
+              <ion-button size="small" class="button-color" (click)="goToOrderDetail(orderItem.id, orderItem.status_order)">Detail Order</ion-button> 
             </div>
           </div>
         </div>

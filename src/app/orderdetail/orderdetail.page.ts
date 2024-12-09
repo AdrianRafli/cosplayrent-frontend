@@ -40,6 +40,7 @@ export class OrderdetailPage implements OnInit {
 
   description:any
   status:any
+  nomorresi:any
   
 
   ngOnInit() {
@@ -85,7 +86,58 @@ export class OrderdetailPage implements OnInit {
   }
 
   doReject(){
-    this.orderResponseClient.status_order = "Cancel"
+    this.orderResponseClient.status_order = "Dibatalkan"
+    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
+      this.resp = resp
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.router.navigate(['/order'])
+          .then(() => {
+            window.location.reload();
+          });
+      }
+    },(error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },)
+  }
+
+  doTerima(){
+    this.orderResponseClient.status_order = "Diterima"
+    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
+      this.resp = resp
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.router.navigate(['/order'])
+          .then(() => {
+            window.location.reload();
+          });
+      }
+    },(error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },)
+  }
+
+  doKembalikan(){
+    this.orderResponseClient.status_order = "Dikembalikan (Customer)"
+    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
+      this.resp = resp
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.router.navigate(['/order'])
+          .then(() => {
+            window.location.reload();
+          });
+      }
+    },(error) => {
+      const errormessage = error.error?.data || "An error occurred. Please try again."
+      this.presentAlert(errormessage);
+    },)
+  }
+
+  doKembalikanKeSeller(){
+    this.orderResponseClient.status_order = "Dikirim (Customer)"
     this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
       this.resp = resp
       if (this.resp.code == "200"){
