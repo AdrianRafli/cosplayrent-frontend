@@ -1,0 +1,64 @@
+<ion-header [hidden]="true" [translucent]="true">
+  <ion-toolbar>
+    <ion-title style="font-family: 'Poppins', sans-serif;">Order Histori</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-no-padding" style="font-family: 'Poppins'; padding: 0 16px;">
+  <div class="mt-5">
+    <a class="flex items-center mb-5 shadow-md pb-4">
+      <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2" (click)="goToHome()"></ion-icon>
+      <span class="text-sm font-semibold" style="font-size: 18px;">List order</span>
+    </a>
+  </div>
+  
+  <div style="padding: 0 16px;">
+    <div *ngFor="let order of orders" class="order-card shadow-md" style="border: 1px solid #ccc; border-radius: 5px; padding: 16px; margin-bottom: 16px;">
+      <div style="display: flex; align-items: center;">
+        <img [src]="order.profile_picture" alt="{{ order.username }}" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 16px;">
+        <div>
+          <h2 style="margin: 0;">{{ order.username }}</h2>
+          <p style="margin: 0; text-align: right; font-size: 12px;">{{ order.rental_start | date: 'dd MMM yyyy' }} - {{ order.rental_end | date: 'dd MMM yyyy' }}</p>
+        </div>
+      </div>
+      <div style="border-bottom: 1px solid #ccc; margin: 8px 0;"></div>
+      
+      <!-- Gambar kostum di baris baru, ditampilkan secara horizontal dan mulai dari kiri -->
+      <div style="margin-top: 16px; display: flex; align-items: flex-start;">
+        <div *ngFor="let picture of order.costume_picture" style="margin-right: 8px;">
+          <img [src]="picture" alt="{{ order.costume_name }}" style="max-width: 100px; height: auto; border-radius: 5px;" />
+        </div>
+      </div>
+
+      <!-- Informasi kostum dan jumlah di satu baris -->
+      <div style="display: flex; justify-content: space-between; margin-top: 8px;">
+        <div style="flex: 1; text-align: left;">
+          <h3 style="margin: 0;">{{ order.costume_name }}</h3>
+          <p style="margin: 0; font-size: 12px;">Ukuran: {{ order.costume_size }}</p>
+          <p style="margin: 0; font-size: 12px;">Durasi Sewa: {{ calculateRentalDuration(order.rental_start, order.rental_end) }} hari</p>
+        </div>
+        
+        <!-- Informasi jumlah dan total di kanan -->
+        <div style="text-align: right; margin-left: 16px;">
+          <p style="margin: 0;">Jumlah Costume: 1</p>
+          <p style="margin: 0;">Total: Rp{{ order.total | number }}</p>
+          <p style="margin: 0; color: {{ order.status_order === 'Belum Dikembalikan' ? 'red' : 'green' }}">
+            {{ order.status_order }}
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
+        <ng-container *ngIf="order.status_order === 'Selesai'">
+          <button (click)="nilai(order.id)" class="w-16 py-2 font-bold text-green-600 bg-white border-2 border-green-600 rounded-lg" style="margin-right: 8px;">
+            Nilai
+          </button>
+          
+          <button (click)="sewaLagi(order.id)" class="w-24 py-2 font-bold text-white bg-green-600 border border-green-600 rounded-lg">
+            Sewa Lagi
+          </button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ion-content>

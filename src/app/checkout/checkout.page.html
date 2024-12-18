@@ -260,6 +260,39 @@
           </ng-container>
         </ion-select>
       </ion-item> -->
+      <div class="mb-4 mx-3">
+        <h3 class="text-lg font-bold">Metode Pembayaran</h3>
+        <form (ngSubmit)="doOrder()" class="py-2">
+          <div class="mt-2">
+            <div *ngFor="let method of paymentMethods" class="flex items-center mb-2">
+              <input 
+                type="radio" 
+                id="{{method.id}}" 
+                name="paymentMethod" 
+                [(ngModel)]="selectedPaymentMethod" 
+                [value]="method.value" 
+                (change)="onPaymentMethodChange()" 
+                class="mr-2"
+              />
+              <label for="{{method.id}}" class="flex items-center">
+                <img [src]="method.icon" alt="{{method.label}}" class="w-10 h-10 rounded-full mr-2" /> <!-- Circular icon -->
+                {{ method.label }}
+              </label>
+            </div>
+            <!-- Always display the balance for E-Money -->
+            <div *ngIf="selectedPaymentMethod === 'emoney'" class="mt-3 text-gray-600">
+              Balance: Rp {{ showEmoneyBalance }}
+              <button (click)="navigateToPayment()" class="ml-4 bg-green-600 text-white px-3 py-1 rounded margin-left">
+                Top Up
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      
+      
+        
+      
       
       </form>
     </div>

@@ -126,7 +126,11 @@ const routes: Routes = [
   {
     path: 'orderdetail/:id',
     loadChildren: () => import('./orderdetail/orderdetail.module').then( m => m.OrderdetailPageModule)
+  },  {
+    path: 'order-histori',
+    loadChildren: () => import('./order-histori/order-histori.module').then( m => m.OrderHistoriPageModule)
   },
+
 
 
 
