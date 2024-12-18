@@ -7,17 +7,46 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" class="ion-no-padding" style="font-family: 'Poppins'">
-  <div class="background-layer"></div>
-  <div class="h-5/6 content">
-    <div class="h-full mx-4 flex justify-center items-center flex-col">
-      <form class="w-full flex flex-col gap-4">
-        <div class="mb-4">
-          <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Top Up Amount</label>
-          <input type="number" [(ngModel)]="data.Emoney_amount" id="topupamount" name="topupamount"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="min. 10000" required /> <!--[(ngModel)]="data.Emoney_amount"-->
+<ion-content [fullscreen]="true" class="ion-padding" style="font-family: 'Poppins'">
+  <div class="mb-8 text-center bg-gray-100 rounded py-2">
+    <span class="text-lg" style="font-family: 'Poppins', sans-serif; color: #226F54;">Your Balance</span>
+    <h2 class="font-bold text-3xl" style="font-family: 'Poppins', sans-serif; color: #226F54;">
+      {{ emoney | currency:'Rp':'symbol':'1.0-0' }}
+    </h2>
+  </div>
+  <div class="flex justify-center items-center my-4">
+    <img src="../../assets/illustration/coin.jpg" alt="coin illustration">
+  </div>
+  <div class="flex justify-center items-center flex-col">
+    <form class="w-full flex flex-col gap-4">
+      <div class="mb-4">
+        <!-- <label class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Top Up Amount</label> -->
+        <input type="number" [(ngModel)]="data.Emoney_amount" id="topupamount" name="topupamount"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="min. 10000" required /> <!--[(ngModel)]="data.Emoney_amount"-->
+      </div>
+      <div class="grid grid-cols-3 gap-4 px-4 pb-4 topup-shortcut">
+        <button class="border-solid border-2 border-gray-500 rounded-md p-2" (click)="setTopUpAmount(20000)">20K</button>
+        <button class="border-solid border-2 border-gray-500 rounded-md p-2" (click)="setTopUpAmount(50000)">50K</button>
+        <button class="border-solid border-2 border-gray-500 rounded-md p-2" (click)="setTopUpAmount(100000)">100K</button>
+        <button class="border-solid border-2 border-gray-500 rounded-md p-2" (click)="setTopUpAmount(200000)">200K</button>
+        <button class="border-solid border-2 border-gray-500 rounded-md p-2" (click)="setTopUpAmount(300000)">300K</button>
+        <button class="border-solid border-2 border-gray-500 rounded-md p-2" (click)="setTopUpAmount(500000)">500K</button>
+      </div>
+      <div class="detail-topup bg-gray-100 rounded p-4 mb-4">
+        <h2 class="font-semibold mb-2">Ringkasan Top Up</h2>
+        <div class="flex justify-between">
+          <p class="font-light text-sm">Jumlah Top Up</p>
+          <p class="font-bold text-sm">Rp {{ data.Emoney_amount| number }}</p>
         </div>
-        <button class="w-full h-12 py-2 font-bold text-white rounded paid" style="font-size: 20px;" (click)="goToPayment()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}">Bayar</button>
-      </form>
-    </div>
+        <div class="flex justify-between">
+          <p class="font-light text-sm">Biaya Admin</p>
+          <p class="font-bold text-sm">Rp 3.000</p>
+        </div>
+        <div class="flex justify-between">
+          <p class="font-light text-sm">Total Top Up</p>
+          <p class="font-bold text-sm">Rp {{ getTotal() | number }}</p>
+        </div>
+      </div>
+      <button class="w-full h-12 py-2 font-bold text-white rounded paid" style="font-size: 20px;" (click)="goToPayment()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}">Konfirmasi dan Top Up</button>
+    </form>
   </div>
 </ion-content>

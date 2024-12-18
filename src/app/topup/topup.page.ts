@@ -22,10 +22,29 @@ export class TopupPage implements OnInit {
   data : any = {
     Emoney_amount:0
   }
+  emoney = 0;
+  total = 0
   isSubmitting = false;
 
 
   ngOnInit() {
+    this.api.getBalance('emoney').subscribe((resp) => {
+      this.resp = resp
+
+      if (this.resp.code == "200"){
+        console.log(this.resp)
+        this.emoney = this.resp.data.emoney_amount
+      }
+    })
+  }
+
+  setTopUpAmount(amount: number) {
+    this.data.Emoney_amount = amount;
+  }
+
+  getTotal() {
+    this.total = this.data.Emoney_amount + 3000;
+    return this.total;
   }
 
   async goToPayment(){
@@ -37,6 +56,9 @@ export class TopupPage implements OnInit {
       message: 'loading...',
     });
     await loading.present();
+
+    // ini masih salah
+    this.data.Emoney_amount = this.total;
 
     this.api.SendTopUpOrder('topup',this.data)
     .subscribe(
