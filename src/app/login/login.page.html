@@ -35,7 +35,13 @@
           <a href="/forgot-password" class="text-sm text-blue-500">Forgot Password?</a>
         </div>
 
-        <button type="submit" (click)="doLogin()" class="w-full py-2 font-bold text-white bg-green-600 rounded-lg">Login</button>
+        <button type="submit" 
+        (click)="doLogin()"
+        [disabled]="isSubmitting" 
+        [ngClass]="{'disabled-button': isSubmitting}" 
+        class="w-full py-2 font-bold text-white bg-green-600 rounded-lg">
+          Login
+        </button>
       </form>
 
       <div class="mt-4 text-center">

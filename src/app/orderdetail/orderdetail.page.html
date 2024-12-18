@@ -61,7 +61,7 @@
 
       <div *ngIf="status === 'Proses'" class="flex mt-5">
         <div class="flex justify-center mb-4 w-full">
-          <button type="submit" (click)="doReject()" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
+          <button type="submit" (click)="doReject()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
         </div>
       </div>
 
@@ -72,10 +72,10 @@
 
       <div *ngIf="status === 'Dikirim (Penyedia Sewa)'" class="flex mt-5">
         <div class="flex justify-center mb-4 w-full">
-        <button type="submit" (click)="doTerima()" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Terima Pesanan</button>
+          <button type="submit" (click)="doTerima()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Terima Pesanan</button>
         </div>
         <div class="flex justify-center mb-4 w-full">
-          <button type="submit" (click)="doKembalikan()" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Kembalikan Pesanan</button>
+          <button type="submit" (click)="doKembalikan()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Kembalikan Pesanan</button>
         </div>
       </div>
 
@@ -86,26 +86,26 @@
 
       <div *ngIf="status === 'Diterima'" class="mt-5">
         <div class="flex justify-center mb-4 w-full">
-        <button type="submit" (click)="doKembalikanKeSeller()" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Kirim balik ke penyedia sewa</button>
+          <button type="submit" (click)="doKembalikanKeSeller()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Kirim balik ke penyedia sewa</button>
         </div>
       </div>
       
       <div *ngIf="status === 'Pending'">
         <div class="flex justify-center mb-4 w-full">
-        <button type="submit" (click)="doReject()" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
+          <button type="submit" (click)="doReject()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
         </div>
       </div>
 
       <div *ngIf="status === 'Dikembalikan (Customer)'">
         <div class="flex justify-center mb-4 w-full">
-        <button type="submit" (click)="doReject()" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
+          <button type="submit" (click)="doReject()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
         </div>
       </div>
 
       <div *ngIf="status === 'Dikembalikan (Penyedia Sewa)'">
         <div class="flex justify-center mb-4 w-full">
-          <button type="submit" (click)="doKembalikanKeSeller()" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Kirim balik ke penyedia sewa</button>
-          </div>
+          <button type="submit" (click)="doKembalikanKeSeller()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Kirim balik ke penyedia sewa</button>
+        </div>
       </div>
     </form>
   </div>

@@ -14,8 +14,9 @@ export class ReviewPage implements OnInit {
 
   // resp: any;
 
-
   rating = 0;
+
+  isSubmitting = false; 
 
   constructor(public api: ApiService, public router: Router) { }
 

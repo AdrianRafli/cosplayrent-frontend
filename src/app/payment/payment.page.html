@@ -16,8 +16,8 @@
         <img src="../../assets/illustration/unpaid.png" class="w-30 h-30" alt="Belum Dibayar">
       </ng-template>
       <div class="w-full flex flex-col gap-4">
-        <button class="w-full h-12 py-2 font-bold text-white rounded paid" style="font-size: 24px;" (click)="goToMidtrans()">Bayar</button>
-        <button class="w-full h-12 py-2 font-bold text-white rounded paid" style="font-size: 24px;" (click)="goToCheckOrder()">Cek Status</button>
+        <button class="w-full h-12 py-2 font-bold text-white rounded paid" style="font-size: 24px;" (click)="goToMidtrans()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}">Bayar</button>
+        <button class="w-full h-12 py-2 font-bold text-white rounded paid" style="font-size: 24px;" (click)="goToCheckOrder()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}">Cek Status</button>
       </div>
     </div>
   </div>

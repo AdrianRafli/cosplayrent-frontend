@@ -96,7 +96,7 @@
       </div>
 
       <div class="flex justify-center mb-4">
-          <button type="submit" (click)="dosave()" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Simpan</button>
+          <button type="submit" (click)="dosave()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Simpan</button>
       </div>
     </form>
   </div>

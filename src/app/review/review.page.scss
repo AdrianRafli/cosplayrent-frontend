@@ -11,7 +11,10 @@
 
     transition: color .3 ease-in-out;
 }
-
 ion-textarea {
     --highlight-color-focused: black;
+}
+.disabled-button {
+    opacity: 0.7;
+    cursor: not-allowed;
 }

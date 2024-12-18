@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../api.service";
 import { Router } from "@angular/router";
-import { AlertController } from "@ionic/angular";
+import { AlertController, LoadingController } from "@ionic/angular";
 
 @Component({
   selector: "app-register",
@@ -16,10 +16,13 @@ export class RegisterPage implements OnInit {
   };
   resp: any;
 
+  isSubmitting = false;
+
   constructor(
     public api: ApiService,
     public router: Router,
     private alertController: AlertController,
+    private loadingCtrl: LoadingController,
   ) {}
 
   ngOnInit() {}
@@ -64,13 +67,22 @@ export class RegisterPage implements OnInit {
     return true;
   }
 
-  doRegister() {
+  async doRegister() {
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
     if (!this.validateFields()) {
+      this.isSubmitting = false;
       return;
     }
 
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading...',
+    });
+    await loading.present();
+
     this.api.post("register", this.data).subscribe(
-      (resp) => {
+      async (resp) => {
         // console.log('register', resp);
         this.resp = resp;
 
@@ -82,16 +94,20 @@ export class RegisterPage implements OnInit {
 
         if (this.resp.code == 200) {
           localStorage.setItem("userToken", this.resp.data.token);
-          this.router.navigate(["/home"]).then(() => {
-            window.location.reload();
-          });
+          await this.router.navigate(["/home"])
+          await loading.dismiss();
+          window.location.reload();
         } else {
+          await loading.dismiss();
           this.presentAlert("Registration failed. Please try again.");
-      }
-      },
-      (error) => {
+        }
+      this.isSubmitting = false;
+    },
+    async (error) => {
+        await loading.dismiss();
         const errormessage = error.error?.data || "An error occurred. Please try again."
         this.presentAlert(errormessage);
+        this.isSubmitting = false;
       },
     );
   }

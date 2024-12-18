@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
-import { AlertController } from "@ionic/angular";
+import { AlertController, LoadingController } from "@ionic/angular";
 import { Location } from '@angular/common';
 
 interface NavigationState {
@@ -16,7 +16,14 @@ interface NavigationState {
 })
 export class PesanandetailPage implements OnInit {
 
-  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService, private alertController: AlertController,  private location: Location,) { }
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute, 
+    public api:ApiService, 
+    private alertController: AlertController,  
+    private location: Location,
+    private loadingCtrl: LoadingController,
+  ) { }
 
   id:any
   resp:any
@@ -41,6 +48,8 @@ export class PesanandetailPage implements OnInit {
   description:any
 
   nomorresi:any
+
+  isSubmitting = false;
   
 
   ngOnInit() {
@@ -66,78 +75,133 @@ export class PesanandetailPage implements OnInit {
     await alert.present();
   }
 
-  doAccept(){
+  async doAccept(){
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
+    // Tampilkan loading sebelum proses
+    const loading = await this.loadingCtrl.create({
+      message: 'loading...',
+    });
+    await loading.present();
+
     this.orderResponseClient.status_order = "Proses"
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
+    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient)
+    .subscribe(
+      async (resp) => {
       this.resp = resp
       if (this.resp.code == "200"){
         console.log(this.resp)
-        this.router.navigate(['/pesanan'])
-          .then(() => {
-            window.location.reload();
-          });
+        await this.router.navigate(['/pesanan'])
+        await loading.dismiss();
+        window.location.reload();
       }
-    },(error) => {
+      this.isSubmitting = false;
+    }, async (error) => {
+      await loading.dismiss();
       const errormessage = error.error?.data || "An error occurred. Please try again."
       this.presentAlert(errormessage);
+      this.isSubmitting = false;
     },)
   }
 
-  doFinish(){
+  async doFinish(){
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
+    // Tampilkan loading sebelum proses
+    const loading = await this.loadingCtrl.create({
+      message: 'loading...',
+    });
+    await loading.present();
+
     this.orderResponseClient.status_order = "Selesai"
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
+    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient)
+    .subscribe(
+      async (resp) => {
       this.resp = resp
       if (this.resp.code == "200"){
         console.log(this.resp)
-        this.router.navigate(['/pesanan'])
-          .then(() => {
-            window.location.reload();
-          });
+        await this.router.navigate(['/pesanan'])
+        await loading.dismiss();
+        window.location.reload();
       }
-    },(error) => {
+      this.isSubmitting = false;
+    }, async (error) => {
+      await loading.dismiss();
       const errormessage = error.error?.data || "An error occurred. Please try again."
       this.presentAlert(errormessage);
+      this.isSubmitting = false;
     },)
   }
 
-  doKembalikan(){
+  async doKembalikan(){
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
+    // Tampilkan loading sebelum proses
+    const loading = await this.loadingCtrl.create({
+      message: 'loading...',
+    });
+    await loading.present();
+
     this.orderResponseClient.status_order = "Dikembalikan (Penyedia Sewa)"
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
+    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient)
+    .subscribe(
+      async (resp) => {
       this.resp = resp
       if (this.resp.code == "200"){
         console.log(this.resp)
-        this.router.navigate(['/pesanan'])
-          .then(() => {
-            window.location.reload();
-          });
+        await this.router.navigate(['/pesanan'])
+        await loading.dismiss();
+        window.location.reload();
       }
-    },(error) => {
+      this.isSubmitting = false;
+    }, async (error) => {
+      await loading.dismiss();
       const errormessage = error.error?.data || "An error occurred. Please try again."
       this.presentAlert(errormessage);
+      this.isSubmitting = false;
     },)
   }
 
-  doReject(){
+  async doReject(){
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
+    // Tampilkan loading sebelum proses
+    const loading = await this.loadingCtrl.create({
+      message: 'loading...',
+    });
+    await loading.present();
+
     this.orderResponseClient.status_order = "Dibatalkan"
     this.orderResponseClient.description = this.description
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
+    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient)
+    .subscribe(
+      async (resp) => {
       this.resp = resp
       if (this.resp.code == "200"){
         console.log(this.resp)
-        this.router.navigate(['/pesanan'])
-          .then(() => {
-            window.location.reload();
-          });
+        await this.router.navigate(['/pesanan'])
+        await loading.dismiss();
+        window.location.reload();
       }
-    },(error) => {
+      this.isSubmitting = false;
+    }, async (error) => {
+      await loading.dismiss();
       const errormessage = error.error?.data || "An error occurred. Please try again."
       this.presentAlert(errormessage);
+      this.isSubmitting = false;
     },)
   }
 
   
 
   doShipping(){
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
     this.orderResponseClient.status_order = "Dikirim (Penyedia Sewa)"
     this.orderResponseClient.description = this.description
     this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
@@ -149,6 +213,7 @@ export class PesanandetailPage implements OnInit {
             window.location.reload();
           });
       }
+      this.isSubmitting = false;
     },(error) => {
       const errormessage = error.error?.data || "An error occurred. Please try again."
       this.presentAlert(errormessage);

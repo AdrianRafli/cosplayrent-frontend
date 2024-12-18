@@ -31,7 +31,7 @@
         {{ errorMessage }}
       </div>
       <div class="flex justify-center mt-8">
-        <button expand="full"  class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="background-color: #226F54; color: white; border-radius: 20px; font-size: 16px;" (click)="gantipassword()">Ubah kata sand </button>
+        <button expand="full"  class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="background-color: #226F54; color: white; border-radius: 20px; font-size: 16px;" (click)="gantipassword()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}">Ubah kata sand </button>
       </div>
     </form>
   </div>

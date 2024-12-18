@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { ApiService } from "../api.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { AlertController } from "@ionic/angular";
+import { AlertController, LoadingController } from "@ionic/angular";
 
 
 @Component({
@@ -13,11 +13,13 @@ export class LoginPage implements OnInit {
   data: any = { email: "", password: "" };
   resp: any;
   successMessage: string = "";
+  isSubmitting = false;
   constructor(
     public api: ApiService,
     public router: Router,
     private route: ActivatedRoute,
     private alertController: AlertController,
+    private loadingCtrl: LoadingController,
   ) {}
 
   ngOnInit() {
@@ -37,7 +39,15 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  
+  // async showLoading() {
+  //   const loading = await this.loadingCtrl.create({
+  //     message: 'Loading...',
+  //     duration: 3000,
+  //   });
+
+  //   loading.present();
+  // }
+
   validateFields(): boolean {
     const { email, password } = this.data;
 
@@ -61,33 +71,51 @@ export class LoginPage implements OnInit {
     return true;
   }
 
-  doLogin() {
+  async doLogin() {
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+  
     if (!this.validateFields()) {
+      this.isSubmitting = false;
       return;
     }
-
+  
+    // Tampilkan loading sebelum login
+    const loading = await this.loadingCtrl.create({
+      message: 'Loading...',
+    });
+    await loading.present();
+  
     this.api.post("login", this.data).subscribe(
-      (resp) => {
-        // console.log("login", resp)
+      async (resp) => {
         this.resp = resp;
-
+  
         if (this.resp.code == 200) {
           localStorage.setItem("userToken", this.resp.data.token);
-          this.router.navigate(['/home'])
-          .then(() => {
-            window.location.reload();
-          });
-          
+  
+          // Navigasi setelah login berhasil
+          await this.router.navigate(['/home']);
+  
+          // Tutup loading setelah redirect
+          await loading.dismiss();
+
+          window.location.reload();
         } else {
+          await loading.dismiss(); // Tutup loading saat gagal login
           this.presentAlert("Invalid email or password.");
         }
+  
+        this.isSubmitting = false;
       },
-      (error) => {
-        const errormessage = error.error?.data || "An error occurred. Please try again."
+      async (error) => {
+        await loading.dismiss(); // Tutup loading jika ada error
+        const errormessage = error.error?.data || "An error occurred. Please try again.";
         this.presentAlert(errormessage);
-      },
+        this.isSubmitting = false;
+      }
     );
   }
+  
 
   doLogout() {
     localStorage.removeItem("userToken")

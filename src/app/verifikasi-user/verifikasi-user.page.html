@@ -36,7 +36,7 @@
         </div>
         <!-- <h2 class="text-center text-2xl font-semibold mb-5"></h2> -->
         <div class="flex justify-center mb-4">
-          <button type="submit" (click)="dosave()" class="w-32 h-12 py-2 font-bold text-white bg-green-600 rounded-full " style="font-size: 24px;">SAVE</button>
+          <button type="submit" (click)="dosave()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-32 h-12 py-2 font-bold text-white bg-green-600 rounded-full " style="font-size: 24px;">SAVE</button>
         </div>
       </div>
     </div>

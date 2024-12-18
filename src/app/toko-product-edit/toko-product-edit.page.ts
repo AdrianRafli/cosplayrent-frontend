@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-toko-product-edit',
@@ -37,11 +37,14 @@ export class TokoProductEditPage implements OnInit {
   
   selectedFile:any
   previewUrl:any
+
+  isSubmitting = false;
   constructor(
     private router: Router, 
     private route: ActivatedRoute, 
     public api:ApiService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private loadingCtrl: LoadingController,
   ) {}
 
   ngOnInit() {
@@ -152,10 +155,20 @@ export class TokoProductEditPage implements OnInit {
     return true;
   }
 
-  dosave() {
+  async dosave() {
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
     if (!this.validateFields()) {
+      this.isSubmitting = false;
       return;
     }
+
+    // Tampilkan loading sebelum proses
+    const loading = await this.loadingCtrl.create({
+      message: 'loading...',
+    });
+    await loading.present();
 
     const formData = new FormData();
     formData.append('name', this.data.name);
@@ -179,19 +192,25 @@ export class TokoProductEditPage implements OnInit {
 
     console.log(formData)
   
-    this.api.updateCostumeById('seller/', this.data.id, formData).subscribe((resp) => {
+    this.api.updateCostumeById('seller/', this.data.id, formData)
+    .subscribe(
+      async (resp) => {
       this.resp = resp;
       if (this.resp.code = "200") {
         console.log("Successfully updated costume");
-        this.router.navigate(['toko-produk']).then(() => {
+        await this.router.navigate(['toko-produk'])
+        await loading.dismiss();
         window.location.reload();
-        });
       } else {
+        await loading.dismiss();
         console.log("Failed to update costume");
       }
-    },(error) => {
+      this.isSubmitting = false;
+    }, async (error) => {
+      await loading.dismiss();
       const errormessage = error.error?.data || "An error occurred. Please try again."
       this.presentAlert(errormessage);
+      this.isSubmitting = false;
     },
   );
   }

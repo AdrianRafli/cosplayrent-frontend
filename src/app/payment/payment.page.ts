@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
+import { LoadingController } from '@ionic/angular';
 
 
 // Define an interface for the expected state
@@ -32,8 +33,14 @@ export class PaymentPage implements OnInit {
     updated_at: "",
   };
   statuspayment:any
+  isSubmitting = false;
 
-  constructor(private location: Location, private router: Router,  public api:ApiService) {}
+  constructor(
+    private location: Location, 
+    private router: Router,  
+    public api:ApiService,
+    private loadingCtrl: LoadingController,
+  ) {}
 
   ngOnInit() {
     // Log the location state to debug
@@ -56,24 +63,43 @@ export class PaymentPage implements OnInit {
   }
 
   goToMidtrans() {
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
     window.open(this.receivedData, '_blank');
+    
+    this.isSubmitting = false;
   }
 
-  goToCheckOrder(){
-    this.api.checkOrderStatus('checkorder/',this.receivedData1).subscribe((resp) => {
+  async goToCheckOrder(){
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
+    // Tampilkan loading sebelum proses
+    const loading = await this.loadingCtrl.create({
+      message: 'loading...',
+    });
+    await loading.present();
+
+    this.api.checkOrderStatus('checkorder/',this.receivedData1)
+    .subscribe(
+      async (resp) => {
       this.resp = resp
       if (this.resp.code == "200"){
         console.log(this.resp)
         if (this.resp.data.status_payment ==  true){
           this.statuspayment = true
           console.log("Status payment is true")
-          setTimeout(() => {
-            this.router.navigate(['/home']).then(() => {
-              window.location.reload();
-            });
-          }, 1000);
+
+          await this.router.navigate(['/home'])
+          await loading.dismiss();
+          window.location.reload();
+
+          this.isSubmitting = false;
         } else {
-          console.log("Stauts payment is false")
+          await loading.dismiss();
+          console.log("Payment status is false")
+          this.isSubmitting = false;
         }
       }
     })

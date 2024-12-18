@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
 import { RajaOngkirService } from '../raja-ongkir.service';
-import { AlertController } from "@ionic/angular";
+import { AlertController, LoadingController } from "@ionic/angular";
 
 @Component({
   selector: 'app-checkout',
@@ -72,7 +72,15 @@ export class CheckoutPage implements OnInit {
   cities:any
   selectedCityName: any
   selectedProvinceName:any
-  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService, private rajaOngkirService: RajaOngkirService,  private alertController: AlertController) { }
+  isSubmitting = false
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute, 
+    public api:ApiService, 
+    private rajaOngkirService: RajaOngkirService,  
+    private alertController: AlertController,
+    private loadingCtrl: LoadingController,
+  ) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['costumeID']
@@ -209,13 +217,23 @@ export class CheckoutPage implements OnInit {
     return costumePrice + this.courierPrice + applicationFee;
   }
 
-  goToPayment(){
+  async goToPayment(){
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
     if (this.courierPrice == 0) {
       this.presentAlert(
         "You need to choose pilih jasa first"
       );
+      this.isSubmitting = false;
+      return;
     }
     else {
+      // Tampilkan loading sebelum login
+      const loading = await this.loadingCtrl.create({
+        message: 'Loading...',
+      });
+      await loading.present();
       this.orderRequestStatus.order_amount = this.totalSewa
       console.log(this.orderRequestStatus.order_amount)
       this.api.checkUserBalanceWithOrderAmount('checkbalancewithorderamount',this.orderRequestStatus).subscribe((resp) => {
@@ -229,24 +247,31 @@ export class CheckoutPage implements OnInit {
     this.orderToMidtransRequest.merchant_name = this.costume.data.username
     this.orderToMidtransRequest.total = this.totalSewa
     console.log(this.orderToMidtransRequest)
-    this.api.createOrderDirectlyToMidtrans('order/midtrans',this.orderToMidtransRequest).subscribe((resp) => {
+    this.api.createOrderDirectlyToMidtrans('order/midtrans',this.orderToMidtransRequest)
+    .subscribe(
+      async (resp) => {
       this.resp = resp
+
       if (this.resp.code == "200"){
         console.log(this.resp)
-        this.router.navigate(['/payment'],
+        await this.router.navigate(['/payment'],
           {
             state: {
               data: this.resp.data.redirect_url,
               data1: this.resp.data.order_id
             }
           }
-        )
+        );
+        await loading.dismiss();
       }
     })
-        }
-      },(error) => {
+    }
+    this.isSubmitting = false;
+      },async (error) => {
+        await loading.dismiss();
         const errormessage = error.error?.data || "An error occurred. Please try again."
         this.presentAlert(errormessage);
+        this.isSubmitting = false;
       },)
     }
   }

@@ -17,3 +17,7 @@
     position: relative;
     z-index: 1;
 }
+.disabled-button {
+    opacity: 0.7;
+    cursor: not-allowed;
+}

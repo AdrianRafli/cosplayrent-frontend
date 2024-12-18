@@ -302,7 +302,7 @@
     </div>
 
     <div class="p-2">
-      <button class="w-full bg-green-600 text-white p-3 rounded-lg" (click)="goToPayment()">
+      <button class="w-full bg-green-600 text-white p-3 rounded-lg" (click)="goToPayment()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}">
         Bayar
       </button>
       <p class="text-center text-gray-500 text-sm mt-2">

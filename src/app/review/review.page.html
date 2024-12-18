@@ -76,7 +76,7 @@
       </div>
 
       <div class="fixed bottom-0 left-0 w-11/12 flex justify-center m-4">
-        <button type="submit" class="w-full h-12 py-2 font-bold text-white bg-green-600 rounded " style="font-size: 24px;">SAVE</button>
+        <button type="submit" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-12 py-2 font-bold text-white bg-green-600 rounded " style="font-size: 24px;">SAVE</button>
       </div>
     </form>
   </div>
