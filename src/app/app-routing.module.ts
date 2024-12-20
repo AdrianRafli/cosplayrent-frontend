@@ -35,17 +35,10 @@ const routes: Routes = [
     path: 'cart',
     loadChildren: () => import('./cart/cart.module').then( m => m.CartPageModule)
   },
-<<<<<<< Updated upstream
-  // {
-  //   path: 'chat',
-  //   loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
-  // },
-=======
   {
     path: 'chat',
     loadChildren: () => import('./chat/chat.module').then( m => m.ChatPageModule)
   },
->>>>>>> Stashed changes
   {
     path: 'profile-change',
     loadChildren: () => import('./profile-change/profile-change.module').then( m => m.ProfileChangePageModule)
@@ -133,15 +126,15 @@ const routes: Routes = [
   {
     path: 'orderdetail/:id',
     loadChildren: () => import('./orderdetail/orderdetail.module').then( m => m.OrderdetailPageModule)
-  },  {
-<<<<<<< Updated upstream
+  },
+  {
     path: 'order-histori',
     loadChildren: () => import('./order-histori/order-histori.module').then( m => m.OrderHistoriPageModule)
-=======
+  },
+  {
     path: 'chat-list',
     loadChildren: () => import('./chat-list/chat-list.module').then( m => m.ChatListPageModule)
->>>>>>> Stashed changes
-  },
+  }
 
 
 
