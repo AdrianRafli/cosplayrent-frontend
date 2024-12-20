@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ChatService, SocketResponse } from '../chat.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-chat',
@@ -12,7 +13,10 @@ export class ChatPage implements OnInit, OnDestroy {
   message: string = '';
   messages: SocketResponse[] = [];
 
-  constructor(private chatService: ChatService) {}
+  constructor(
+    private chatService: ChatService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.username = prompt('Enter your name please:') || 'No name';
@@ -21,7 +25,7 @@ export class ChatPage implements OnInit, OnDestroy {
 
     this.chatService.messages$.subscribe((messages) => {
       console.log('Messages updated:', messages);
-      this.messages = messages; 
+      this.messages = messages;
     });
   }
 
@@ -34,5 +38,9 @@ export class ChatPage implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.chatService.closeConnection();
+  }
+
+  goToChatList(){
+    this.router.navigate(['/chat-list']);
   }
 }

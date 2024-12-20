@@ -1,4 +1,4 @@
-<ion-header>
+<ion-header [hidden]="true">
   <ion-toolbar>
     <ion-title>
       Chat disini
@@ -7,24 +7,35 @@
 </ion-header>
 
 <ion-content>
-  <div class="container mb-12">
-    <div *ngFor="let msg of messages" class="mb-2">
-      <p class="text-lg font-semibold">
-        <span class="text-blue-600">{{ msg.from }}:</span> 
-        {{ msg.message }}
-      </p>
-    </div>
+  <div class="mt-5 shadow-md pb-1">
+    <a class="flex items-center mb-5">
+      <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2" (click)="goToChatList()"></ion-icon>
+      <span class="text-sm font-semibold" style="font-size: 18px;">Chat</span>
+    </a>  
   </div>
 
-  <div class="fixed left-0 bottom-0 right-0 bg-gray-100 border-t border-blue-400 p-4">
-    <form (submit)="sendMessage()">
-      <div class="mb-4">
+  <div class="container mb-12 p-4">
+    <div *ngFor="let msg of messages" class="mb-2 flex flex-col gap-1">
+      <span class="text-gray-400">{{ msg.from }}:</span> 
+      <div class="message-box">
+        <p class="font-medium text-balance">
+          {{ msg.message }}
+        </p>
+        <span class="time-stamp">08.00</span>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="fixed left-0 bottom-0 right-0 bg-gray-100 shadow-md p-4">
+    <form (submit)="sendMessage()" class="flex gap-2">
+      <!-- <div class="mb-4">
         <label class="text-gray-700">
           Hello <b>{{ username }}</b>. Say something:
         </label>
-      </div>
-      <input [(ngModel)]="message" name="message" type="text" placeholder="Enter message" class="w-full bg-white border-2 p-2">
-      <button class="w-full bg-blue-500 text-white p-2 mt-  2">Send</button>
+      </div> -->
+      <input [(ngModel)]="message" name="message" type="text" placeholder="Enter message" class="w-full bg-white border-2 p-2 rounded-md">
+      <button class="w-16 bg-green-600 text-white text-lg p-2 pt-3 rounded-full flex item-center justify-center"><ion-icon name="send-outline"></ion-icon></button>
     </form>
   </div>
 </ion-content>

@@ -4,7 +4,7 @@
       <ion-title>Menu Content</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-content class="ion-padding" class="goToLogin()">
+  <ion-content class="ion-padding" (click)="goToLogin()">
     <button class="px-10 py-2 font-bold text-white bg-green-600 rounded-lg">Login</button>
   </ion-content>
 </ion-menu>
@@ -14,7 +14,7 @@
       <ion-searchbar slot="start" placeholder="Kostum Naruto" class="shadow-none rounded-lg" show-clear-button="focus"></ion-searchbar>
       <ion-buttons slot="end">
         <a>
-          <ion-button>
+          <ion-button (click)="goToChatList()">
             <ion-icon name="chatbubbles-outline"></ion-icon>
           </ion-button>
         </a>

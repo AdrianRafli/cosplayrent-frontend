@@ -84,6 +84,12 @@ export class HomePage implements OnInit{
       this.router.navigate(['/login'])
     }
   }
+  goToChatList(){
+    this.router.navigate(['/chat-list']);
+  }
+  goToLogin(){
+    this.router.navigate(['/login']);
+  }
   goToCostumeDetail(costumeId:number){
     this.router.navigate(['/detail-product', costumeId]);
   }

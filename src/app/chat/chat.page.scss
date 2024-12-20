@@ -1,0 +1,28 @@
+.message-box {
+    display: flex;
+    flex-wrap: wrap; /* Membuat elemen di dalamnya bisa turun ke baris baru jika ruang tidak cukup */
+    justify-content: space-between; /* Menempatkan elemen teks dan waktu di sisi yang berbeda */
+    align-items: center; /* Memastikan elemen sejajar secara vertikal */
+    width: fit-content;
+    max-width: 70%;
+    padding: 10px;
+    background-color: #2f855a; /* Hijau */
+    color: white;
+    border-radius: 10px;
+    word-wrap: break-word;
+  }
+  
+  .message-box p {
+    margin: 0;
+    flex: 1; /* Membuat teks mengambil ruang yang tersedia */
+    word-break: break-word; /* Memecah teks panjang agar tidak keluar dari box */
+    margin-right: 6px;
+  }
+  
+  .time-stamp {
+    font-size: 10px;
+    color: #e2e8f0;
+    align-self: flex-end; 
+    white-space: nowrap; 
+  }
+  

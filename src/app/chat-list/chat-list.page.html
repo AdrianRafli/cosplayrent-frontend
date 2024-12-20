@@ -1,0 +1,49 @@
+<ion-header [translucent]="true" [hidden]="true">
+  <ion-toolbar>
+    <ion-title>chat-list</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="mt-5 shadow-md pb-1">
+    <a class="flex items-center mb-5">
+      <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2" (click)="goToHome()"></ion-icon>
+      <span class="text-sm font-semibold" style="font-size: 18px;">Chat</span>
+    </a>  
+  </div>
+
+  <div class="chat-list">
+    <div class="chat-item px-4 py-5 flex justify-between border border-solid border-y-gray-400" (click)="goToChat()">
+      <div class="chat-content flex gap-4">
+        <img src="../../assets/product/kostum-1.png" class="rounded-full w-10 h-10" alt="profile picture">
+        <div class="flex flex-col gap-1">
+          <h2 class="chat-name text-md font-semibold">Will</h2>
+          <p class="chat-text text-sm font-light line-clamp-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum omnis sequi quidem facilis velit ex libero saepe quam nulla doloribus.</p>
+        </div>
+      </div>
+      <div class="chat-info flex flex-col justify-between gap-2 relative">
+        <p class="font-light timestamp">08.00</p>
+        <ion-badge slot="end" class="bg-green-600 rounded-full py-1 px-2">1</ion-badge>
+      </div>
+    </div>
+    <div class="chat-item px-4 py-6 flex border border-solid border-b-gray-400">
+      <div class="chat-content flex gap-4">
+        <img src="../../assets/product/kostum-1.png" class="rounded-full w-10 h-10" alt="profile picture">
+        <div class="flex flex-col gap-1">
+          <h2 class="chat-name text-md font-semibold">Will</h2>
+          <p class="chat-text text-sm font-light line-clamp-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum omnis sequi quidem facilis velit ex libero saepe quam nulla doloribus.</p>
+        </div>
+      </div>
+      <div class="chat-info flex flex-col gap-2">
+        <p class="font-light timestamp justify-self-end">08.00</p>
+        <!-- <ion-badge slot="end" class="bg-green-600 rounded-full py-1 px-2">1</ion-badge> -->
+      </div>
+    </div>
+  </div>
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">chat-list</ion-title>
+    </ion-toolbar>
+  </ion-header>
+</ion-content>
