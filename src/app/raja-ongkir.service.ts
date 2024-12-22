@@ -22,7 +22,7 @@ export class RajaOngkirService {
     return this.http.get(this.baseUrl+url+province_id,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
   }
-  
+
   postOrder(url:any,data:any){
     return this.http.post(this.baseUrl+url,data,
       {headers: new HttpHeaders({'Authorization': 'Bearer ' + this.token}) })
