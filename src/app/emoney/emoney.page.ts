@@ -18,6 +18,7 @@ export class EmoneyPage implements OnInit {
   username = "User123";
   emoney = 0; // Example initial value
   resp:any
+  Token:any
 
   transaction: Transaction[] = [
     {
@@ -86,6 +87,39 @@ export class EmoneyPage implements OnInit {
 
   goToEmoneyHistory(){
     this.router.navigate(['emoney-history'])
+  }
+
+  goToWishlist(){
+    this.Token = localStorage.getItem('userToken')
+    if (this.Token !== null && this.Token.trim() !== '') {
+      console.log('Token exists');
+      this.router.navigate(['/wishlist'])
+    } else {
+      console.log('Token is empty or does not exist');
+      this.router.navigate(['/login'])
+    }
+  }
+
+  goToOrder(){
+    this.Token = localStorage.getItem('userToken')
+    if (this.Token !== null && this.Token.trim() !== '') {
+      console.log('Token exists');
+      this.router.navigate(['/order'])
+    } else {
+      console.log('Token is empty or does not exist');
+      this.router.navigate(['/login'])
+    }
+  }
+
+  goToLoginOrProfile(){
+    this.Token = localStorage.getItem('userToken')
+    if (this.Token !== null && this.Token.trim() !== '') {
+      console.log('Token exists');
+      this.router.navigate(['profile'])
+    } else {
+      console.log('Token is empty or does not exist');
+      this.router.navigate(['/login'])
+    }
   }
 
 }

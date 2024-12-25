@@ -8,3 +8,8 @@
 .button-color {
     --background: #226F54;
 }
+.tab-active {
+    --color: white;
+    background-color: rgba(34,111,84,.6);
+    border-radius: 4px;
+}
