@@ -47,6 +47,9 @@ export class ProfilePage implements OnInit {
   goToTokoProduk(){
     this.router.navigate(['/toko-home-page'])
   }
+  goToReview(){
+    this.router.navigate(['/review-history'])
+  }
   goToVerification(){
     this.router.navigate(['/verifikasi-user'])
   }

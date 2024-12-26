@@ -134,7 +134,11 @@ const routes: Routes = [
   {
     path: 'chat-list',
     loadChildren: () => import('./chat-list/chat-list.module').then( m => m.ChatListPageModule)
+  },  {
+    path: 'review-history',
+    loadChildren: () => import('./review-history/review-history.module').then( m => m.ReviewHistoryPageModule)
   }
+
 
 
 
