@@ -1,0 +1,66 @@
+<ion-header [hidden]="true" [translucent]="true">
+  <ion-toolbar>
+    <ion-title style="font-family: 'Poppins', sans-serif;">Selesaikan Pembayaran</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-no-padding" style="font-family: 'Poppins'; padding: 16px;">
+  <div class="mt-5 mb-5">
+    <a class="flex items-center mb-5" (click)="gotransaksi()">
+      <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2" style="font-size: 24px;"></ion-icon> <!-- Adjusted font size -->
+    </a>
+  </div>  
+  
+  <div style="text-align: center;margin-top: 65px; margin-bottom: 18px;">
+    <h2 style="margin: 0;" class="font-bold">Selesaikan Pembayaran dalam</h2>
+    <p style="font-size: 24px; font-weight: bolder; color: #8B2635;">{{ countdown }}</p>
+    <p style="margin: 0; color: black; font-size: 14px; font-weight:bold">Batas Akhir Pembayaran</p>
+  </div>
+
+  <!-- New Border for Payment Method -->
+  <div style="border: 1px solid gray; border-radius: 15px; padding: 16px; margin: 0 16px 4px 16px;">
+    <h3 style="margin: 0; font-size: 16px;">{{ paymentMethod }}</h3>
+  </div>
+
+  <!-- Existing Border for Payment Details -->
+  <div style="border: 1px solid gray; border-radius: 15px; padding: 16px; margin: 0 16px 16px 16px;">
+    <p>Nomor {{ paymentMethod }}</p>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <p style="font-weight: bold; ">{{ paymentTo }}</p>
+      <button (click)="copyToClipboard()" style="color: #226F54; background: none; border: none; cursor: pointer; font-weight: bold; font-size: 12px;">
+        Salin
+      </button>
+    </div>
+    <p>Total Tagihan</p>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <p style="font-weight: bold; font-size: 16px;">Rp{{ totalAmount | number }}</p>
+      <button (click)="viewPaymentDetails()" style="color: #226F54; background: none; border: none; cursor: pointer; font-weight: bold; font-size: 12px;">
+        Lihat Detail
+      </button>
+    </div>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; margin: 0 16px 16px 16px;">
+    <button (click)="checkTransactionStatus()" style="flex: 1; margin-right: 8px; padding: 6px 12px; font-weight: bold; background-color: white; color: #226F54; border: 2px solid #226F54; border-radius: 15px; font-size: 12px; white-space: nowrap;">
+      Cek Status Transaksi
+    </button>
+    <button (click)="continueShopping()" style="flex: 1; margin-left: 8px; padding: 6px 12px; font-weight: bold; background-color: #226F54; color: white; border-radius: 15px; font-size: 12px;">
+      Belanja Lagi
+    </button>
+  </div>
+
+  <div class="mt-12"> <!-- Added a div for spacing -->
+    <h3 style="margin: 0; font-size: 12px; margin-left: 16px;  margin-bottom: 10px;" class="font-bold">Cara Pembayaran</h3>
+    <p style="margin: 0; margin-left: 16px; font-size: 12px; color: gray;">Untuk pembayaran VA BCA melalui mobile banking, Anda dapat:</p>
+    <ol style="margin: 0; padding-left: 36px; margin-left: 16px; font-size: 12px; color: gray;">
+      <li>1. Buka aplikasi BCA mobile</li>
+      <li>2. Pilih menu m-Transfer</li>
+      <li>3. Pilih menu BCA Virtual Account</li>
+      <li>4. Masukkan nomor BCA Virtual Account</li>
+      <li>5. Klik Send</li>
+      <li>6. Cek nominal yang muncul</li>
+      <li>7. Masukkan PIN m-BCA</li>
+      <li>8. Notifikasi transaksi berhasil akan muncul</li>
+    </ol>
+  </div>
+</ion-content>

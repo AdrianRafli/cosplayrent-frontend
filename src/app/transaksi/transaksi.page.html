@@ -1,0 +1,33 @@
+<ion-header [hidden]="true" [translucent]="true">
+  <ion-toolbar>
+    <ion-title style="font-family: 'Poppins';">Transaksi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-no-padding" style="font-family: 'Poppins'; padding: 0 16px;">
+  <div class="mt-5">
+    <a class="flex items-center mb-5 shadow-md pb-4">
+      <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2" (click)="gohome()"></ion-icon>
+      <span class="text-sm font-semibold" style="font-size: 18px;">Menunggu Pembayaran</span>
+    </a>
+  </div>
+  
+  <div style="padding: 0 16px;">
+    <div *ngFor="let costume of costumes" class="transaction-card shadow-md" style="border: 1px solid #ccc; border-radius: 5px; padding: 16px; margin-bottom: 16px; display: flex; align-items: flex-start;">
+      <img [src]="costume.pictures[0]" alt="{{ costume.name }}" style="width: 60px; height: 80px; border-radius: 5px; margin-right: 16px;" />
+      <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-start;">
+        <h2 style="margin: 0; font-size: 14px; font-weight: bold ;">{{ costume.name }}</h2>
+        <p style="margin: 0; font-size: 12px;">Rp {{ costume.price | number }}</p>
+        <p style="margin: 0; font-size: 12px; font-weight: lighter;">Size: {{ costume.size }}</p>
+      </div>
+
+      <div style="margin-left: auto; text-align: right;">
+        <p style="margin: 0; font-size: 12px; color: black;">Bayar sebelum:</p>
+        <p style="margin: 0; font-size: 12px; color: #8B2635;">{{ costume.paymentDeadline | date: 'dd MMM, HH:mm' }}</p>
+        <button (click)="viewPayment()" class="w-auto py-2 font-bold" style="background-color: white; color: #226F54; border: 2px solid #226F54; border-radius: 5px; font-size: 12px; white-space: nowrap; padding: 6px 12px;">
+          Lihat Cara Bayar
+        </button>              
+      </div>
+    </div>
+  </div>
+</ion-content>

@@ -134,10 +134,16 @@ const routes: Routes = [
   {
     path: 'chat-list',
     loadChildren: () => import('./chat-list/chat-list.module').then( m => m.ChatListPageModule)
-  },  {
-    path: 'review-history',
-    loadChildren: () => import('./review-history/review-history.module').then( m => m.ReviewHistoryPageModule)
+  },
+  {
+    path: 'transaksi',
+    loadChildren: () => import('./transaksi/transaksi.module').then( m => m.TransaksiPageModule)
+  },
+  {
+    path: 'selesaikan-transaksi',
+    loadChildren: () => import('./selesaikan-transaksi/selesaikan-transaksi.module').then( m => m.SelesaikanTransaksiPageModule)
   }
+
 
 
 

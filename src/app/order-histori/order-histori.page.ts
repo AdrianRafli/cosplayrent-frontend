@@ -44,71 +44,7 @@ export class OrderHistoriPage implements OnInit {
       profile_picture: "../../assets/illustration/defaultprofile.jpg", // Gambar profil
       rental_start: "2024-10-09",
       rental_end: "2024-10-17",
-    },
-    {
-      id: "1",
-      status_order: "Belum Dikembalikan",
-      costume_id: 1,
-      costume_name: "Kostum Naruto",
-      costume_price: 10000000,
-      costume_size: "XXL",
-      costume_picture: ["../../assets/illustration/black.jpeg"], // Mengubah menjadi array
-      total: 10000000,
-      updated_at: "2024-10-09",
-      user_id: "1",
-      username: "Raja Cosplay",
-      profile_picture: "../../assets/illustration/defaultprofile.jpg", // Gambar profil
-      rental_start: "2024-10-09",
-      rental_end: "2024-10-16",
-    },
-    {
-      id: "2",
-      status_order: "Selesai",
-      costume_id: 2,
-      costume_name: "Kostum Sasuke",
-      costume_price: 10000000,
-      costume_size: "XXL",
-      costume_picture: ["../../assets/illustration/black.jpeg","../../assets/illustration/black.jpeg"], // Mengubah menjadi array
-      total: 10000000,
-      updated_at: "2024-10-09",
-      user_id: "1",
-      username: "Raja Cosplay",
-      profile_picture: "../../assets/illustration/defaultprofile.jpg", // Gambar profil
-      rental_start: "2024-10-09",
-      rental_end: "2024-10-17",
-    },
-    {
-      id: "1",
-      status_order: "Belum Dikembalikan",
-      costume_id: 1,
-      costume_name: "Kostum Naruto",
-      costume_price: 10000000,
-      costume_size: "XXL",
-      costume_picture: ["../../assets/illustration/black.jpeg"], // Mengubah menjadi array
-      total: 10000000,
-      updated_at: "2024-10-09",
-      user_id: "1",
-      username: "Raja Cosplay",
-      profile_picture: "../../assets/illustration/defaultprofile.jpg", // Gambar profil
-      rental_start: "2024-10-09",
-      rental_end: "2024-10-16",
-    },
-    {
-      id: "2",
-      status_order: "Selesai",
-      costume_id: 2,
-      costume_name: "Kostum Sasuke",
-      costume_price: 10000000,
-      costume_size: "XXL",
-      costume_picture: ["../../assets/illustration/black.jpeg","../../assets/illustration/black.jpeg"], // Mengubah menjadi array
-      total: 10000000,
-      updated_at: "2024-10-09",
-      user_id: "1",
-      username: "Raja Cosplay",
-      profile_picture: "../../assets/illustration/defaultprofile.jpg", // Gambar profil
-      rental_start: "2024-10-09",
-      rental_end: "2024-10-17",
-    },
+    }
   ];
 
   constructor(private router: Router) { }
