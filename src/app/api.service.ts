@@ -74,7 +74,7 @@ export class ApiService {
   }
 
   updateUserDetail(url: any, data: any) {
-    return this.http.put(this.baseUrl + url, data, {
+    return this.http.patch(this.baseUrl + url, data, {
       headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
     });
   }

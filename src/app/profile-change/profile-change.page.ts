@@ -18,6 +18,7 @@ export class ProfileChangePage implements OnInit {
   provinces: any;
   asalKota: any;
   asalProvinsi: any;
+  error:any
   namaAsalKota:any
   namaAsalProvinsi:any
   cities: any;
@@ -52,22 +53,14 @@ export class ProfileChangePage implements OnInit {
             this.asalKota = this.data.origin_city_id;
             this.namaAsalProvinsi = this.data.origin_province_name
             this.namaAsalKota = this.data.origin_city_name
-            console.log('Default Province:', this.asalProvinsi);
-            console.log('Default City:', this.asalKota);
-            console.log("got here")
-            console.log(this.namaAsalKota)
-            console.log(this.namaAsalProvinsi)
             this.fetchProvinces();
-            this.fetchCity();
-           
-            console.log("got here 2")
+            this.fetchCity();           
           } else {
             this.fetchProvinces();
           }
         }
       });
     } else {
-      console.log('Token is empty or does not exist');
       this.router.navigate(['/login']);
     }
   }
@@ -81,16 +74,13 @@ export class ProfileChangePage implements OnInit {
       this.resp = resp;
       if (this.resp.code == 200) {
         this.provinces = this.resp.data;
-        console.log('Provinces loaded:', this.provinces);
       } else {
         console.error('Failed to load provinces');
       }
     });
   }
 
-  onAsalProvinsiChange() {
-    console.log('Province changed to:', this.asalProvinsi);
-  
+  onAsalProvinsiChange() {  
     // Find the province name from the provinces list
     const selectedProvince = this.provinces.find((province: any) => province.province_id === this.asalProvinsi);
     if (selectedProvince) {
@@ -101,29 +91,21 @@ export class ProfileChangePage implements OnInit {
   }
 
   onCityChange() {
-    console.log('City changed to:', this.asalKota);
-    
     // Find the city name from the cities list
     const selectedCity = this.cities.find((city: any) => city.city_id === this.asalKota);
     if (selectedCity) {
       this.selectedCityName = selectedCity.city_name;
-      console.log(this.selectedCityName)
-      console.log(this.selectedProvinceName)
     }
   }
 
   fetchCity() {
     if (!this.asalProvinsi) {
-      console.error('Province ID is not set. Cannot fetch cities.');
       return;
     }
     this.rajaOngkirService.getCity('city/', this.asalProvinsi).subscribe((resp) => {
       this.resp = resp;
       if (this.resp.code == 200) {
         this.cities = this.resp.data;
-        console.log('Cities loaded:', this.cities);
-      } else {
-        console.error('Failed to load cities');
       }
     });
   }
@@ -169,71 +151,78 @@ export class ProfileChangePage implements OnInit {
   async dosave() {
     if (this.isSubmitting) return;
     this.isSubmitting = true;
-
+  
     if (!this.validateFields()) {
       this.isSubmitting = false;
       return;
     }
-
-    // Tampilkan loading sebelum proses
+  
+    // Show loading spinner
     const loading = await this.loadingCtrl.create({
       message: 'loading...',
     });
     await loading.present();
-    
+  
     const formData = new FormData();
-    formData.append('name', this.data.name);
-    formData.append('email', this.data.email);
-    formData.append('address', this.data.address);
-    if (this.selectedProvinceName == null && this.namaAsalProvinsi != null){
-      formData.append('origin_province_name', this.namaAsalProvinsi)
-      formData.append('origin_province_id', this.asalProvinsi)
-    } else {
-      formData.append('origin_province_name', this.selectedProvinceName)
-      formData.append('origin_province_id', this.asalProvinsi)
+  
+    // Append fields only if they have valid values
+    if (this.data.name) {
+      formData.append('name', this.data.name);
     }
-    if (this.selectedCityName == null && this.namaAsalKota != null){
-      formData.append('origin_city_name', this.namaAsalKota)
-      formData.append('origin_city_id', this.asalKota)
-    } else {
-      formData.append('origin_city_name', this.selectedCityName)
-      formData.append('origin_city_id', this.asalKota)
+  
+    if (this.data.email) {
+      formData.append('email', this.data.email);
     }
-    // console.log("Ini selected file:", this.selectedFile);
-    // console.log("Ini profile_picture:", this.data.profile_picture);
+  
+    if (this.data.address) {
+      formData.append('address', this.data.address);
+    }
+  
+    if (this.selectedProvinceName) {
+      formData.append('origin_province_name', this.selectedProvinceName);
+    } else if (this.namaAsalProvinsi) {
+      formData.append('origin_province_name', this.namaAsalProvinsi);
+    }
+  
+    if (this.asalProvinsi) {
+      formData.append('origin_province_id', this.asalProvinsi);
+    }
+  
+    if (this.selectedCityName) {
+      formData.append('origin_city_name', this.selectedCityName);
+    } else if (this.namaAsalKota) {
+      formData.append('origin_city_name', this.namaAsalKota);
+    }
+  
+    if (this.asalKota) {
+      formData.append('origin_city_id', this.asalKota);
+    }
   
     if (this.selectedFile) {
-      console.log("Appending selected profile_picture...");
       formData.append('profile_picture', this.selectedFile, this.selectedFile.name);
-      console.log("Selected file:", this.selectedFile);
-    } else {
-      console.log("No file selected, using existing profile_picture");
+    } else if (this.data.profile_picture) {
       formData.append('profile_picture', this.data.profile_picture);
     }
   
     this.api.updateUserDetail('userdetail', formData)
-    .subscribe(
-      async (resp) => {
-      this.resp = resp;
-      if (this.resp.code = "200") {
-        console.log("Successfully updated profile");
-        await this.router.navigate(['profile'])
-        await loading.dismiss();
-        window.location.reload();
-      } else {
-        await loading.dismiss();
-        console.log("Failed to update profile");
-      }
-      this.isSubmitting = false;
-    },
-    async (error) => {
-      await loading.dismiss();
-      const errormessage = error.error?.data || "An error occurred. Please try again."
-      this.presentAlert(errormessage);
-      this.isSubmitting = false;
-    },
-  );
+      .subscribe(
+        async (resp) => {
+          this.resp = resp;
+          if (this.resp.code == 200) {
+            await this.router.navigate(['profile']);
+            await loading.dismiss();
+            window.location.reload();
+          } else {
+            await loading.dismiss();
+            this.error = this.resp.data
+            this.presentAlert(this.error)
+            this.selectedFile = null
+          }
+          this.isSubmitting = false;
+        },
+      );
   }
+  
 
   onFileSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
