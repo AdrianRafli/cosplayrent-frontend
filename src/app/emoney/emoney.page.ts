@@ -2,12 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
 
-interface Transaction {
-  transaction_type: string;
-  transaction_date: string; 
-  transaction_amount: number;
-}
-
 @Component({
   selector: 'app-emoney',
   templateUrl: './emoney.page.html',
@@ -20,13 +14,11 @@ export class EmoneyPage implements OnInit {
   resp:any
   Token:any
 
-  transaction: Transaction[] = [
-    {
-      transaction_type: "",
-      transaction_date: "",
-      transaction_amount: 0,
-    },
-  ];
+  transaction: { 
+    transaction_type: string; 
+    transaction_date: string; 
+    transaction_amount: number; 
+  }[] = [];
 
   constructor(private router: Router, public api: ApiService){
     this.api.getUserDetail('userdetail').subscribe((resp) => {
