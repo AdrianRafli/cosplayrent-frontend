@@ -104,7 +104,6 @@ export class ApiService {
   }
 
   getUserToOrderStatus(url: any, id: any) {
-    console.log(this.token);
     return this.http.get(this.baseUrl + url + id, {
       headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
     });

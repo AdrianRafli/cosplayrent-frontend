@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
-import { AlertController } from "@ionic/angular";
+import { AlertController,LoadingController } from "@ionic/angular";
 
 @Component({
   selector: 'app-detail-product',
@@ -12,6 +12,7 @@ import { AlertController } from "@ionic/angular";
 export class DetailProductPage implements OnInit {
   
   statusToOrder : any
+  error:any
 
   product = {
     name: 'Costum Naruto',
@@ -103,7 +104,8 @@ export class DetailProductPage implements OnInit {
   review: any = []
   ids = this.costume.id
 
-  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService, private alertController: AlertController) { }
+  constructor(private router: Router, private route: ActivatedRoute, public api:ApiService, private alertController: AlertController, private loadingCtrl: LoadingController,
+  ) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id']
@@ -143,25 +145,26 @@ export class DetailProductPage implements OnInit {
     });
     await alert.present();
   }
+  
 
-  goToCheckout(){
-    this.api.getUserToOrderStatus('checkuserstatus/',this.id).subscribe((resp) => { 
+  async goToCheckout(){
+    const loading = await this.loadingCtrl.create({
+      message: 'loading...',
+    });
+    await loading.present();
+
+    this.api.getUserToOrderStatus('checkuserstatus/',this.id).subscribe(async(resp) => { 
       this.resp = resp
       if (this.resp.code == "200"){
         this.statusToOrder = this.resp.data.status
         console.log(this.statusToOrder)
-        
-        this.router.navigate(['/checkout',this.id]);
+        await this.router.navigate(['/checkout',this.id]);
+      } else {
+        await loading.dismiss()
+        this.error = this.resp.data
+        this.presentAlert(this.error)
       }
-    },(error) => {
-      const errormessage = error.error?.data || "An error occurred. Please try again."
-      if (errormessage == "Token format is not match"){
-        this.presentAlert("Please relogin first or login first")
-      }
-      else {
-        this.presentAlert(errormessage);
-      }
-    },)
+    })
   }
 
   goToChat(){

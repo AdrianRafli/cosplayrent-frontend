@@ -28,16 +28,6 @@ export class HomePage implements OnInit{
   appversion:string = "0.7"
 
   constructor(private router: Router, public api: ApiService, private alertController: AlertController,) {
-    this.api.getCheckApp('checkappversion').subscribe((resp)=> {
-      this.resp = resp
-      console.log("hi")
-      if(this.resp.code == "200"){
-        console.log(this.resp.data)
-        if(this.appversion != "0.7"){
-          this.presentAlert("Versi app tidak sama, mohon update aplikasinya");
-        }
-      }
-    })
    }
 
    async presentAlert(message: string) {
@@ -65,7 +55,15 @@ export class HomePage implements OnInit{
       this.resp = resp
       if(this.resp.code == "200") {
         this.costume = this.resp.data
-        console.log(this.costume)
+      }
+    })
+
+    this.api.getCheckApp('checkappversion').subscribe((resp)=> {
+      this.resp = resp
+      if(this.resp.code == "200"){
+        if(this.appversion != "0.7"){
+          this.presentAlert("Versi app tidak sama, mohon update aplikasinya");
+        }
       }
     })
   }
@@ -77,10 +75,8 @@ export class HomePage implements OnInit{
   goToLoginOrProfile(){
     this.Token = localStorage.getItem('userToken')
     if (this.Token !== null && this.Token.trim() !== '') {
-      console.log('Token exists');
       this.router.navigate(['profile'])
     } else {
-      console.log('Token is empty or does not exist');
       this.router.navigate(['/login'])
     }
   }
@@ -96,30 +92,24 @@ export class HomePage implements OnInit{
   goToWishlist(){
     this.Token = localStorage.getItem('userToken')
     if (this.Token !== null && this.Token.trim() !== '') {
-      console.log('Token exists');
       this.router.navigate(['/wishlist'])
     } else {
-      console.log('Token is empty or does not exist');
       this.router.navigate(['/login'])
     }
   }
   goToOrder(){
     this.Token = localStorage.getItem('userToken')
     if (this.Token !== null && this.Token.trim() !== '') {
-      console.log('Token exists');
       this.router.navigate(['/order'])
     } else {
-      console.log('Token is empty or does not exist');
       this.router.navigate(['/login'])
     }
   }
   goToEmoney(){
     this.Token = localStorage.getItem('userToken')
     if (this.Token !== null && this.Token.trim() !== '') {
-      console.log('Token exists');
       this.router.navigate(['/emoney'])
     } else {
-      console.log('Token is empty or does not exist');
       this.router.navigate(['/login'])
     }
   }

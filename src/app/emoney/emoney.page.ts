@@ -20,7 +20,10 @@ export class EmoneyPage implements OnInit {
     transaction_amount: number; 
   }[] = [];
 
-  constructor(private router: Router, public api: ApiService){
+  constructor(private router: Router, public api: ApiService){}
+  
+
+  ngOnInit() {
     this.api.getUserDetail('userdetail').subscribe((resp) => {
       this.resp = resp
       
@@ -28,10 +31,6 @@ export class EmoneyPage implements OnInit {
         this.username = this.resp.data.name
       }
     })
-  }
-  
-
-  ngOnInit() {
     this.api.getBalance('emoney').subscribe((resp) => {
       this.resp = resp
 
@@ -45,9 +44,8 @@ export class EmoneyPage implements OnInit {
       this.resp = resp
 
       if (this.resp.code == "200"){
-        console.log(this.resp)
         this.transaction = this.resp.data
-      }
+      } 
     })
     // Sort transactions by date and time in descending order
     
