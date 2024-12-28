@@ -26,11 +26,9 @@ export class ProfilePage implements OnInit {
         this.resp = resp;
         if (this.resp.code == "200") {
           this.data = this.resp.data;
-          console.log(this.resp)
         }
       })
     } else {
-      console.log('Token is empty or does not exist');
       this.router.navigate(['/login'])
     }
   }
@@ -52,6 +50,19 @@ export class ProfilePage implements OnInit {
   }
   goToVerification(){
     this.router.navigate(['/verifikasi-user'])
+  }
+
+  deleteAccount(){
+    this.api.getUserDetail('useraccount').subscribe((resp) => {
+      this.resp = resp;
+      if (this.resp.code == "200") {
+        this.data = this.resp.data;
+      }
+    })
+    this.router.navigate(['/home']).then(() => {
+      window.location.reload();
+    });
+    localStorage.removeItem('userToken');
   }
 
   removeToken(){

@@ -5,8 +5,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
   providedIn: "root",
 })
 export class ApiService {
-  baseUrl = 'https://cosplayrent.site/api/'
-  //baseUrl = "http://localhost:8081/api/";
+  //baseUrl = 'https://cosplayrent.site/api/'
+  baseUrl = "http://localhost:8081/api/";
 
   token: any = "";
   constructor(private http: HttpClient) {
@@ -71,6 +71,12 @@ export class ApiService {
     return this.http.put(this.baseUrl + url, data, {
       headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
     });
+  }
+
+  deleteAccount(url:any){
+    return this.http.delete(this.baseUrl + url,{
+      headers:new HttpHeaders({Authorization:"Bearer" + this.token}),
+    })
   }
 
   updateUserDetail(url: any, data: any) {
