@@ -99,7 +99,8 @@ export class RegisterPage implements OnInit {
           window.location.reload();
         } else {
           await loading.dismiss();
-          this.presentAlert("Registration failed. Please try again.");
+          this.presentAlert(this.resp.data)
+          //this.presentAlert("Registration failed. Please try again.");
         }
       this.isSubmitting = false;
     },

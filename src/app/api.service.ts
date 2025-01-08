@@ -75,7 +75,7 @@ export class ApiService {
 
   deleteAccount(url:any){
     return this.http.delete(this.baseUrl + url,{
-      headers:new HttpHeaders({Authorization:"Bearer" + this.token}),
+      headers:new HttpHeaders({Authorization:"Bearer " + this.token}),
     })
   }
 

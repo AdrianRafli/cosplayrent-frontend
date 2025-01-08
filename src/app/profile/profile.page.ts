@@ -53,16 +53,17 @@ export class ProfilePage implements OnInit {
   }
 
   deleteAccount(){
-    this.api.getUserDetail('useraccount').subscribe((resp) => {
+    this.api.deleteAccount('useraccount').subscribe((resp) => {
       this.resp = resp;
+      console.log(this.resp)
       if (this.resp.code == "200") {
         this.data = this.resp.data;
+        this.router.navigate(['/home']).then(() => {
+          window.location.reload();
+        });
+        localStorage.removeItem('userToken');
       }
     })
-    this.router.navigate(['/home']).then(() => {
-      window.location.reload();
-    });
-    localStorage.removeItem('userToken');
   }
 
   removeToken(){
