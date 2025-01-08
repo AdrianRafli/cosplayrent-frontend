@@ -34,7 +34,8 @@ export class TokoProductEditPage implements OnInit {
     created_at: '',
     updated_at: ''
   };
-  
+  categories: any
+
   selectedFile:any
   previewUrl:any
 
@@ -59,6 +60,15 @@ export class TokoProductEditPage implements OnInit {
         }
       })
     }
+
+    this.api.getCategory('categories').subscribe((resp)=> {
+      this.resp = resp
+
+      if (this.resp.code == "200"){
+        this.categories = this.resp.data
+        console.log(this.categories)
+      }
+    })
   }
 
   handleFileInput(event: any) {
@@ -101,7 +111,7 @@ export class TokoProductEditPage implements OnInit {
   }
 
   validateFields(): boolean {
-    const {name, description, bahan, ukuran, berat, kategori, price} = this.data;
+    const {name, description, bahan, ukuran, berat, kategori, price, available} = this.data;
 
     if (!name || name.length < 5 || name.length > 50) {
       this.presentAlert(
@@ -124,23 +134,23 @@ export class TokoProductEditPage implements OnInit {
       return false;
     }
 
-    if (!ukuran || ukuran.length < 5 || ukuran.length > 30) {
+    if (!ukuran || ukuran.length < 0 || ukuran.length > 5) {
       this.presentAlert(
-        "Ukuran must be between 5 and 255 characters."
+        "Ukuran must be between 1 and 5 characters."
       );
       return false;
     }
 
-    if (!berat || berat.length < 1 || berat.length > 30) {
+    if (!berat || berat.length < 0 || berat.length > 4) {
       this.presentAlert(
-        "Berat must be between 1 and 30 characters."
+        "Berat must be between 1 and 4 characters."
       );
       return false;
     }
 
-    if (!kategori || kategori.length < 5 || kategori.length > 30) {
+    if (!kategori || kategori.length > 1 || kategori.length > 30) {
       this.presentAlert(
-        "Kategori must be between 5 and 255 characters."
+        "Kategori must more than 1 character."
       );
       return false;
     }
@@ -148,6 +158,18 @@ export class TokoProductEditPage implements OnInit {
     if (!price || !Number.isInteger(Number(price))) {
       this.presentAlert(
         "Input must be an integer."
+      );
+      return false;
+    }
+    if (!price || !Number.isInteger(Number(price))) {
+      this.presentAlert(
+        "Input must be an integer."
+      );
+      return false;
+    }
+    if (!available || available.length < 5 || available.length > 13){
+      this.presentAlert(
+        "Input must be between 5 characters and 13 characters."
       );
       return false;
     }
@@ -177,6 +199,7 @@ export class TokoProductEditPage implements OnInit {
     formData.append('ukuran', this.data.ukuran)
     formData.append('berat', this.data.berat)
     formData.append('kategori', this.data.kategori)
+    formData.append('available',this.data.available)
     formData.append('price', this.data.price)
 
     if (this.selectedFile) {
@@ -196,22 +219,16 @@ export class TokoProductEditPage implements OnInit {
     .subscribe(
       async (resp) => {
       this.resp = resp;
-      if (this.resp.code = "200") {
+      if (this.resp.code == "200") {
         console.log("Successfully updated costume");
         await this.router.navigate(['toko-produk'])
         await loading.dismiss();
         window.location.reload();
       } else {
         await loading.dismiss();
-        console.log("Failed to update costume");
+        this.presentAlert(this.resp.data)
       }
       this.isSubmitting = false;
-    }, async (error) => {
-      await loading.dismiss();
-      const errormessage = error.error?.data || "An error occurred. Please try again."
-      this.presentAlert(errormessage);
-      this.isSubmitting = false;
-    },
-  );
+    })
   }
 }

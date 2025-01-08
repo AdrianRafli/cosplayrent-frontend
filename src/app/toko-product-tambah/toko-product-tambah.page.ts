@@ -213,6 +213,7 @@ export class TokoProductTambahPage implements OnInit {
     .subscribe(
       async (resp) => {
       this.resp = resp;
+      console.log(this.resp)
       if (this.resp.code == "200") {
         console.log("Successfully updated costume");
         await this.router.navigate(['toko-produk'])

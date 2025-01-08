@@ -219,7 +219,7 @@ export class ApiService {
     });
   }
   updateCostumeById(url: any, id: any, data: any) {
-    return this.http.put(this.baseUrl + url + id, data, {
+    return this.http.patch(this.baseUrl + url + id, data, {
       headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
     });
   }
