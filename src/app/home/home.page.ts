@@ -11,7 +11,8 @@ import { AlertController } from "@ionic/angular";
 })
 export class HomePage implements OnInit{
 
-  categories = ['One Piece', 'Jujutsu Kaisen', 'Naruto', 'Gintama', 'Neon Genesis Evangelion', 'Demon Slayer', 'AOT'];
+  //categories = ['One Piece', 'Jujutsu Kaisen', 'Naruto', 'Gintama', 'Neon Genesis Evangelion', 'Demon Slayer', 'AOT'];
+  categories:any
 
   userData: any = {
     name:'',
@@ -41,20 +42,18 @@ export class HomePage implements OnInit{
   }
 
   ngOnInit() {
-    
-    // this.api.get('verifytoken').subscribe((resp)=> {
-    //   // console.log("login", resp)
-    //   this.resp = resp
-
-    //   if(this.resp.code == "200") {
-    //     this.userData.name = this.resp.data.name
-    //   }})
-    // this.Token = localStorage.getItem('userToken')
-    // console.log(this.Token)
     this.api.getCostumes('costume').subscribe((resp)=>{  
       this.resp = resp
       if(this.resp.code == "200") {
         this.costume = this.resp.data
+      }
+    })
+
+    this.api.getCategory('categories').subscribe((resp)=>{
+      this.resp = resp
+
+      if(this.resp.code == "200"){
+        this.categories = this.resp.data
       }
     })
 

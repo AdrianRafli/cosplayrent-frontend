@@ -1,6 +1,6 @@
 <ion-header [hidden]="true" [translucent]="true">
   <ion-toolbar>
-    <ion-title style="font-family: 'Poppins', sans-serif;">Tambah Produk</ion-title>
+    <ion-title style="font-family: 'Poppins', sans-serif;">Tambah Kostum</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -8,12 +8,12 @@
   <div class="mt-5">
     <a (click)="goToTokoProduk()" class="flex items-center mb-5">
       <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2"></ion-icon> 
-      <span class="text-sm font-bold" style="font-size: 18px;">Tambah Produk</span>
+      <span class="text-sm font-bold" style="font-size: 18px;">Tambah Kostum</span>
     </a>
 
     <form class="px-4">
       <div class="mb-4 items-center justify-between">
-        <label for="product-images" class="block text-sm font-semibold text-gray-900" style="font-size: 16px;">Foto Produk *</label>
+        <label for="product-images" class="block text-sm font-semibold text-gray-900" style="font-size: 16px;">Foto Kostum *</label>
           <!-- <div>
             <input type="file" id="product-images" accept="image/*" multiple required (change)="handleFileInput($event)" class="hidden" />
             <label for="product-images" 
@@ -50,17 +50,17 @@
       </div>
 
       <div class="mb-4">
-        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Nama Produk *</label>
+        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Nama Kostum</label>
         <input type="text" [(ngModel)]="data.name" name="name" id="name" placeholder="{{data.name}}" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
       </div>
 
       <div class="mb-4">
-        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Harga *</label>
+        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Harga</label>
         <input type="number" [(ngModel)]="data.price" name="price" id="price" placeholder="{{data.price}}" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
       </div>
 
       <div class="mb-4">
-        <label for="product-description" class="block mb-2 text-sm font-semibold text-gray-900">Deskripsi Produk *</label>
+        <label for="product-description" class="block mb-2 text-sm font-semibold text-gray-900">Deskripsi Kostum</label>
         <textarea [(ngModel)]="data.description" name="description" id="description" placeholder="{{data.description}}" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-24"></textarea>
       </div>
 
@@ -70,24 +70,40 @@
       </div>
 
       <div class="mb-4">
-        <label for="product-dimensions" class="block mb-2 text-sm font-semibold text-gray-900">Ukuran Produk *</label>
-        <input type="text" [(ngModel)]="data.ukuran" name="ukuran" id="ukuran" placeholder="{{data.ukuran}}" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12">
-        <!-- <ion-select id="product-dimensions" multiple required class="bg-white-50 border border-black text-black-900 rounded-lg w-full h-12" interface="popover" style="font-size: 12px; font-family: 'Poppins', sans-serif; padding: 0; display: flex; align-items: center; justify-content: center;padding-left: 0.5rem"
-                    [(ngModel)]="product.ukuran" name="productSize">
-            <ion-select-option *ngFor="let size of Ukuran" [value]="size" style="font-size: 10px; font-family: 'Poppins', sans-serif;">
-                {{ size }}
-            </ion-select-option>
-        </ion-select> -->
+        <label for="product-dimensions" class="block mb-2 text-sm font-semibold text-gray-900">Ukuran Kostum</label>
+        <select 
+        id="kurir" 
+        [(ngModel)]="data.ukuran" 
+        [ngModelOptions]="{standalone: true}" 
+        class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12"
+      >
+        <option class="text-sm" value="S">S</option>
+        <option class="text-sm" value="M">M</option>
+        <option class="text-sm" value="L">L</option>
+        <option class="text-sm" value="XL">XL</option>
+        <option class="text-sm" value="XXL">XXL</option>
+        <option class="text-sm" value="XXXL">XXXL</option>
+      </select>
       </div>
+
     
       <div class="mb-4">
-        <label for="product-price" class="block mb-2 text-sm font-semibold text-gray-900">Berat *</label>
+        <label for="product-price" class="block mb-2 text-sm font-semibold text-gray-900">Berat (dalam gram)</label>
         <input type="number" [(ngModel)]="data.berat" name="price" id="berat" placeholder="{{data.berat}}" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
       </div>
 
-      <div class="mb-4">
-        <label for="product-category" class="block mb-2 text-sm font-semibold text-gray-900">Kategori *</label>
-        <input type="text" [(ngModel)]="data.kategori" name="kategori" id="kategori" placeholder="{{data.kategori}}" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12">
+      <div class="mb-8">
+        <label for="product-category" class="block mb-2 text-sm font-semibold text-gray-900">Kategori</label>
+        <select 
+          id="category" 
+          [(ngModel)]="data.kategori" 
+          [ngModelOptions]="{standalone: true}" 
+          placeholder="Pilih kategori dari animenya" 
+          class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12">
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
       </div>
       
       <div class="flex justify-center mb-4">

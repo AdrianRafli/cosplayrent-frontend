@@ -12,9 +12,9 @@ import { AlertController, LoadingController } from '@ionic/angular';
 export class TokoProductTambahPage implements OnInit {
   product: any = {nama: "",harga: '', deskripsi: "", bahan: "", ukuran: '', berat: '', kategori:'', ketersedian: ''};
 
-  selectedFiles: string[] = ["../../assets/illustration/black.jpeg"]; 
+  selectedFiles: string[] = ["../../assets/illustration/black.jpeg"];
+  selectedSize: any
   kategori =  ["Naruto", "One Piece", "paket"];
-  Ukuran = ['S', 'M', 'L', 'XL'];
   id:any
   resp:any
   data:any = {
@@ -38,6 +38,10 @@ export class TokoProductTambahPage implements OnInit {
   selectedFile:any
   previewUrl:any
 
+  selectedCategory:any
+
+  categories: any
+
   isSubmitting = false;
   constructor(
     private router: Router, 
@@ -53,7 +57,15 @@ export class TokoProductTambahPage implements OnInit {
       this.resp = resp
       if (this.resp.code == "200"){
         this.userData = this.resp.data
-        console.log(this.userData)
+      }
+    })
+
+    this.api.getCategory('categories').subscribe((resp)=> {
+      this.resp = resp
+
+      if (this.resp.code == "200"){
+        this.categories = this.resp.data
+        console.log(this.categories)
       }
     })
   }
@@ -100,6 +112,13 @@ export class TokoProductTambahPage implements OnInit {
   validateFields(): boolean {
     const {name, description, bahan, ukuran, berat, kategori, price} = this.data;
 
+    if (this.selectedFile == null) {
+      this.presentAlert(
+        "Costume image cannot be empty"
+      )
+      return false;
+    }
+
     if (!name || name.length < 5 || name.length > 50) {
       this.presentAlert(
         "Username must be between 5 and 20 characters."
@@ -121,23 +140,23 @@ export class TokoProductTambahPage implements OnInit {
       return false;
     }
 
-    if (!ukuran || ukuran.length < 5 || ukuran.length > 30) {
+    if (!ukuran || ukuran.length < 0 || ukuran.length > 5) {
       this.presentAlert(
-        "Ukuran must be between 5 and 255 characters."
+        "Ukuran must be between 1 and 5 characters."
       );
       return false;
     }
 
-    if (!berat || berat.length < 0 || berat.length > 30) {
+    if (!berat || berat.length < 0 || berat.length > 4) {
       this.presentAlert(
-        "Berat must be between 1 and 30 characters."
+        "Berat must be between 1 and 4 characters."
       );
       return false;
     }
 
-    if (!kategori || kategori.length < 5 || kategori.length > 30) {
+    if (!kategori || kategori.length > 1 || kategori.length > 30) {
       this.presentAlert(
-        "Kategori must be between 5 and 255 characters."
+        "Kategori must more than 1 character."
       );
       return false;
     }
@@ -155,6 +174,8 @@ export class TokoProductTambahPage implements OnInit {
   async dosave() {
     if (this.isSubmitting) return;
     this.isSubmitting = true;
+
+    console.log("this data ukuran",this.data.ukuran)
 
     if (!this.validateFields()) {
       this.isSubmitting = false;
@@ -186,28 +207,23 @@ export class TokoProductTambahPage implements OnInit {
       formData.append('costume_picture', this.data.costume_picture);
     }
 
-    console.log(formData)
+    console.log(this.data.ukuran)
   
     this.api.createCostume('costume', formData)
     .subscribe(
       async (resp) => {
       this.resp = resp;
-      if (this.resp.code = "200") {
+      if (this.resp.code == "200") {
         console.log("Successfully updated costume");
         await this.router.navigate(['toko-produk'])
         await loading.dismiss();
         window.location.reload(); 
       } else {
         await loading.dismiss();
-        console.log("Failed to update costume");
+        this.presentAlert(this.resp.data)
       }
       this.isSubmitting = false;
-    }, async (error) => {
-      await loading.dismiss();
-      const errormessage = error.error?.data || "An error occurred. Please try again."
-      this.presentAlert(errormessage);
-      this.isSubmitting = false;
-    },
+    }
   );
     
   }

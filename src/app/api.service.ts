@@ -37,6 +37,12 @@ export class ApiService {
     });
   }
 
+  getCategory(url:any){
+    return this.http.get(this.baseUrl + url,{
+      headers: new HttpHeaders({ Authorization:"Bearer " + this.token})
+    })
+  }
+
   getCostumesById(url: any, id: string) {
     return this.http.get(this.baseUrl + url + id, {
       headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
