@@ -40,8 +40,7 @@ export class VerifikasiUserPage implements OnInit {
   ngOnInit() {
     this.api.getIdentityCard('identitycard').subscribe((resp) => {
       this.resp = resp;
-      if (this.resp.code = "200") {
-        console.log(this.resp)
+      if (this.resp.code == "200") {
         this.identityCardPicture = this.resp.data.identitycard_picture
       } else {
         console.log("Failed to get identity card picture");
@@ -75,27 +74,23 @@ export class VerifikasiUserPage implements OnInit {
       formData.append('identity_card', this.data.profile_picture);
     }
   
-    this.api.updateIdentityCard('identitycard', formData)
-    .subscribe(
+    this.api.updateIdentityCard('identitycard', formData).subscribe(
       async (resp) => {
       this.resp = resp;
-      if (this.resp.code = "200") {
+      console.log(this.resp)
+      if (this.resp.code == 200) {
         console.log("Successfully updated profile");
         await this.router.navigate(['profile']);
         await loading.dismiss();
         window.location.reload();
+        this.isSubmitting = false
       } else {
         await loading.dismiss();
-        console.log("Failed to update profile");
+        await this.presentAlert(this.resp.data)
+        this.selectedFile = null
+        this.isSubmitting = false
       }
-      this.isSubmitting = false;
-    }, async (error) => {
-      await loading.dismiss();
-      const errormessage = error.error?.data || "An error occurred. Please try again."
-      this.presentAlert(errormessage);
-      this.isSubmitting = false;
-    },
-  );
+      })
   }
 
   onFileSelected(event: Event): void {

@@ -79,6 +79,12 @@ export class ApiService {
     })
   }
 
+  getSellerStatus(url:any){
+    return this.http.get(this.baseUrl + url,{
+      headers:new HttpHeaders({Authorization:"Bearer " + this.token}),
+    })
+  }
+
   updateUserDetail(url: any, data: any) {
     return this.http.patch(this.baseUrl + url, data, {
       headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
