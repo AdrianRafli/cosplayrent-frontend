@@ -74,7 +74,7 @@ export class TopupPaymentPage implements OnInit {
 
       if (this.resp.code == "200"){
         console.log(this.resp)
-        if (this.resp.data.top_up_order_status_payment == "true") {
+        if (this.resp.data.top_up_order_status_payment == "Paid") {
           console.log(this.resp.data.top_up_order_status_payment)
           this.statuspayment = true
           setTimeout(() => {

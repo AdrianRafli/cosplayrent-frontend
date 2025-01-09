@@ -59,13 +59,36 @@ export class PaymentPage implements OnInit {
   }
 
   goToHome() {
-    this.router.navigate(['/home']);
+    // Reset all the properties
+    this.receivedData = null;
+    this.receivedData1 = null;
+    this.resp = {
+      id: "",
+      user_id: "",
+      seller_id: "",
+      costume_id: 0,
+      shipping_id: 0,
+      total: 0,
+      status_payment: false,
+      status_shipping: false,
+      is_canceled: false,
+      created_at: "",
+      updated_at: "",
+    };
+    this.statuspayment = null;
+  
+    // Navigate to home and reload
+    this.router.navigate(['/home']).then(() => {
+      window.location.reload();
+    });
   }
+  
 
   goToMidtrans() {
     if (this.isSubmitting) return;
     this.isSubmitting = true;
 
+    console.log(this.receivedData)
     window.open(this.receivedData, '_blank');
     
     this.isSubmitting = false;
@@ -87,13 +110,16 @@ export class PaymentPage implements OnInit {
       this.resp = resp
       if (this.resp.code == "200"){
         console.log(this.resp)
-        if (this.resp.data.status_payment ==  true){
+        if (this.resp.data.status_payment ==  'Paid'){
           this.statuspayment = true
           console.log("Status payment is true")
 
-          await this.router.navigate(['/home'])
           await loading.dismiss();
-          window.location.reload();
+          setTimeout(() => {
+            this.router.navigate(['/home']).then(() => {
+              window.location.reload();
+            });
+          }, 1000);
 
           this.isSubmitting = false;
         } else {

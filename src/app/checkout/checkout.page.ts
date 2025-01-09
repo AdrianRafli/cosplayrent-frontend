@@ -36,8 +36,14 @@ export class CheckoutPage implements OnInit {
     costume_category:'',
     costume_price:0,
     merchant_name:'',
-    total:0
+    shipment_destination:'',
+    shipment_origin:'',
+    total:0,
+    payment_method:'',
   }
+
+  condition:any
+  
   courierPrice:any
   costData:any
   listKotaAsal:any
@@ -74,7 +80,7 @@ export class CheckoutPage implements OnInit {
   selectedProvinceName:any
   selectedPaymentMethod: any;
   isSubmitting=false
-  showEmoneyBalance: number = 100000; // Variable to hold the E-Money balance
+  showEmoneyBalance: any
   paymentMethods = [
     { id: 'emoney', label: 'E-Money', value: 'emoney', icon: '../../assets/illustration/icons8-money-50.png/', balance: 10000 },
     { id: 'bca', label: 'Pembayaran Lainnya', value: 'payment', icon: '../../assets/illustration/icons8-payment-100.png/' },
@@ -83,16 +89,34 @@ export class CheckoutPage implements OnInit {
   constructor(private router: Router, private route: ActivatedRoute, public api: ApiService, private rajaOngkirService: RajaOngkirService, private alertController: AlertController, private loadingCtrl: LoadingController) { }
 
   ngOnInit() {
+    this.condition = "Order"
     this.id = this.route.snapshot.params['costumeID']
     this.api.getUserDetail('userdetail').subscribe((resp)=> {
       // console.log(resp)
       this.resp = resp
       if(this.resp.code == "200") {
+        this.api.getBalance('emoney').subscribe((resp) => {
+          this.resp = resp
+    
+          if (this.resp.code == "200"){
+            console.log(this.resp)
+            this.showEmoneyBalance = this.resp.data.emoney_amount
+          }
+        })
         this.userData = this.resp.data
+        console.log("bruh",this.resp.data)
+        this.selectedCityName = this.resp.data.origin_city_name
+        console.log(this.selectedCityName)
         this.api.getCostumesById('costume/', this.id).subscribe((resp)=> {
           this.resp = resp
           this.costume = this.resp
-          console.log(this.costume)
+          console.log(this.resp.data)
+          this.orderToMidtransRequest.costume_category = this.costume.data.kategori
+          this.orderToMidtransRequest.costume_price = this.costume.data.price
+          this.orderToMidtransRequest.costume_id = this.costume.data.id
+          this.orderToMidtransRequest.merchant_name = this.costume.data.username
+          this.orderToMidtransRequest.seller_id = this.costume.data.user_id
+          this.orderToMidtransRequest.costume_name = this.costume.data.name
           this.selectedWeight = this.costume.data.berat
         })
         this.asalProvinsi = this.resp.data.origin_province_id
@@ -224,7 +248,7 @@ export class CheckoutPage implements OnInit {
 
     // Check if a courier is selected
     if (this.courierPrice == 0) {
-        await this.presentAlert("You need to choose a courier first");
+        await this.presentAlert("You need to choose a courier service first");
         this.isSubmitting = false;
         return;
     }
@@ -249,58 +273,63 @@ export class CheckoutPage implements OnInit {
     // Check if the selected payment method is E-Money
     if (this.selectedPaymentMethod === 'emoney') {
         console.log("Using E-Money to Pay");
-
-        // Check user balance with the order amount
-        this.api.checkUserBalanceWithOrderAmount('checkbalancewithorderamount', this.orderRequestStatus).subscribe(async (resp) => {
-            this.resp = resp;
-            if (this.resp.code == "200") {
-                // Proceed with E-Money payment logic here
-                console.log("E-Money payment successful");
-                // You can add any additional logic for E-Money payment here
-                await this.presentAlert("Pay with E-money balance");
-            } else {
-                await this.presentAlert("Insufficient E-Money balance.");
-            }
+        this.orderToMidtransRequest.shipment_destination = this.selectedCityName
+        this.orderToMidtransRequest.shipment_origin = this.kotaTujuanNama
+        this.orderToMidtransRequest.total = this.totalSewa;
+        this.orderToMidtransRequest.payment_method = "Emoney"
+        console.log(this.orderToMidtransRequest);
+        
+        this.api.createOrder('order', this.orderToMidtransRequest).subscribe(async (resp) => {
+          this.resp = resp;
+          
+          if (this.resp.code == "200") {
+            console.log(this.resp)
+              await loading.dismiss();
+              await this.router.navigate(['/home']).then(() => {
+                window.location.reload();
+              });
+          } else {
             await loading.dismiss();
-            this.isSubmitting = false;
-        }, async (error) => {
-            await loading.dismiss();
-            const errormessage = error.error?.data || "An error occurred. Please try again.";
-            await this.presentAlert(errormessage);
-            this.isSubmitting = false;
-        });
+            this.presentAlert(this.resp.data)
+          }
+          this.isSubmitting = false;
+      });
     } else {
         // Logic for Midtrans payment
         console.log("Using Midtrans to Pay");
 
         // Prepare the order request for Midtrans
-        this.orderToMidtransRequest.seller_id = this.costume.data.user_id;
-        this.orderToMidtransRequest.costume_id = this.costume.data.id;
-        this.orderToMidtransRequest.costume_name = this.costume.data.name;
-        this.orderToMidtransRequest.costume_category = this.costume.data.kategori;
-        this.orderToMidtransRequest.costume_price = this.costume.data.price;
-        this.orderToMidtransRequest.merchant_name = this.costume.data.username;
+        // this.orderToMidtransRequest.seller_id = this.costume.seller_id;
+        // this.orderToMidtransRequest.costume_id = this.costume.costume_id;
+        // this.orderToMidtransRequest.costume_name = this.costume.costume_name;
+        // this.orderToMidtransRequest.costume_category = this.costume.costume_category;
+        // this.orderToMidtransRequest.costume_price = this.costume.costume_price;
+        // this.orderToMidtransRequest.merchant_name = this.costume.merchant_name;
+        this.orderToMidtransRequest.shipment_destination = this.selectedCityName
+        this.orderToMidtransRequest.shipment_origin = this.kotaTujuanNama
         this.orderToMidtransRequest.total = this.totalSewa;
+        this.orderToMidtransRequest.payment_method = "Midtrans"
         console.log(this.orderToMidtransRequest);
 
-        // Create the order directly to Midtrans
-        this.api.createOrderDirectlyToMidtrans('order/midtrans', this.orderToMidtransRequest).subscribe(async (resp) => {
+        this.api.createOrder('order', this.orderToMidtransRequest).subscribe(async (resp) => {
             this.resp = resp;
+            
             if (this.resp.code == "200") {
-                console.log(this.resp);
-                await this.router.navigate(['/payment'], {
+              console.log(this.resp)
+                await loading.dismiss();
+                await this.router.navigate(['/selesaikan-transaksi'], {
                     state: {
                         data: this.resp.data.redirect_url,
-                        data1: this.resp.data.order_id
+                        data1: this.resp.data.order_id,
+                        data2: this.orderToMidtransRequest.total,
+                        data3: this.resp.data.midtrans_expired_time,
+                        data4: this.condition
                     }
                 });
+            } else {
+              await loading.dismiss();
+              this.presentAlert(this.resp.data)
             }
-            await loading.dismiss();
-            this.isSubmitting = false;
-        }, async (error) => {
-            await loading.dismiss();
-            const errormessage = error.error?.data || "An error occurred. Please try again.";
-            await this.presentAlert(errormessage);
             this.isSubmitting = false;
         });
     }
@@ -313,11 +342,10 @@ export class CheckoutPage implements OnInit {
     
     if (selectedMethod) {
       console.log("Selected Payment Method:", this.selectedPaymentMethod);
-      // No need to set the balance conditionally anymore
     }
   }
   navigateToPayment() {
-    this.router.navigate(['/emoney']); // Navigate to the payment page
+    this.router.navigate(['/emoney']);
   }
 
 }

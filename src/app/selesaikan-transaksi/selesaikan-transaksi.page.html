@@ -1,9 +1,6 @@
 <ion-header [hidden]="true" [translucent]="true">
-  <ion-toolbar>
-    <ion-title style="font-family: 'Poppins', sans-serif;">Selesaikan Pembayaran</ion-title>
-  </ion-toolbar>
-</ion-header>
 
+</ion-header>
 <ion-content [fullscreen]="true" class="ion-no-padding" style="font-family: 'Poppins'; padding: 16px;">
   <div class="mt-5 mb-5">
     <a class="flex items-center mb-5" (click)="gotransaksi()">
@@ -11,45 +8,54 @@
     </a>
   </div>  
   
-  <div style="text-align: center;margin-top: 65px; margin-bottom: 18px;">
-    <h2 style="margin: 0;" class="font-bold">Selesaikan Pembayaran dalam</h2>
-    <p style="font-size: 24px; font-weight: bolder; color: #8B2635;">{{ countdown }}</p>
-    <p style="margin: 0; color: black; font-size: 14px; font-weight:bold">Batas Akhir Pembayaran</p>
+  <div style="text-align: center;" class="flex flex-col gap-y-2 mb-5">
+    <h2 style="margin: 0;" class="font-bold text-xl">Selesaikan Pembayaran dalam</h2>
+    <p style="font-weight: bolder; color: #8B2635;" class="text-2xl">{{ countdown }}</p>
+    <p style="margin: 0; color: black; font-weight:bold" class="text-xl">Batas Akhir Pembayaran</p>
   </div>
 
   <!-- New Border for Payment Method -->
   <div style="border: 1px solid gray; border-radius: 15px; padding: 16px; margin: 0 16px 4px 16px;">
-    <h3 style="margin: 0; font-size: 16px;">{{ paymentMethod }}</h3>
+    <h3 style="margin: 0;" class="text-lg">Midtrans</h3>
   </div>
 
   <!-- Existing Border for Payment Details -->
-  <div style="border: 1px solid gray; border-radius: 15px; padding: 16px; margin: 0 16px 16px 16px;">
-    <p>Nomor {{ paymentMethod }}</p>
+  <div style="border: 1px solid gray; border-radius: 15px; padding: 16px; margin: 20px 16px 16px 16px;">
+    <p class="text-lg">Link pembayaran melalui Midtrans</p>
     <div style="display: flex; justify-content: space-between; align-items: center;">
-      <p style="font-weight: bold; ">{{ paymentTo }}</p>
-      <button (click)="copyToClipboard()" style="color: #226F54; background: none; border: none; cursor: pointer; font-weight: bold; font-size: 12px;">
+      <p style="font-weight: bold; " class="text-lg mt-1 truncate w-3/4">{{ receivedData }}</p>
+      <button (click)="copyToClipboard()" style="color: #226F54; background: none; border: none; cursor: pointer; font-weight: bold;" class="text-lg mt-1  transition duration-200  active:scale-125">
         Salin
       </button>
     </div>
-    <p>Total Tagihan</p>
+    <p class="mt-4 text-lg">Total Tagihan</p>
     <div style="display: flex; justify-content: space-between; align-items: center;">
-      <p style="font-weight: bold; font-size: 16px;">Rp{{ totalAmount | number }}</p>
-      <button (click)="viewPaymentDetails()" style="color: #226F54; background: none; border: none; cursor: pointer; font-weight: bold; font-size: 12px;">
+      <p style="font-weight: bold; " class="text-lg mt-1">Rp{{ receivedData2 | number }}</p>
+      <!-- <button (click)="viewPaymentDetails()" style="color: #226F54; background: none; border: none; cursor: pointer; font-weight: bold;" class="text-lg">
         Lihat Detail
-      </button>
+      </button> -->
     </div>
   </div>
 
-  <div style="display: flex; justify-content: space-between; margin: 0 16px 16px 16px;">
+  <!-- <div style="display: flex; justify-content: space-between; margin: 0 16px 16px 16px;">
+    <button (click)="continueShopping()" style="flex: 1; margin-left: 8px; padding: 6px 12px; font-weight: bold; background-color: #226F54; color: white; border-radius: 15px; font-size: 17px;">
+      Belanja Lagi
+    </button>
     <button (click)="checkTransactionStatus()" style="flex: 1; margin-right: 8px; padding: 6px 12px; font-weight: bold; background-color: white; color: #226F54; border: 2px solid #226F54; border-radius: 15px; font-size: 12px; white-space: nowrap;">
       Cek Status Transaksi
     </button>
-    <button (click)="continueShopping()" style="flex: 1; margin-left: 8px; padding: 6px 12px; font-weight: bold; background-color: #226F54; color: white; border-radius: 15px; font-size: 12px;">
-      Belanja Lagi
+  </div> -->
+
+  <div class="flex flex-row justify-center gap-x-5 px-5 mt-5">
+    <button class="w-1/2">
+      <h1 style="background-color: #226F54;" class="text-md px-3 py-4 rounded-2xl outline outline-1 font-semibold text-white">Belanja Lagi</h1>
+    </button>
+    <button class="w-1/2">
+      <h1  style="color: #226F54;" class="text-md px-3 py-4 rounded-2xl outline outline-1 font-semibold" (click)="goToCheckOrder()">Cek Status</h1>
     </button>
   </div>
 
-  <div class="mt-12"> <!-- Added a div for spacing -->
+  <!-- <div class="mt-12">
     <h3 style="margin: 0; font-size: 12px; margin-left: 16px;  margin-bottom: 10px;" class="font-bold">Cara Pembayaran</h3>
     <p style="margin: 0; margin-left: 16px; font-size: 12px; color: gray;">Untuk pembayaran VA BCA melalui mobile banking, Anda dapat:</p>
     <ol style="margin: 0; padding-left: 36px; margin-left: 16px; font-size: 12px; color: gray;">
@@ -62,5 +68,5 @@
       <li>7. Masukkan PIN m-BCA</li>
       <li>8. Notifikasi transaksi berhasil akan muncul</li>
     </ol>
-  </div>
+  </div> -->
 </ion-content>

@@ -228,4 +228,9 @@ export class ApiService {
       headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
     });
   }
+  createOrder(url:any, data:any){
+    return this.http.post(this.baseUrl+url,data, {
+      headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
+    })
+  }
 }

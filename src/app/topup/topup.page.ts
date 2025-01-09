@@ -25,9 +25,10 @@ export class TopupPage implements OnInit {
   emoney = 0;
   total = 0
   isSubmitting = false;
-
+  condition:any
 
   ngOnInit() {
+    this.condition = "Topup Order"
     this.api.getBalance('emoney').subscribe((resp) => {
       this.resp = resp
 
@@ -68,22 +69,22 @@ export class TopupPage implements OnInit {
         console.log(this.resp)
         this.redirecturl = this.resp.data.redirect_url
         console.log(this.redirecturl)
-        await this.router.navigate(['/topup-payment'],
+        await loading.dismiss();
+        await this.router.navigate(['/selesaikan-transaksi'],
           {
             state: {
               data: this.resp.data.redirect_url,
-              data1: this.resp.data.order_id
+              data1: this.resp.data.order_id,
+              data2:this.data.Emoney_amount,
+              data3:this.resp.data.midtrans_expired_time,
+              data4: this.condition
             }
           }
         )
+      } else {
         await loading.dismiss();
-        //window.open(this.redirecturl,'_blank')
+        this.presentAlert(this.resp.data)
       }
-      this.isSubmitting = false;
-    }, async (error) => {
-      await loading.dismiss();
-      const errormessage = error.error?.data || "An error occurred. Please try again."
-      this.presentAlert(errormessage);
       this.isSubmitting = false;
     },)
   }

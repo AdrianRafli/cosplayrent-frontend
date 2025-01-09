@@ -113,7 +113,7 @@ export class DetailProductPage implements OnInit {
     this.api.getCostumesById('costume/', this.id).subscribe((resp)=> {
       this.resp = resp
 
-      if(this.resp.code == 200) {
+      if(this.resp.code == "200") {
         this.costume = this.resp.data
         console.log(this.costume)
       }
@@ -157,8 +157,8 @@ export class DetailProductPage implements OnInit {
       this.resp = resp
       if (this.resp.code == "200"){
         this.statusToOrder = this.resp.data.status
-        console.log(this.statusToOrder)
         await this.router.navigate(['/checkout',this.id]);
+        await loading.dismiss();
       } else {
         await loading.dismiss()
         this.error = this.resp.data
