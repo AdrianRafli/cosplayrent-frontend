@@ -13,6 +13,8 @@ export class DetailProductPage implements OnInit {
   
   statusToOrder : any
   error:any
+  fillColor: string = '#000000';
+  wishlist:boolean =false
 
   product = {
     name: 'Costum Naruto',
@@ -135,6 +137,14 @@ export class DetailProductPage implements OnInit {
          console.log(this.Allcostume)
        }
      })
+  }
+
+  updateWishlist(wishlistStatus: boolean) {
+    if (wishlistStatus == true){
+      this.wishlist = false
+    } else {
+      this.wishlist = true
+    }
   }
 
   async presentAlert(message: string) {
