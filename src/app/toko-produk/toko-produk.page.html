@@ -22,23 +22,27 @@
 
   <ion-searchbar placeholder="Cari produk"></ion-searchbar>
   <div *ngIf="costume?.length > 0; else noData">
-    <div *ngFor="let costumeItem of costume" class="product-item">
-      <ion-card class="flex flex-col">
-        <div class="flex gap-4">
-          <img [src]="costumeItem.costume_picture" class="p-2 produk-image" alt="Produk Image">
-          <div class="flex flex-col gap-2 ">
-            <div class="pt-2 ">
-              <h2 class="font-bold">{{ costumeItem.name }}</h2>
-              <p>Rp {{ costumeItem.price }}</p>
-              <p>Size: {{ costumeItem.ukuran }}</p>
-            </div>
-            <div class="action-buttons pb-2 pe-2 flex">
-              <ion-button size="small" class="button-color" (click)="editProduct(costumeItem.id)">Edit</ion-button> 
-              <ion-button size="small" color="danger" (click)="deleteProduct(costumeItem.id)">Hapus</ion-button>
+    <div *ngFor="let costumeItem of costume" class="">
+      <div class="flex flex-col w-full ">
+        <div class="flex gap-x-4 shadow-xl">
+          <img [src]="costumeItem.costume_picture" class="p-2 w-1/4 h-1/4" alt="Produk Image">
+          <div class="flex flex-col gap-2 w-full">
+            <div class="flex flex-row w-full">
+              <div class="pt-2 w-full">
+                <h2 class="font-bold">{{ costumeItem.name }}</h2>
+                <p>Rp {{ costumeItem.price }}</p>
+                <div class="flex mt-3">
+                  <p class="w-1/2 ">Size: {{ costumeItem.ukuran }}</p>
+                 <div class="flex gap-x-4 pr-2 pb-4">
+                  <button (click)="editProduct(costumeItem.id)" class="items-center px-4 py-1 rounded-lg outline outline-1 font-semibold">Edit</button>
+                  <button (click)="editProduct(costumeItem.id)" class="items-center px-3 py-1 rounded-lg outline outline-1 font-semibold outline-red-500 text-red-500">Hapus</button>
+                 </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </ion-card>
+      </div>
     </div>
   </div>
   

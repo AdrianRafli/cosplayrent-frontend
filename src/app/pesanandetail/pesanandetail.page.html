@@ -73,7 +73,7 @@
         <input type="number" name="name" id="name" value=""  [(ngModel)]="nomorresi"  required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
       </div>
 
-      <div *ngIf="status === 'Pending'" class="mb-4">
+      <div *ngIf="status === 'Paid'" class="mb-4">
         <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Response</label>
         <textarea type="text" name="name" id="name" [(ngModel)]="description" placeholder="Type your response here" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12"></textarea>
       </div>
@@ -109,7 +109,7 @@
         </div>
       </div>
 
-      <div *ngIf="status === 'Pending'">
+      <div *ngIf="status === 'Paid'">
         <div class="flex mt-5">
           <div class="flex justify-center mb-4 w-full">
             <button type="submit" (click)="doAccept()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Terima Pesanan</button>
