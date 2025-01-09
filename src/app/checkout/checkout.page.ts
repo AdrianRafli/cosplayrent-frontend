@@ -272,6 +272,11 @@ export class CheckoutPage implements OnInit {
 
     // Check if the selected payment method is E-Money
     if (this.selectedPaymentMethod === 'emoney') {
+        if (this.showEmoneyBalance <= this.totalSewa){
+          await loading.dismiss()
+          await this.presentAlert("Sufficient amount of money")
+        }
+        else{
         console.log("Using E-Money to Pay");
         this.orderToMidtransRequest.shipment_destination = this.selectedCityName
         this.orderToMidtransRequest.shipment_origin = this.kotaTujuanNama
@@ -292,8 +297,9 @@ export class CheckoutPage implements OnInit {
             await loading.dismiss();
             this.presentAlert(this.resp.data)
           }
-          this.isSubmitting = false;
-      });
+          
+      });}
+      this.isSubmitting = false;
     } else {
         // Logic for Midtrans payment
         console.log("Using Midtrans to Pay");
