@@ -18,7 +18,7 @@
 
   <ion-searchbar placeholder="Cari produk"></ion-searchbar>
   <!-- <div *ngFor="let wishlist of wishlist" class="product-item"> -->
-    <ion-card class="flex flex-col">
+    <!-- <ion-card class="flex flex-col">
       <div class="flex gap-4">
         <img src="../../assets/product/kostum-1.png" class="p-2 produk-image" alt="Produk Image">
         <div class="flex flex-col gap-2">
@@ -28,12 +28,33 @@
             <p>Size: L</p>
           </div>
           <div class="action-buttons pb-2 pe-2 flex justify-end">
-            <ion-button size="small" class="button-color">Keranjang</ion-button> <!--(click)="editProduct(product)"-->
-            <ion-button size="small" color="danger">Hapus</ion-button> <!--(click)="deleteProduct(product)"-->
+            <ion-button size="small" class="button-color">Keranjang</ion-button> 
+            <ion-button size="small" color="danger">Hapus</ion-button>
           </div>
         </div>
       </div>
-    </ion-card>
+    </ion-card> -->
+
+    <div class="flex flex-col w-full ">
+      <div *ngFor="let costume of costume" class="flex gap-x-4 shadow-xl">
+        <img [src]="costume.costume_picture" class="p-2 w-1/4 h-1/4" alt="Produk Image">
+        <div class="flex flex-col gap-2 w-full">
+          <div class="flex flex-row w-full">
+            <div class="pt-2 w-full">
+              <h2 class="font-bold">{{costume.costume_name}}</h2>
+              <p>Price: {{costume.costume_price}}</p>
+              <div class="flex mt-3">
+                <p class="w-1/2 ">Size: {{costume.costume_size}}</p>
+               <div class="flex gap-x-4 pr-2 pb-4 ">
+                <button class="px-2 py-1 rounded-lg outline outline-1 outline-[#226F54] text-[#226F54] font-semibold">Keranjang</button>
+                <button class="px-2 py-1 rounded-lg outline outline-1 font-semibold outline-red-500 text-red-500" (click)="removeFromWishlist(costume.costume_id)">Hapus</button>
+               </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   <!-- </div> -->
 
 </ion-content>

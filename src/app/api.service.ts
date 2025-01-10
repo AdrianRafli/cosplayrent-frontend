@@ -245,4 +245,34 @@ export class ApiService {
       headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
     })
   }
+
+  postWishlist(url:any,id:any){
+    return this.http.post(this.baseUrl+url+id, {
+      headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
+    })
+  }
+
+  kirimWishlist(url: any, id: any) {
+    console.log("this is token",this.token)
+    return this.http.post(this.baseUrl + url + id, {}, {
+      headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
+    });    
+  }
+  deleteWishlist(url:any,id:any){
+    return this.http.delete(this.baseUrl+url+id, {
+      headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
+    })
+  }
+
+  getWishlistStatsuById(url:any,id:any){
+    return this.http.get(this.baseUrl+url+id, {
+      headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
+    })
+  }
+
+  getAllWishlist(url:any){
+    return this.http.get(this.baseUrl+url, {
+      headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
+    })
+  }
 }

@@ -10,12 +10,29 @@ import { ApiService } from '../api.service';
 export class WishlistPage implements OnInit {
 
   Token:any
+  resp:any
+  costume:any=[]
 
   constructor(private router: Router, public api: ApiService) { }
 
   ngOnInit() {
+    this.api.getAllWishlist('wishlist').subscribe((resp)=>{
+      this.resp = resp
+      if (this.resp.code == "200"){
+        this.costume = this.resp.data
+      }
+    })
   }
 
+  removeFromWishlist(costumeid: number){
+    this.api.deleteWishlist('wishlist/',costumeid).subscribe((resp)=>{
+      this.resp = resp
+
+      if (this.resp.code == "200"){
+        window.location.reload()
+      }
+    })
+  }
 
   goToHome(){
     this.router.navigate(['/home'])

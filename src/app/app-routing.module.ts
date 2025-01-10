@@ -83,10 +83,10 @@ const routes: Routes = [
     path: 'payment',
     loadChildren: () => import('./payment/payment.module').then( m => m.PaymentPageModule)
   },
-  // {
-  //   path: 'wishlist',
-  //   loadChildren: () => import('./wishlist/wishlist.module').then( m => m.WishlistPageModule)
-  // },
+  {
+    path: 'wishlist',
+    loadChildren: () => import('./wishlist/wishlist.module').then( m => m.WishlistPageModule)
+  },
   {
     path: 'verifikasi-user',
     loadChildren: () => import('./verifikasi-user/verifikasi-user.module').then( m => m.VerifikasiUserPageModule)

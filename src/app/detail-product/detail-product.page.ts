@@ -14,7 +14,7 @@ export class DetailProductPage implements OnInit {
   statusToOrder : any
   error:any
   fillColor: string = '#000000';
-  wishlist:boolean =false
+  wishlist:any="False"
 
   product = {
     name: 'Costum Naruto',
@@ -117,15 +117,12 @@ export class DetailProductPage implements OnInit {
 
       if(this.resp.code == "200") {
         this.costume = this.resp.data
-        console.log(this.costume)
       }
 
       this.api.getReviewByCostumeId('costume/',this.costume.id).subscribe((resp)=>{
-        console.log(this.costume.id)
         this.resp = resp
         if(this.resp.code == "200") {
           this.review = this.resp.data
-          console.log(this.review)
         }
       })
     })
@@ -137,13 +134,43 @@ export class DetailProductPage implements OnInit {
          console.log(this.Allcostume)
        }
      })
+
+    console.log(this.wishlist)
+    this.api.getWishlistStatsuById('wishlist/',this.id).subscribe((resp)=>{
+      this.resp = resp
+      if(this.resp.code == "200"){
+        this.wishlist = "True"
+      } else {
+        this.wishlist = "False"
+      }
+    })
   }
 
-  updateWishlist(wishlistStatus: boolean) {
-    if (wishlistStatus == true){
-      this.wishlist = false
-    } else {
-      this.wishlist = true
+  updateWishlist(wishlistStatus: string, costumeId: number) {
+    console.log("status:",wishlistStatus)
+    console.log("costume id:", costumeId)
+    if (wishlistStatus == "True"){
+      this.api.deleteWishlist('wishlist/',costumeId).subscribe((resp)=>{
+        this.resp = resp
+         if(this.resp.code == "200") {
+           console.log("mana 2", this.resp)
+           this.wishlist = "False"
+           //window.location.reload()
+         } else {
+          this.presentAlert(this.resp.data)
+         }
+       })
+    } else if (wishlistStatus == "False") {
+       this.api.kirimWishlist('wishlist/',costumeId).subscribe((resp)=>{
+        this.resp = resp
+         if(this.resp.code == "200") {
+           console.log("mana",this.Allcostume)
+           this.wishlist = "True"
+           //window.location.reload()
+         } else {
+          this.presentAlert(this.resp.data)
+         }
+       })
     }
   }
 
