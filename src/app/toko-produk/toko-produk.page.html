@@ -22,9 +22,9 @@
 
   <ion-searchbar placeholder="Cari produk"></ion-searchbar>
   <div *ngIf="costume?.length > 0; else noData">
-    <div *ngFor="let costumeItem of costume" class="">
+    <div *ngFor="let costumeItem of costume" class="mb-4">
       <div class="flex flex-col w-full ">
-        <div class="flex gap-x-4 shadow-xl">
+        <div class="flex gap-x-4 shadow-xl p-4 rounded-lg bg-white">
           <img [src]="costumeItem.costume_picture" class="p-2 w-1/4 h-1/4" alt="Produk Image">
           <div class="flex flex-col gap-2 w-full">
             <div class="flex flex-row w-full">
