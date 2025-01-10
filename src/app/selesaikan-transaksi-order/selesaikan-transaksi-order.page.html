@@ -23,14 +23,14 @@
   <div style="border: 1px solid gray; border-radius: 15px; padding: 16px; margin: 20px 16px 16px 16px;">
     <p class="text-lg">Link pembayaran melalui Midtrans</p>
     <div style="display: flex; justify-content: space-between; align-items: center;">
-      <p style="font-weight: bold; " class="text-lg mt-1 truncate w-3/4">{{ receivedData }}</p>
-      <button (click)="copyToClipboard()" style="color: #226F54; background: none; border: none; cursor: pointer; font-weight: bold;" class="text-lg mt-1  transition duration-200  active:scale-125">
+      <p style="font-weight: bold; " class="text-lg mt-1 truncate w-3/4">{{ transaksi.midtrans_redirect_url }}</p>
+      <button (click)="copyToClipboard(transaksi.midtrans_redirect_url)" style="color: #226F54; background: none; border: none; cursor: pointer; font-weight: bold;" class="text-lg mt-1  transition duration-200  active:scale-125">
         Salin
       </button>
     </div>
     <p class="mt-4 text-lg">Total Tagihan</p>
     <div style="display: flex; justify-content: space-between; align-items: center;">
-      <p style="font-weight: bold; " class="text-lg mt-1">Rp{{ receivedData2 | number }}</p>
+      <p style="font-weight: bold; " class="text-lg mt-1">Rp{{ transaksi.payment_amount | number }}</p>
       <!-- <button (click)="viewPaymentDetails()" style="color: #226F54; background: none; border: none; cursor: pointer; font-weight: bold;" class="text-lg">
         Lihat Detail
       </button> -->

@@ -3,8 +3,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { ApiService } from '../api.service';
 import { LoadingController } from '@ionic/angular';
-
-
+import { ActivatedRoute } from '@angular/router';
 
 
 interface NavigationState {
@@ -34,32 +33,24 @@ export class SelesaikanTransaksiOrderPage implements OnInit, OnDestroy {
   resp:any
   statuspayment:any
   isSubmitting:any
-  
+  paymentid:any
+  transaksi:any  = []; 
 
-  constructor(private router: Router, private location: Location, public api: ApiService, private loadingCtrl: LoadingController,
+
+  constructor(private router: Router,  private route: ActivatedRoute,private location: Location, public api: ApiService, private loadingCtrl: LoadingController,
   ) {}
 
   ngOnInit() {
+    this.paymentid = this.route.snapshot.params['id']
+    this.api.getTransactionPaymentInfo('order/payment/',this.paymentid).subscribe((resp)=>{
+      this.resp = resp
 
-    console.log('Location state:', this.location.getState());
-
-    const navigation = this.location.getState() as NavigationState;
-
-    if (navigation && navigation.data && navigation.data1) {
-      this.receivedData = navigation.data;
-      this.receivedData1 = navigation.data1;
-      this.receivedData2 = navigation.data2;
-      this.receivedData3 = navigation.data3;
-      this.receivedData4 = navigation.data4;
-      console.log('Received Data:', this.receivedData);
-      console.log('Received Data1:', this.receivedData1);
-      console.log('Received Data2:', this.receivedData2)
-      console.log('Received Data3:', this.receivedData3)
-      console.log('Received Data4:', this.receivedData4)
-    } else {
-      console.log('Failed to get navigation data');
-    }
-    this.fetchApiDate(this.receivedData3);
+      if (this.resp.code == "200"){
+        this.transaksi = this.resp.data
+        console.log(this.transaksi)
+        this.startCountdownForAll(this.transaksi)
+      }
+    })
   }
 
   ngOnDestroy() {
@@ -68,40 +59,29 @@ export class SelesaikanTransaksiOrderPage implements OnInit, OnDestroy {
     }
   }
 
-  fetchApiDate(timeExpired:string) {
-    this.startCountdown(timeExpired);
+  startCountdownForAll(item:any) {
+    const expirationDate = new Date(item.midtrans_expired_time); // The expiration date
+    const interval = setInterval(() => {
+      const now = new Date(); // Current time
+      const remainingTime = expirationDate.getTime() - now.getTime(); // Time difference in milliseconds
+
+      if (remainingTime <= 0) {
+        clearInterval(interval); // Stop the countdown when expired
+        this.countdown = 'Expired';
+      } else {
+        // Calculate hours, minutes, seconds
+        const hours = Math.floor((remainingTime / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((remainingTime / (1000 * 60)) % 60);
+        const seconds = Math.floor((remainingTime / 1000) % 60);
+
+        // Format as HH:mm:ss
+        this.countdown = `${this.padZero(hours)}:${this.padZero(minutes)}:${this.padZero(seconds)}`;
+      }
+    }, 1000); // Update every second
   }
 
-  startCountdown(expirationTime: string) {
-    // Transform the API expiration time to ISO format
-    const targetTime = new Date(expirationTime.replace(' ', 'T'));
-
-    // Start the countdown
-    this.updateCountdown(targetTime);
-
-    this.timer = setInterval(() => {
-      this.updateCountdown(targetTime);
-    }, 1000);
-  }
-
-  updateCountdown(targetTime: Date) {
-    const now = new Date();
-    const timeLeft = targetTime.getTime() - now.getTime();
-
-    if (timeLeft <= 0) {
-      clearInterval(this.timer);
-      this.countdown = '00:00:00';
-      return;
-    }
-
-    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
-    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-    this.countdown = `${this.pad(hours)}:${this.pad(minutes)}:${this.pad(seconds)}`;
-  }
-
-  pad(num: number): string {
+  // Helper function to add leading zero to numbers < 10
+  padZero(num: number): string {
     return num < 10 ? '0' + num : num.toString();
   }
 
@@ -197,7 +177,7 @@ export class SelesaikanTransaksiOrderPage implements OnInit, OnDestroy {
     }
   }
 
-  copyToClipboard() {
-    navigator.clipboard.writeText(this.receivedData).then(() => {});
+  copyToClipboard(url:any) {
+    navigator.clipboard.writeText(url).then(() => {});
   }
 }

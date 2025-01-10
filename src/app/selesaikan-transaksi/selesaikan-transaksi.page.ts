@@ -59,7 +59,7 @@ export class SelesaikanTransaksiPage implements OnInit, OnDestroy {
     } else {
       console.log('Failed to get navigation data');
     }
-    this.fetchApiDate(this.receivedData3);
+    this.startCountdownForAll(this.receivedData3);
   }
 
   ngOnDestroy() {
@@ -68,40 +68,29 @@ export class SelesaikanTransaksiPage implements OnInit, OnDestroy {
     }
   }
 
-  fetchApiDate(timeExpired:string) {
-    this.startCountdown(timeExpired);
+  startCountdownForAll(item:any) {
+    const expirationDate = new Date(item); // The expiration date
+    const interval = setInterval(() => {
+      const now = new Date(); // Current time
+      const remainingTime = expirationDate.getTime() - now.getTime(); // Time difference in milliseconds
+
+      if (remainingTime <= 0) {
+        clearInterval(interval); // Stop the countdown when expired
+        this.countdown = 'Expired';
+      } else {
+        // Calculate hours, minutes, seconds
+        const hours = Math.floor((remainingTime / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((remainingTime / (1000 * 60)) % 60);
+        const seconds = Math.floor((remainingTime / 1000) % 60);
+
+        // Format as HH:mm:ss
+        this.countdown = `${this.padZero(hours)}:${this.padZero(minutes)}:${this.padZero(seconds)}`;
+      }
+    }, 1000); // Update every second
   }
 
-  startCountdown(expirationTime: string) {
-    // Transform the API expiration time to ISO format
-    const targetTime = new Date(expirationTime.replace(' ', 'T'));
-
-    // Start the countdown
-    this.updateCountdown(targetTime);
-
-    this.timer = setInterval(() => {
-      this.updateCountdown(targetTime);
-    }, 1000);
-  }
-
-  updateCountdown(targetTime: Date) {
-    const now = new Date();
-    const timeLeft = targetTime.getTime() - now.getTime();
-
-    if (timeLeft <= 0) {
-      clearInterval(this.timer);
-      this.countdown = '00:00:00';
-      return;
-    }
-
-    const hours = Math.floor(timeLeft / (1000 * 60 * 60));
-    const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-
-    this.countdown = `${this.pad(hours)}:${this.pad(minutes)}:${this.pad(seconds)}`;
-  }
-
-  pad(num: number): string {
+  // Helper function to add leading zero to numbers < 10
+  padZero(num: number): string {
     return num < 10 ? '0' + num : num.toString();
   }
 

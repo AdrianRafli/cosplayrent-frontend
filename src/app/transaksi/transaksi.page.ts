@@ -65,8 +65,8 @@ export class TransaksiPage implements OnInit {
     this.router.navigate(['/home']); // Adjust the route as needed
   }
 
-  viewPayment() {
-    this.router.navigate(['/selesaikan-transaksi']);
+  viewPayment(paymentid:number) {
+    this.router.navigate(['/selesaikan-transaksi-order',paymentid]);
   }
 
   // Start countdown for all costumes
