@@ -49,7 +49,7 @@ export class ProfilePage implements OnInit {
     this.router.navigate(['/review-history'])
   }
   goToTransaksi(){
-    this.router.navigate(['/review-history'])
+    this.router.navigate(['/transaksi'])
   }
   goToVerification(){
     this.router.navigate(['/verifikasi-user'])

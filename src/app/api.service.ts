@@ -233,4 +233,10 @@ export class ApiService {
       headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
     })
   }
+
+  getTransactionPayment(url:any){
+    return this.http.get(this.baseUrl+url,{
+      headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
+    })
+  }
 }

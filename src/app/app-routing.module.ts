@@ -142,6 +142,10 @@ const routes: Routes = [
   {
     path: 'selesaikan-transaksi',
     loadChildren: () => import('./selesaikan-transaksi/selesaikan-transaksi.module').then( m => m.SelesaikanTransaksiPageModule)
+  },
+  {
+    path: 'selesaikan-transaksi-order',
+    loadChildren: () => import('./selesaikan-transaksi-order/selesaikan-transaksi-order.module').then( m => m.SelesaikanTransaksiOrderPageModule)
   }
 
 

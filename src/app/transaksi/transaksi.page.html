@@ -12,22 +12,28 @@
     </a>
   </div>
   
-  <div style="padding: 0 16px;">
-    <div *ngFor="let costume of costumes" class="transaction-card shadow-md" style="border: 1px solid #ccc; border-radius: 5px; padding: 16px; margin-bottom: 16px; display: flex; align-items: flex-start;">
-      <img [src]="costume.pictures[0]" alt="{{ costume.name }}" style="width: 60px; height: 80px; border-radius: 5px; margin-right: 16px;" />
+  <div style="padding: 0 16px;" *ngIf="costume && costume.length > 0; else noData">
+    <div *ngFor="let costume of costume" class="transaction-card shadow-md" style="border: 1px solid #ccc; border-radius: 5px; padding: 16px; margin-bottom: 16px; display: flex; align-items: flex-start;">
+      <img [src]="costume.costume_picture" alt="{{ costume.name }}" style="width: 60px; height: 80px; border-radius: 5px; margin-right: 16px;" />
       <div style="flex: 1; display: flex; flex-direction: column; justify-content: flex-start;">
-        <h2 style="margin: 0; font-size: 14px; font-weight: bold ;">{{ costume.name }}</h2>
-        <p style="margin: 0; font-size: 12px;">Rp {{ costume.price | number }}</p>
-        <p style="margin: 0; font-size: 12px; font-weight: lighter;">Size: {{ costume.size }}</p>
+        <h2 style="margin: 0; font-size: 14px; font-weight: bold ;">{{ costume.costume_name }}</h2>
+        <p style="margin: 0; font-size: 12px;">Rp {{ costume.costume_price | number }}</p>
+        <p style="margin: 0; font-size: 12px; font-weight: lighter;">Size: {{ costume.costume_size }}</p>
       </div>
 
       <div style="margin-left: auto; text-align: right;">
         <p style="margin: 0; font-size: 12px; color: black;">Bayar sebelum:</p>
-        <p style="margin: 0; font-size: 12px; color: #8B2635;">{{ costume.paymentDeadline | date: 'dd MMM, HH:mm' }}</p>
+        <p style="margin: 0; font-size: 12px; color: #8B2635;">{{ costume.countdown || 'Loading...' }}</p>
         <button (click)="viewPayment()" class="w-auto py-2 font-bold" style="background-color: white; color: #226F54; border: 2px solid #226F54; border-radius: 5px; font-size: 12px; white-space: nowrap; padding: 6px 12px;">
           Lihat Cara Bayar
         </button>              
       </div>
     </div>
   </div>
+  
+
+  <ng-template #noData>
+    <p class="text-center text-lg">No payment transaction is available.</p>
+  </ng-template>      
+
 </ion-content>
