@@ -54,6 +54,9 @@ export class ProfilePage implements OnInit {
   goToVerification(){
     this.router.navigate(['/verifikasi-user'])
   }
+  goaboutus(){
+    this.router.navigate(['/about-us'])
+  }
 
   deleteAccount(){
     this.api.deleteAccount('useraccount').subscribe((resp) => {
