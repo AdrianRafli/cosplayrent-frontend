@@ -99,19 +99,7 @@ export class SelesaikanTransaksiOrderPage implements OnInit, OnDestroy {
 
   gotransaksi() {
     // Reset the component state
-    this.receivedData = null;
-    this.receivedData1 = null;
-    this.receivedData2 = null;
-    this.countdown = '00:00:00';
-    this.paymentMethod = 'BCA Virtual Account';
-    this.paymentTo = '';
-    this.totalAmount = 0;
-    if (this.timer) {
-      clearInterval(this.timer);
-    }
-
-    // Navigate to the 'transaksi' page
-    this.router.navigate(['/home']).then(() => {
+    this.router.navigate(['/transaksi']).then(() => {
       window.location.reload();
     });
   }
@@ -125,46 +113,21 @@ export class SelesaikanTransaksiOrderPage implements OnInit, OnDestroy {
       message: 'loading...',
     });
     await loading.present();
-    if (this.receivedData4 == "Topup Order"){
-      this.api.getTopUpOrderStatus('checktopuporder/', this.receivedData1).subscribe(async(resp) => {
-        this.resp = resp
-  
-        if (this.resp.code == "200"){
-          console.log(this.resp)
-          await loading.dismiss();
-          if (this.resp.data.top_up_order_status_payment == "Paid") {
-            console.log(this.resp.data.top_up_order_status_payment)
-            this.statuspayment = true
-            setTimeout(() => {
-              this.router.navigate(['/emoney']).then(() => {
-                window.location.reload();
-              });
-            }, 1000); // Delay of 2000ms (2 seconds)
-          } else{
-            await loading.dismiss();
-            console.log(this.resp)
-            this.isSubmitting = false;
-          }
-        }
-      },)
-    }
-    if (this.receivedData4 == "Order"){
-      this.api.checkOrderStatus('checkorder/',this.receivedData1)
+    this.api.getTransactionPaymentInfo('order/payment/',this.paymentid)
     .subscribe(
       async (resp) => {
       this.resp = resp
       if (this.resp.code == "200"){
         console.log(this.resp)
-        if (this.resp.data.status_payment ==  'Paid'){
+        if (this.resp.data.payment_status ==  'Paid'){
+          await loading.dismiss();
           this.statuspayment = true
           console.log("Status payment is true")
-
-          await loading.dismiss();
           setTimeout(() => {
-            this.router.navigate(['/home']).then(() => {
+            this.router.navigate(['/transaksi']).then(() => {
               window.location.reload();
             });
-          }, 1000);
+          }, 2000);
 
           this.isSubmitting = false;
         } else {
@@ -172,10 +135,14 @@ export class SelesaikanTransaksiOrderPage implements OnInit, OnDestroy {
           console.log("Payment status is false")
           this.isSubmitting = false;
         }
+      } else {
+        await loading.dismiss();
+        console.log("Payment status is false")
+        this.isSubmitting = false;
       }
     })
     }
-  }
+  
 
   copyToClipboard(url:any) {
     navigator.clipboard.writeText(url).then(() => {});

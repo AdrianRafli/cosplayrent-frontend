@@ -33,8 +33,7 @@ export class SelesaikanTransaksiPage implements OnInit, OnDestroy {
   receivedData4:any
   resp:any
   statuspayment:any
-  isSubmitting:any
-  
+  isSubmitting:any  
 
   constructor(private router: Router, private location: Location, public api: ApiService, private loadingCtrl: LoadingController,
   ) {}
@@ -165,7 +164,7 @@ export class SelesaikanTransaksiPage implements OnInit, OnDestroy {
       if (this.resp.code == "200"){
         console.log(this.resp)
         if (this.resp.data.status_payment ==  'Paid'){
-          this.statuspayment = true
+          this.statuspayment = 'Paid'
           console.log("Status payment is true")
 
           await loading.dismiss();
@@ -173,7 +172,7 @@ export class SelesaikanTransaksiPage implements OnInit, OnDestroy {
             this.router.navigate(['/home']).then(() => {
               window.location.reload();
             });
-          }, 1000);
+          }, 2000);
 
           this.isSubmitting = false;
         } else {

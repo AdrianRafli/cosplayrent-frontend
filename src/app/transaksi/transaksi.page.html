@@ -8,7 +8,7 @@
   <div class="mt-5">
     <a class="flex items-center mb-5 shadow-md pb-4">
       <ion-icon name="arrow-back-outline" slot="start" class="pl-4 mr-2" (click)="gohome()"></ion-icon>
-      <span class="text-sm font-semibold" style="font-size: 18px;">Menunggu Pembayaran</span>
+      <span class="text-sm font-semibold" style="font-size: 18px;">Transaksi Pembayaran</span>
     </a>
   </div>
   
@@ -21,9 +21,16 @@
         <p style="margin: 0; font-size: 12px; font-weight: lighter;">Size: {{ costume.costume_size }}</p>
       </div>
 
-      <div style="margin-left: auto; text-align: right;">
+      <div *ngIf="costume.payment_status == 'Pending'" style="margin-left: auto; text-align: right;">
         <p style="margin: 0; font-size: 14px; color: black;">Bayar sebelum:</p>
         <p style="margin: 0; font-size: 14px; color: #8B2635;">{{ costume.countdown || 'Loading...' }}</p>
+        <button (click)="viewPayment(costume.payment_id)" class="w-auto py-2 font-bold mt-2" style="background-color: white; color: #226F54; border: 2px solid #226F54; border-radius: 5px; font-size: 12px; white-space: nowrap; padding: 6px 12px;">
+          Lihat Cara Bayar
+        </button>              
+      </div>
+
+      <div *ngIf="costume.payment_status == 'Paid'" style="margin-left: auto; text-align: right;">
+        <p style="margin: 0; font-size: 14px; color: black;">Paid</p>
         <button (click)="viewPayment(costume.payment_id)" class="w-auto py-2 font-bold mt-2" style="background-color: white; color: #226F54; border: 2px solid #226F54; border-radius: 5px; font-size: 12px; white-space: nowrap; padding: 6px 12px;">
           Lihat Cara Bayar
         </button>              
