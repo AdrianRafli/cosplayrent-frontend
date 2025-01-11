@@ -5,8 +5,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
   providedIn: "root",
 })
 export class ApiService {
-  //baseUrl = 'https://cosplayrent.site/api/'
-    baseUrl = "http://localhost:8081/api/";
+  baseUrl = 'https://cosplayrent.site/api/'
+  //baseUrl = "http://localhost:8081/api/";
 
   token: any = "";
   constructor(private http: HttpClient) {
