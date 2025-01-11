@@ -72,6 +72,7 @@ export class ProfileChangePage implements OnInit {
   fetchProvinces() {
     this.rajaOngkirService.getProvinces('provinces').subscribe((resp) => {
       this.resp = resp;
+      console.log(this.resp)
       if (this.resp.code == 200) {
         this.provinces = this.resp.data;
       } else {

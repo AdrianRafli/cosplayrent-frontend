@@ -142,7 +142,7 @@ export class SelesaikanTransaksiPage implements OnInit, OnDestroy {
           await loading.dismiss();
           if (this.resp.data.top_up_order_status_payment == "Paid") {
             console.log(this.resp.data.top_up_order_status_payment)
-            this.statuspayment = true
+            this.statuspayment = 'Paid'
             setTimeout(() => {
               this.router.navigate(['/emoney']).then(() => {
                 window.location.reload();

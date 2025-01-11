@@ -45,6 +45,7 @@ export class EmoneyPage implements OnInit {
 
       if (this.resp.code == "200"){
         this.transaction = this.resp.data
+        console.log(this.transaction)
       } 
     })
     // Sort transactions by date and time in descending order
