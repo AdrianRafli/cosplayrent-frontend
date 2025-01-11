@@ -1,6 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../api.service';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { AlertController, LoadingController } from '@ionic/angular';
+
+
+interface NavigationState {
+  data: string;  // Adjust the type according to the data you are sending
+  data1: number;    // Adjust the type accordingly
+}
 
 @Component({
   selector: 'app-review',
@@ -10,30 +18,49 @@ import { Router } from '@angular/router';
 export class ReviewPage implements OnInit {
   // sesuain sama database
   data: any = { id: '',  review_rating: '', review_picture: '', review_comment: ''};
+  receivedData : any
+  receivedData1: any
   // Token:any
 
   // resp: any;
 
   rating = 0;
+  selectedFile: File | null = null;
+  previewUrl: string | null = null;
 
-  isSubmitting = false; 
+  isSubmitting = false;
+  costume:any=[]
+  review:any
+  request: any = {
+    order_id:'',
+    costume_id:0,
+    description:'',
+    review_picture:'',
+    rating:'',
+  };
+  resp:any
 
-  constructor(public api: ApiService, public router: Router) { }
+  constructor(public api: ApiService, public router: Router,private location: Location, private loadingCtrl: LoadingController, private alertController: AlertController, 
+  ) { }
 
   ngOnInit() {
-    // this.Token = localStorage.getItem('userToken')
-    // if (this.Token !== null && this.Token.trim() !== '') {
-    //   this.api.getUserDetail('userdetail').subscribe((resp) => {
-    //     this.resp = resp;
-    //     if (this.resp.code == "200") {
-    //       this.data = this.resp.data;
-    //       console.log(this.data);
-    //     }
-    //   })
-    // } else {
-    //   console.log('Token is empty or does not exist');
-    //   this.router.navigate(['/login'])
-    // }
+    const navigation = this.location.getState() as NavigationState;
+
+    if (navigation && navigation.data && navigation.data1) {
+      this.receivedData = navigation.data;
+      this.receivedData1 = navigation.data1;
+      console.log('Received Data:', this.receivedData);
+      console.log('Received Data1:', this.receivedData1);
+    } else {
+      console.log('Failed to get navigation data');
+    }
+    this.api.getCostumesById('costume/',this.receivedData1).subscribe((resp)=>{
+      this.resp = resp
+
+      if (this.resp.code == "200"){
+        this.costume = this.resp.data
+      }
+    })
   }
 
   // nilai rating disimpan di variable rating (number 1-5)
@@ -43,9 +70,66 @@ export class ReviewPage implements OnInit {
   }
 
   goToOrder(){
-    this.router.navigate(['/order']);
+    this.router.navigate(['/home']).then(() => {
+      window.location.reload();
+    });
   }
 
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: "Review Process Failed",
+      message: message,
+      buttons: ["OK"],
+    });
+    await alert.present();
+  }
+
+  saveReview() {
+    if (this.rating != null && this.selectedFile != null && this.review != null) {
+      const formData = new FormData();
   
+      // Convert numbers to strings and append fields
+      formData.append('rating', String(this.rating));
+      formData.append('order_id', String(this.receivedData));
+      formData.append('costume_id', this.receivedData1);
+      formData.append('description', this.review);
+  
+      // Append file with name if selected
+      if (this.selectedFile) {
+        formData.append('review_picture', this.selectedFile, this.selectedFile.name);
+      }
+  
+      // API call
+      this.api.sendReview('review', formData).subscribe((resp) => {
+        this.resp = resp;
+        if (this.resp.code == "200") {
+          console.log(this.resp);
+          this.router.navigate(['/home']).then(() => {
+            window.location.reload();
+          });
+        } else {
+          this.presentAlert(this.resp.data);
+        }
+      });
+    } else {
+      this.presentAlert("Please input rating, review picture, and description");
+    }
+  }
+  
+  
+  onFileSelected(event: Event): void {
+    const fileInput = event.target as HTMLInputElement;
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      this.selectedFile = file;
+
+     
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.previewUrl = e.target.result; 
+      };
+      reader.readAsDataURL(file); 
+    }
+  }
 
 }

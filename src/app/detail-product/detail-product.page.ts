@@ -211,4 +211,8 @@ export class DetailProductPage implements OnInit {
   goToCostumeDetail(costumeId:number){
     this.router.navigate(['/detail-product', costumeId]);
   }
+
+  goToSeeComment(costumeid:number){
+    this.router.navigate(['/see-comment', costumeid]);
+  }
 }

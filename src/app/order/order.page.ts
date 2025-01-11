@@ -38,13 +38,26 @@ export class OrderPage implements OnInit {
     })
   }
 
-  goToOrderDetail(id:any,status_order:any){
-    this.router.navigate(['/orderdetail',id],
+  goToOrderDetail(id:any,status_order:any,costumeid:any){
+    if (status_order == "Completed"){
+      console.log('Order ID:', id);
+      console.log('Costume ID:', costumeid);
+      this.router.navigate(['/review'],
+        {
+          state: {
+            data: id,
+            data1: costumeid,
+          }
+        })
+    }
+    else{
+      this.router.navigate(['/orderdetail',id],
       {
         state: {
           data: status_order,
         }
       })
+    }
   }
 
   goToLoginOrProfile(){

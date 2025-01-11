@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../api.service';
+import { Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-see-comment',
@@ -30,10 +35,22 @@ export class SeeCommentPage implements OnInit {
     // Add more comments as needed
   ];
 
-  constructor() { }
+  id:any
+  resp:any
+  review:any=[]
+  
+  constructor(private router: Router,public api:ApiService,private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // No additional logic needed
+    this.id = this.route.snapshot.params['costumeid']
+
+    this.api.getReviewByCostumeId('costume/',this.id).subscribe((resp)=>{
+      this.resp = resp
+      if(this.resp.code == "200") {
+        this.review = this.resp.data
+        console.log(this.review)
+      }
+    })
   }
 }
 

@@ -13,25 +13,35 @@
   </div> 
 
   <div class="px-4">
-    <div *ngFor="let comment of comments" style="margin-bottom: 10px;">
+    <div *ngFor="let review of review" style="margin-bottom: 10px;">
       <!-- New div for the border with full width -->
       <div style="border-bottom: 5px solid rgb(172, 169, 169); padding: 10px; margin-left: -16px; margin-right: -16px; width: calc(100% + 32px);">
         <div class="flex items-center" style="margin-left: 10px;"> <!-- Adjusted margin-left -->
-          <img [src]="comment.avatar" alt="User Avatar" style="border-radius: 50%; width: 40px; height: 40px; margin-right: 10px;" />
+          <img
+            *ngIf="review.profile_picture"
+            [src]="review.profile_picture"
+            alt="User Avatar"
+            class="w-8 h-8 rounded-full mr-2"
+          />
+          <img
+            *ngIf="!review.profile_picture"
+            src="../../assets/illustration/defaultprofile.jpg"
+            alt="User Avatar"
+            class="w-8 h-8 rounded-full mr-2"
+          />
           <div class="ml-2">
-            <span class="font-bold" style="font-family: 'Poppins', sans-serif;">{{ comment.user }}</span>
+            <span class="font-bold" style="font-family: 'Poppins', sans-serif;">{{ review.name }}</span>
             <div class="text-gray-500" style="font-family: 'Poppins', sans-serif;">
-              <span style="font-size: 11px;">{{ comment.rating }} Bintang</span> | <span style="font-size: 11px;">{{ comment.time }}</span>
+              <span style="font-size: 11px;">{{ review.rating }} Bintang</span> | <span style="font-size: 11px;">{{ review.created_at }}</span>
             </div>
           </div>
         </div>
         <p class="mt-2 comment-text" style="font-family: 'Poppins', sans-serif; font-size: 12px; margin-left: 10px;"> <!-- Adjusted margin-left -->
-          {{ comment.text }}
+          {{ review.description }}
         </p>
-        <!-- Display the comment images if they exist -->
-        <div *ngIf="comment.images.length > 0" style="margin-top: 10px; display: flex; gap: 2px; margin-left: 10px;"> <!-- Adjusted margin-left -->
-          <div *ngFor="let image of comment.images" style="flex: 0 0 auto;">
-            <img [src]="image" alt="Comment Image" style="width: 50px; height: 50px; border-radius: 5px;" />
+        <div  style="margin-top: 10px; display: flex; gap: 2px; margin-left: 10px;"> 
+          <div style="flex: 0 0 auto;">
+            <img [src]="review.review_picture" alt="Comment Image" style="width: 70px; height: 70px; border-radius: 5px;" />
           </div>
         </div>
       </div>
