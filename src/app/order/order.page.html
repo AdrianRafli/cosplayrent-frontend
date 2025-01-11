@@ -13,24 +13,30 @@
   </div>
 
   <div *ngIf="status else noData">
-    <div *ngFor="let orderItem of order" class="product-item">
-      <ion-card class="flex flex-col">
-        <div class="flex gap-4">
-          <img [src]="orderItem.costume_picture" class="p-2 produk-image" alt="Produk Image">
-          <div class="flex flex-col gap-2 ">
-            <div class="pt-2 ">
-              <h2 class="font-bold">{{ orderItem.costume_name }}</h2>
-              <p class="mt-1">Rp {{ orderItem.costume_price }}</p>
-              <p>Size: {{ orderItem.costume_size }}</p>
-              <p>Price: {{orderItem.total}}</p>
-              <p>Status: {{orderItem.status_order}}</p>
-            </div>
-            <div class="action-buttons pb-2 pe-2 flex">
-              <ion-button size="small" class="button-color" (click)="goToOrderDetail(orderItem.id,orderItem.status_order)">Detail Order</ion-button> 
+    <div *ngFor="let orderItem of order" class="mb-4"> <!-- Add margin-bottom -->
+      <div class="flex flex-col w-full">
+        <div class="flex gap-x-4 shadow-xl p-4 rounded-lg bg-white"> <!-- Add padding, rounded corners, and background -->
+          <img [src]="orderItem.costume_picture" class="p-2 w-1/4 h-1/4" alt="Produk Image">
+          <div class="flex flex-col gap-2 w-full">
+            <div class="flex w-full">
+              <div class="pt-2 w-full flex flex-row justify-between">
+                <div>
+                  <h2 class="font-bold">{{ orderItem.costume_name }}</h2>
+                  <p>Rp {{ orderItem.costume_price }}</p>
+                  <p class="w-1/2 mt-3">Size: {{ orderItem.costume_size }}</p>
+                </div>
+                <div class="flex flex-col items-end gap-y-9">
+                  <h1 *ngIf="orderItem.status_order != 'Cancelled';" class="text-[#226F54] font-semibold text-[14px]">{{orderItem.status_order}}</h1>
+                  <h1 *ngIf="orderItem.status_order == 'Cancelled';" class="text-red-700 font-semibold text-[14px]">{{orderItem.status_order}}</h1>
+                  <button (click)="goToOrderDetail(orderItem.id, orderItem.status_order)" class="text-[#226F54] px-4 py-1 rounded-lg outline outline-1 outline-[#226F54] font-semibold">
+                    Detail
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </ion-card>
+      </div>
     </div>
   </div>
 

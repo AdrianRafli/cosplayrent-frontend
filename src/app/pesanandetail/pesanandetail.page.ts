@@ -33,15 +33,14 @@ export class PesanandetailPage implements OnInit {
     costume_price:0,
     costume_size:"",
     costumer_name: "",
-    costumer_address: "",
-    costumer_origin_province: "",
-    costumer_origin_city: "",
+    shipment_destination:"",
     costumer_identity_card: "",
   };
 
   orderResponseClient:any = {
-    status_order:'',
-    description:'',
+    orderevent_status:'',
+    orderevent_notes:'',
+    shipment_receipt_user_id:'',
   }
   status:any
 
@@ -85,8 +84,8 @@ export class PesanandetailPage implements OnInit {
     });
     await loading.present();
 
-    this.orderResponseClient.status_order = "Proses"
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient)
+    this.orderResponseClient.orderevent_status = "Process"
+    this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient)
     .subscribe(
       async (resp) => {
       this.resp = resp
@@ -115,8 +114,8 @@ export class PesanandetailPage implements OnInit {
     });
     await loading.present();
 
-    this.orderResponseClient.status_order = "Selesai"
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient)
+    this.orderResponseClient.orderevent_status = "Completed"
+    this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient)
     .subscribe(
       async (resp) => {
       this.resp = resp
@@ -144,9 +143,11 @@ export class PesanandetailPage implements OnInit {
       message: 'loading...',
     });
     await loading.present();
-
-    this.orderResponseClient.status_order = "Dikembalikan (Penyedia Sewa)"
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient)
+    if (this.description != null && this.nomorresi != null){
+    this.orderResponseClient.orderevent_status = "Return (Rental Provider)"
+    this.orderResponseClient.orderevent_notes = this.description
+    this.orderResponseClient.shipment_receipt_user_id = this.nomorresi
+    this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient)
     .subscribe(
       async (resp) => {
       this.resp = resp
@@ -157,12 +158,12 @@ export class PesanandetailPage implements OnInit {
         window.location.reload();
       }
       this.isSubmitting = false;
-    }, async (error) => {
-      await loading.dismiss();
-      const errormessage = error.error?.data || "An error occurred. Please try again."
-      this.presentAlert(errormessage);
-      this.isSubmitting = false;
-    },)
+    })
+    } else {
+      await loading.dismiss()
+      this.presentAlert("Please input description and shipment receipt id")
+      this.isSubmitting = false
+    }
   }
 
   async doReject(){
@@ -175,25 +176,32 @@ export class PesanandetailPage implements OnInit {
     });
     await loading.present();
 
-    this.orderResponseClient.status_order = "Dibatalkan"
-    this.orderResponseClient.description = this.description
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient)
-    .subscribe(
-      async (resp) => {
-      this.resp = resp
-      if (this.resp.code == "200"){
-        console.log(this.resp)
-        await this.router.navigate(['/pesanan'])
+    this.orderResponseClient.orderevent_status = "Cancelled"
+    if (this.description != null){
+      this.orderResponseClient.orderevent_notes = this.description
+      this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient)
+      .subscribe(
+        async (resp) => {
+        this.resp = resp
+        if (this.resp.code == "200"){
+          console.log(this.resp)
+          await this.router.navigate(['/pesanan'])
+          await loading.dismiss();
+          window.location.reload();
+        }
+        this.isSubmitting = false;
+      }, async (error) => {
         await loading.dismiss();
-        window.location.reload();
-      }
-      this.isSubmitting = false;
-    }, async (error) => {
-      await loading.dismiss();
-      const errormessage = error.error?.data || "An error occurred. Please try again."
-      this.presentAlert(errormessage);
-      this.isSubmitting = false;
-    },)
+        const errormessage = error.error?.data || "An error occurred. Please try again."
+        this.presentAlert(errormessage);
+        this.isSubmitting = false;
+      },)
+    } else {
+      await loading.dismiss()
+      await this.presentAlert("Please input description")
+      this.isSubmitting = false
+    }
+   
   }
 
   
@@ -202,22 +210,29 @@ export class PesanandetailPage implements OnInit {
     if (this.isSubmitting) return;
     this.isSubmitting = true;
 
-    this.orderResponseClient.status_order = "Dikirim (Penyedia Sewa)"
-    this.orderResponseClient.description = this.description
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient).subscribe((resp) => {
-      this.resp = resp
-      if (this.resp.code == "200"){
-        console.log(this.resp)
-        this.router.navigate(['/pesanan'])
-          .then(() => {
-            window.location.reload();
-          });
-      }
+    if (this.nomorresi != null){
+      this.orderResponseClient.orderevent_status = "Shipping (Rental Provider)"
+      this.orderResponseClient.orderevent_notes = this.description
+      this.orderResponseClient.shipment_receipt_user_id = this.nomorresi
+      this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient).subscribe((resp) => {
+        this.resp = resp
+        if (this.resp.code == "200"){
+          console.log(this.resp)
+          this.router.navigate(['/pesanan'])
+            .then(() => {
+              window.location.reload();
+            });
+        }
+        this.isSubmitting = false;
+      },(error) => {
+        const errormessage = error.error?.data || "An error occurred. Please try again."
+        this.presentAlert(errormessage);
+        this.isSubmitting = false
+      },)
+    } else {
+      this.presentAlert("Please input shipment receipt id")
       this.isSubmitting = false;
-    },(error) => {
-      const errormessage = error.error?.data || "An error occurred. Please try again."
-      this.presentAlert(errormessage);
-    },)
+    }
   }
 
   goToPesanan(){

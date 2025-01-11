@@ -44,33 +44,119 @@
         <input type="text" name="name" id="name" value="{{order.seller_address}}" disabled required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
       </div>
 
-      <div class="mb-4">
-        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Alamat Seller (Provinsi)</label>
-        <input type="text" name="name" id="name" value="{{order.seller_origin_province}}" disabled required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
-      </div>
+     
 
-      <div class="mb-4">
-        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Alamat Seller (Kota)</label>
-        <input type="text" name="name" id="name" value="{{order.seller_origin_city}}" disabled required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
-      </div>
-
-      <div *ngIf="status === 'Dibatalkan'" class="mb-4">
+      <div *ngIf="status === 'Cancelled'" class="mb-4">
         <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Response</label>
         <textarea type="text" name="name" id="name" disabled [(ngModel)]="description" [value]="order.seller_response" placeholder="Type your response here" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12"></textarea>
       </div>
 
-      <div *ngIf="status === 'Proses'" class="flex mt-5">
+     
+      <div *ngIf="status === 'Process'" class="flex mt-5">
         <div class="flex justify-center mb-4 w-full">
           <button type="submit" (click)="doReject()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
         </div>
       </div>
 
-      <div *ngIf="status === 'Dikirim (Penyedia Sewa)'" class="mb-4">
-        <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Nomor Resi</label>
-        <input type="number" name="name" id="name" value=""  [(ngModel)]="nomorresi"  required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
+      <div *ngIf="status === 'Shipping (Rental Provider)'" class="mb-4">
+        <!-- Nomor Resi -->
+        <label for="shipment-receipt" class="block mb-2 text-sm font-semibold text-gray-900">Nomor Resi</label>
+        <input 
+          type="text" 
+          disabled 
+          name="shipment-receipt" 
+          id="shipment-receipt" 
+          value="{{order.shipment_receipt_user_id}}"  
+          [(ngModel)]="order.shipment_receipt_user_id"  
+          required 
+          class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" 
+        />
+      
+        <!-- Nomor Resi Pengembalian -->
+        <label for="return-receipt" class="block mb-2 mt-4 text-sm font-semibold text-gray-900">Nomor Resi Pengembalian</label>
+        <input 
+          type="text"  
+          name="return-receipt" 
+          id="return-receipt"   
+          [(ngModel)]="nomorresi"  
+          required 
+          class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" 
+        />
+      
+        <!-- Response -->
+        <label for="response" class="block mt-4 mb-2 text-sm font-semibold text-gray-900">Response</label>
+        <input 
+          type="text" 
+          name="response" 
+          id="response" 
+          [(ngModel)]="description" 
+          placeholder="Type your response here" 
+          required 
+          class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" 
+        />
       </div>
 
-      <div *ngIf="status === 'Dikirim (Penyedia Sewa)'" class="flex mt-5">
+      <div *ngIf="status === 'Return (Rental Provider)'" class="mb-4">
+        <!-- Nomor Resi -->
+        <label for="shipment-receipt" class="block mb-2 text-sm font-semibold text-gray-900">Nomor Resi</label>
+        <input 
+          type="text" 
+          disabled 
+          name="shipment-receipt" 
+          id="shipment-receipt" 
+          value="{{order.shipment_receipt_user_id}}"  
+          [(ngModel)]="order.shipment_receipt_user_id"  
+          required 
+          class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" 
+        />
+
+        <label for="response" class="block mt-4 mb-2 text-sm font-semibold text-gray-900">Response</label>
+        <input 
+          type="text" 
+          name="response" 
+          id="response" 
+          disabled
+          value="{{order.shipment_notes}}" 
+          placeholder="Type your response here" 
+          required 
+          class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" 
+        />
+      
+        <!-- Nomor Resi Pengembalian -->
+        <label for="return-receipt" class="block mb-2 mt-4 text-sm font-semibold text-gray-900">Nomor Resi Pengembalian</label>
+        <input 
+          type="text"  
+          name="return-receipt" 
+          id="return-receipt"   
+          [(ngModel)]="nomorresi"  
+          required 
+          class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" 
+        />
+      
+        <!-- Response -->
+        
+      </div>
+
+      <div *ngIf="status === 'Accepted'" class="mb-4">
+        <label for="return-receipt" class="block mb-2 mt-4 text-sm font-semibold text-gray-900">Nomor Resi Pengembalian</label>
+        <input 
+          type="text"  
+          name="return-receipt" 
+          id="return-receipt"   
+          [(ngModel)]="nomorresi"  
+          required 
+          class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" 
+        />
+      </div>
+
+      <div *ngIf="status === 'Return (Rental Provider)'" class="flex mt-5">
+        <div class="flex justify-center mb-4 w-full">
+          <button type="submit" (click)="doKembalikanKeSeller()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Kembalikan Pesanan</button>
+        </div>
+      </div>
+      
+      
+      <div *ngIf="status === 'Shipping (Rental Provider)'" class="flex mt-5">
         <div class="flex justify-center mb-4 w-full">
           <button type="submit" (click)="doTerima()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Terima Pesanan</button>
         </div>
@@ -84,9 +170,9 @@
         <input type="number" name="name" id="name" value=""  [(ngModel)]="nomorresi"  required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" />
       </div>
 
-      <div *ngIf="status === 'Diterima'" class="mt-5">
+      <div *ngIf="status === 'Accepted'" class="mt-5">
         <div class="flex justify-center mb-4 w-full">
-          <button type="submit" (click)="doKembalikanKeSeller()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Kirim balik ke penyedia sewa</button>
+          <button type="submit" (click)="doKembalikanKeSeller()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Kembalikan ke penyedia sewa</button>
         </div>
       </div>
       
@@ -104,7 +190,7 @@
 
       <div *ngIf="status === 'Dikembalikan (Penyedia Sewa)'">
         <div class="flex justify-center mb-4 w-full">
-          <button type="submit" (click)="doKembalikanKeSeller()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Kirim balik ke penyedia sewa</button>
+          <button type="submit" (click)="doKembalikanKeSeller()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Kembalikan ke penyedia sewa</button>
         </div>
       </div>
     </form>

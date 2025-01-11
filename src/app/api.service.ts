@@ -188,7 +188,7 @@ export class ApiService {
   }
 
   sendOrderDetailClientResponse(url: any, id: any, data: any) {
-    return this.http.put(this.baseUrl + url + id, data, {
+    return this.http.post(this.baseUrl + url + id, data, {
       headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
     });
   }

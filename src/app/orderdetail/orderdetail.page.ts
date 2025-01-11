@@ -41,8 +41,9 @@ export class OrderdetailPage implements OnInit {
   };
 
   orderResponseClient:any = {
-    status_order:'',
-    description:'',
+    orderevent_status:'',
+    orderevent_notes:'',
+    shipment_receipt_user_id:'',
   }
 
   description:any
@@ -84,10 +85,10 @@ export class OrderdetailPage implements OnInit {
     });
     await loading.present();
   
-    this.orderResponseClient.status_order = "Finish";
+    this.orderResponseClient.orderevent_status = "Finish";
     this.orderResponseClient.description = this.description;
   
-    this.api.sendOrderDetailClientResponse('order/', this.id, this.orderResponseClient)
+    this.api.sendOrderDetailClientResponse('orderevents/', this.id, this.orderResponseClient)
       .subscribe(
         async (resp) => {
           this.resp = resp;
@@ -128,9 +129,9 @@ export class OrderdetailPage implements OnInit {
     });
     await loading.present();
 
-    this.orderResponseClient.status_order = "Dibatalkan"
+    this.orderResponseClient.orderevent_status = "Dibatalkan"
 
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient)
+    this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient)
     .subscribe(
       async (resp) => {
         this.resp = resp
@@ -162,9 +163,9 @@ export class OrderdetailPage implements OnInit {
     });
     await loading.present();
 
-    this.orderResponseClient.status_order = "Diterima"
+    this.orderResponseClient.orderevent_status = "Accepted"
 
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient)
+    this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient)
     .subscribe(
       async (resp) => {
         this.resp = resp
@@ -201,8 +202,11 @@ export class OrderdetailPage implements OnInit {
     });
     await loading.present();
 
-    this.orderResponseClient.status_order = "Dikembalikan (Customer)"
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient)
+    if (this.description != null && this.nomorresi != null){
+      this.orderResponseClient.orderevent_status = "Return (Customer)"
+      this.orderResponseClient.orderevent_notes = this.description
+      this.orderResponseClient.shipment_receipt_user_id = this.nomorresi
+      this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient)
     .subscribe(
       async (resp) => {
         this.resp = resp
@@ -219,12 +223,12 @@ export class OrderdetailPage implements OnInit {
           this.presentAlert("An unexpected error occurred.");
         }
       this.isSubmitting = false;
-    }, async (error) => {
-      await loading.dismiss();
-      const errormessage = error.error?.data || "An error occurred. Please try again."
-      this.presentAlert(errormessage);
-      this.isSubmitting = false;
-    },)
+    })
+    } else {
+      await loading.dismiss()
+      this.presentAlert("Please input response and shipment receipt id")
+      this.isSubmitting = false
+    }
   }
 
   async doKembalikanKeSeller(){
@@ -237,9 +241,10 @@ export class OrderdetailPage implements OnInit {
     });
     await loading.present();    
 
-    this.orderResponseClient.status_order = "Dikirim (Customer)"
-
-    this.api.sendOrderDetailClientResponse('order/',this.id,this.orderResponseClient)
+    if (this.nomorresi != null){
+      this.orderResponseClient.orderevent_status = "Shipping (Customer)"
+      this.orderResponseClient.shipment_receipt_user_id = this.nomorresi
+      this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient)
     .subscribe(
       async (resp) => {
         this.resp = resp
@@ -257,12 +262,12 @@ export class OrderdetailPage implements OnInit {
           this.presentAlert("An unexpected error occurred.");
         }
       this.isSubmitting = false;
-    }, async (error) => {
-      await loading.dismiss();
-      const errormessage = error.error?.data || "An error occurred. Please try again."
-      this.presentAlert(errormessage);
-      this.isSubmitting = false;
-    },)
+    })
+    } else {
+      await loading.dismiss()
+      this.presentAlert("Please input shipment receipt id")
+      this.isSubmitting = false
+    }
   }
 
 }

@@ -12,7 +12,7 @@ export class PesananPage implements OnInit {
 
   constructor(private router: Router, public api: ApiService) { }
 
-  status:any //default false
+  status:any
   resp:any
   order: any = {
     id: "",
@@ -34,6 +34,9 @@ export class PesananPage implements OnInit {
         console.log(this.resp)
         this.order = this.resp.data
         this.status = true
+        console.log("woi",this.status)
+      } else {
+        console.log(this.resp)
       }
     })
   }
