@@ -143,7 +143,7 @@ export class PesanandetailPage implements OnInit {
       message: 'loading...',
     });
     await loading.present();
-    if (this.description != null && this.nomorresi != null){
+    if (this.description != null && this.description.trim() !== "" && this.nomorresi != null && this.nomorresi.trim() !== ""){
     this.orderResponseClient.orderevent_status = "Return (Rental Provider)"
     this.orderResponseClient.orderevent_notes = this.description
     this.orderResponseClient.shipment_receipt_user_id = this.nomorresi
@@ -166,43 +166,47 @@ export class PesanandetailPage implements OnInit {
     }
   }
 
-  async doReject(){
+  async doReject() {
     if (this.isSubmitting) return;
     this.isSubmitting = true;
 
-    // Tampilkan loading sebelum proses
+    // Show loading spinner
     const loading = await this.loadingCtrl.create({
       message: 'loading...',
     });
     await loading.present();
 
-    this.orderResponseClient.orderevent_status = "Cancelled"
-    if (this.description != null){
-      this.orderResponseClient.orderevent_notes = this.description
-      this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient)
-      .subscribe(
-        async (resp) => {
-        this.resp = resp
-        if (this.resp.code == "200"){
-          console.log(this.resp)
-          await this.router.navigate(['/pesanan'])
-          await loading.dismiss();
-          window.location.reload();
-        }
-        this.isSubmitting = false;
-      }, async (error) => {
-        await loading.dismiss();
-        const errormessage = error.error?.data || "An error occurred. Please try again."
-        this.presentAlert(errormessage);
-        this.isSubmitting = false;
-      },)
+    this.orderResponseClient.orderevent_status = "Cancelled";
+
+    // Check for null, undefined, or empty string
+    if (this.description && this.description.trim() !== "") {
+      this.orderResponseClient.orderevent_notes = this.description.trim();
+      this.api.sendOrderDetailClientResponse('orderevents/', this.id, this.orderResponseClient)
+        .subscribe(
+          async (resp) => {
+            this.resp = resp;
+            if (this.resp.code == "200") {
+              console.log(this.resp);
+              await this.router.navigate(['/pesanan']);
+              await loading.dismiss();
+              window.location.reload();
+            }
+            this.isSubmitting = false;
+          },
+          async (error) => {
+            await loading.dismiss();
+            const errormessage = error.error?.data || "An error occurred. Please try again.";
+            this.presentAlert(errormessage);
+            this.isSubmitting = false;
+          }
+        );
     } else {
-      await loading.dismiss()
-      await this.presentAlert("Please input description")
-      this.isSubmitting = false
+      await loading.dismiss();
+      await this.presentAlert("Please input description");
+      this.isSubmitting = false;
     }
-   
   }
+
 
   
 
@@ -210,7 +214,7 @@ export class PesanandetailPage implements OnInit {
     if (this.isSubmitting) return;
     this.isSubmitting = true;
 
-    if (this.nomorresi != null){
+    if (this.nomorresi != null && this.nomorresi.trim() !== ""){
       this.orderResponseClient.orderevent_status = "Shipping (Rental Provider)"
       this.orderResponseClient.orderevent_notes = this.description
       this.orderResponseClient.shipment_receipt_user_id = this.nomorresi

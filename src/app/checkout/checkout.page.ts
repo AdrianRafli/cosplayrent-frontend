@@ -274,7 +274,7 @@ export class CheckoutPage implements OnInit {
     if (this.selectedPaymentMethod === 'emoney') {
         if (this.showEmoneyBalance <= this.totalSewa){
           await loading.dismiss()
-          await this.presentAlert("Sufficient amount of money")
+          await this.presentAlert("Insufficient amount of money")
         }
         else{
         console.log("Using E-Money to Pay");
@@ -329,7 +329,8 @@ export class CheckoutPage implements OnInit {
                         data1: this.resp.data.order_id,
                         data2: this.orderToMidtransRequest.total,
                         data3: this.resp.data.midtrans_expired_time,
-                        data4: this.condition
+                        data4: this.condition,
+                        data5: this.resp.data.midtrans_created_at,
                     }
                 });
             } else {

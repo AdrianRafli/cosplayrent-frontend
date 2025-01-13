@@ -202,7 +202,7 @@ export class OrderdetailPage implements OnInit {
     });
     await loading.present();
 
-    if (this.description != null && this.nomorresi != null){
+    if (this.description != null && this.description.trim() !== "" &&  this.nomorresi != null && this.nomorresi.trim() !== ""){
       this.orderResponseClient.orderevent_status = "Return (Customer)"
       this.orderResponseClient.orderevent_notes = this.description
       this.orderResponseClient.shipment_receipt_user_id = this.nomorresi
@@ -241,7 +241,7 @@ export class OrderdetailPage implements OnInit {
     });
     await loading.present();    
 
-    if (this.nomorresi != null){
+    if (this.nomorresi != null && this.nomorresi.trim() !== ""){
       this.orderResponseClient.orderevent_status = "Shipping (Customer)"
       this.orderResponseClient.shipment_receipt_user_id = this.nomorresi
       this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient)

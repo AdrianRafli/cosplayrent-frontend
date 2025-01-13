@@ -13,6 +13,7 @@ interface NavigationState {
   data2: string;
   data3: string;
   data4: string;
+  data5: string
 }
 
 @Component({
@@ -31,6 +32,7 @@ export class SelesaikanTransaksiPage implements OnInit, OnDestroy {
   receivedData2:any
   receivedData3:any
   receivedData4:any
+  receivedData5:any
   resp:any
   statuspayment:any
   isSubmitting:any  
@@ -50,15 +52,17 @@ export class SelesaikanTransaksiPage implements OnInit, OnDestroy {
       this.receivedData2 = navigation.data2;
       this.receivedData3 = navigation.data3;
       this.receivedData4 = navigation.data4;
+      this.receivedData5 = navigation.data5;
       console.log('Received Data:', this.receivedData);
       console.log('Received Data1:', this.receivedData1);
       console.log('Received Data2:', this.receivedData2)
       console.log('Received Data3:', this.receivedData3)
       console.log('Received Data4:', this.receivedData4)
+      console.log('Received Data5:', this.receivedData5)
     } else {
       console.log('Failed to get navigation data');
     }
-    this.startCountdownForAll(this.receivedData3);
+    this.startCountdownForAll(this.receivedData3,this.receivedData5);
   }
 
   ngOnDestroy() {
@@ -67,31 +71,42 @@ export class SelesaikanTransaksiPage implements OnInit, OnDestroy {
     }
   }
 
-  startCountdownForAll(item:any) {
+  startCountdownForAll(item: any, item1: any) {
     const expirationDate = new Date(item); // The expiration date
+    let currentDate = new Date(item1); // Initial reference date
+    const actualStartTime = new Date(); // The actual current time
+
+    // Adjust currentDate to reflect the actual starting point
+    const timeDifference = actualStartTime.getTime() - currentDate.getTime();
+    currentDate = new Date(currentDate.getTime() + timeDifference);
+
     const interval = setInterval(() => {
-      const now = new Date(); // Current time
-      const remainingTime = expirationDate.getTime() - now.getTime(); // Time difference in milliseconds
+        const remainingTime = expirationDate.getTime() - currentDate.getTime(); // Time difference in milliseconds
 
-      if (remainingTime <= 0) {
-        clearInterval(interval); // Stop the countdown when expired
-        this.countdown = 'Expired';
-      } else {
-        // Calculate hours, minutes, seconds
-        const hours = Math.floor((remainingTime / (1000 * 60 * 60)) % 24);
-        const minutes = Math.floor((remainingTime / (1000 * 60)) % 60);
-        const seconds = Math.floor((remainingTime / 1000) % 60);
+        if (remainingTime <= 0) {
+            clearInterval(interval); // Stop the countdown when expired
+            this.countdown = 'Expired';
+        } else {
+            // Calculate hours, minutes, seconds
+            const hours = Math.floor((remainingTime / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((remainingTime / (1000 * 60)) % 60);
+            const seconds = Math.floor((remainingTime / 1000) % 60);
 
-        // Format as HH:mm:ss
-        this.countdown = `${this.padZero(hours)}:${this.padZero(minutes)}:${this.padZero(seconds)}`;
-      }
+            // Format as HH:mm:ss
+            this.countdown = `${this.padZero(hours)}:${this.padZero(minutes)}:${this.padZero(seconds)}`;
+        }
+
+        // Increment currentDate by 1 second
+        currentDate = new Date(currentDate.getTime() + 1000);
     }, 1000); // Update every second
   }
 
   // Helper function to add leading zero to numbers < 10
   padZero(num: number): string {
-    return num < 10 ? '0' + num : num.toString();
+      return num < 10 ? '0' + num : num.toString();
   }
+
+
 
   viewPaymentDetails() {
     console.log('Viewing payment details');

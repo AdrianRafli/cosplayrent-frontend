@@ -77,7 +77,8 @@ export class TopupPage implements OnInit {
               data1: this.resp.data.order_id,
               data2:this.data.Emoney_amount,
               data3:this.resp.data.midtrans_expired_time,
-              data4: this.condition
+              data4: this.condition,
+              data5: this.resp.data.midtrans_created_at
             }
           }
         )
