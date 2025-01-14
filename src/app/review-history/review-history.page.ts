@@ -20,4 +20,10 @@ export class ReviewHistoryPage implements OnInit {
   goToProfile(){
     this.router.navigate(['/profile'])
   }
+  goToReview(){
+    this.router.navigate(['/review'])
+  }
+  goToDetail(){
+    this.router.navigate(['/review'])
+  }
 }

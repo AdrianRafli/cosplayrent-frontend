@@ -13,58 +13,62 @@
   </header>
 
   <ion-segment color="success" [(ngModel)]="selectTabs">
-    <ion-segment-button value="menunggu">
-      <ion-label class="text-sm">Belum Direview</ion-label>
+    <ion-segment-button value="menunggu" class="py-2">
+      <ion-label class="text-sm">Menunggu Diulas</ion-label>
     </ion-segment-button>
-    <ion-segment-button value="riwayat">
+    <ion-segment-button value="riwayat" class="py-2">
       <ion-label>Riwayat</ion-label>
     </ion-segment-button>
   </ion-segment>
 
   <div *ngIf="selectTabs == 'menunggu'">
     <div class="reviews mt-5 px-4">
-      <div class="order-card shadow-md" style="border: 1px solid #ccc; border-radius: 5px; padding: 16px; margin-bottom: 16px;">
-        <p class="font-light text-sm mb-2">Nama toko</p>
-        <div style="display: flex; align-items: center;">
-          <img src="../../assets/product/kostum-1.png" alt="" style="max-width: 50px; height: auto; border-radius: 5px;" class="me-2" />
-          <div>
-            <h3 class="font-bold text-balance">Kostum Naruto</h3>
-            <p class="font-light text-sm">26 Desember 2024</p>
+      <div class="shadow-md" style="border: 1px solid #ccc; border-radius: 5px; padding: 16px; margin-bottom: 16px;">
+        <div class="flex gap-3 items-center w-full">
+          <img src="../../assets/product/kostum-1.png" class="product-img rounded-sm" alt="product-image">
+          <div class="flex flex-col w-full">
+            <h3 class="font-bold">Kostum Naruto</h3>
+            <p class="font-light">26 Desember 2024</p>
+            <div class="flex justify-between w-full">
+              <p class="font-light">Size: L</p>
+              <button (click)="goToReview()" class="w-16 py-2 font-bold text-green-600 bg-white border-2 border-solid border-green-500 rounded-lg" style="margin-right: 8px;">
+                Nilai
+              </button>
+            </div>
           </div>
-        </div>
-        <div style="border-bottom: 1px solid #ccc; margin: 8px 0;"></div>
-
-
-  
-        <div style="margin-top: 16px; display: flex; justify-content: flex-end;">
-          <ng-container>
-            <button class="w-16 py-2 font-bold text-green-600 bg-white border-2 border-solid border-green-500 rounded-lg" style="margin-right: 8px;">
-              Nilai
-            </button>
-          </ng-container>
         </div>
       </div>
     </div>
   </div>
 
   <div *ngIf="selectTabs == 'riwayat'">
-    <div class="reviews mt-5 px-4">
-      <div class="order-card shadow-md" style="border: 1px solid #ccc; border-radius: 5px; padding: 16px; margin-bottom: 16px;">
+    <div class="review mt-5 px-4">
+      <div class="shadow-md" style="border: 1px solid #ccc; border-radius: 5px; padding: 16px; margin-bottom: 16px;">
         <div class="flex flex-col gap-2">
-          <h3 class="font-bold">Kostum Naruto</h3>
-          <div class="flex items-center">
-            <div class="stars-review flex justify-end flex-row-reverse gap-1 me-2">
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
-              <ion-icon name="star"></ion-icon>
+          <div class="flex gap-3 items-center w-100">
+            <img src="../../assets/product/kostum-1.png" class="product-img rounded-sm" alt="product-image">
+            <div class="flex flex-col">
+              <h3 class="font-bold">Kostum Naruto</h3>
+              <p class="font-light">26 Desember 2024</p>
             </div>
-            <p> - 26 Desember 2024</p>
           </div>
-          <p class="font-light">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate, autem sequi molestiae repudiandae veritatis inventore ab aliquid rem nulla beatae dolorem mollitia eos velit ullam eaque! Dicta et aperiam aut.</p>
+          <div class="stars-review flex justify-end flex-row-reverse gap-1 me-2">
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+            <ion-icon name="star"></ion-icon>
+          </div>
+          <p class="font-light line-clamp-2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate, autem sequi molestiae repudiandae veritatis inventore ab aliquid rem nulla beatae dolorem mollitia eos velit ullam eaque! Dicta et aperiam aut.</p>
+          <div class="flex justify-between items-center">
+            <span></span> <!-- Placeholder untuk menjaga tombol di kanan -->
+            <button (click)="goToDetail()" class="w-16 py-2 font-bold text-green-600 bg-white border-2 border-solid border-green-500 rounded-lg">
+              Detail
+            </button>
+          </div>
         </div>
-      </div>
+      </div>    
     </div>
+    
   </div>
 </ion-content>
