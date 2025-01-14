@@ -76,6 +76,10 @@ const routes: Routes = [
     loadChildren: () => import('./review/review.module').then( m => m.ReviewPageModule)
   },
   {
+    path: 'review-history',
+    loadChildren: () => import('./review-history/review-history.module').then( m => m.ReviewHistoryPageModule)
+  },
+  {
     path: 'order',
     loadChildren: () => import('./order/order.module').then( m => m.OrderPageModule)
   },
