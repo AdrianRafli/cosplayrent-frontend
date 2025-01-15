@@ -275,7 +275,12 @@
                 class="mr-2"
               />
               <label for="{{method.id}}" class="flex items-center">
-                <img [src]="method.icon" alt="{{method.label}}" class="w-10 h-10 rounded-full mr-2" /> <!-- Circular icon -->
+                <img 
+                  [src]="method.id === 'emoney' ? '../../assets/illustration/icons8-money-50.png' 
+                  : '../../assets/illustration/icons8-payment-100.png'"
+                  alt="{{method.label}}" 
+                  class="w-10 h-10 rounded-full mr-2" 
+                />
                 {{ method.label }}
               </label>
             </div>
