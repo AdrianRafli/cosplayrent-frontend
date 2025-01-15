@@ -31,7 +31,7 @@ export class SelesaikanTransaksiOrderPage implements OnInit, OnDestroy {
   receivedData3:any
   receivedData4:any
   resp:any
-  statuspayment:any
+  statuspayment:any = false
   isSubmitting:any
   paymentid:any
   transaksi:any  = []; 

@@ -40,14 +40,19 @@
           <h4 class="text-base font-extrabold">Tambahkan Foto</h4>
           <div class="mt-2 border border-dashed border-grey-500 rounded w-20 h-20">
             <input type="file" (change)="onFileSelected($event)" accept="image/*" class="hidden" #fileInput>
-            <img *ngIf="!selectedFile"
-                 src="../../assets/illustration/defaultprofile.jpg" 
-                 alt="Image Review"
-                 class="w-20 h-20 rounded"
-                 (click)="fileInput.click()">
             <img *ngIf="selectedFile"
                  [src]="previewUrl" 
                  alt="Image Review"
+                 class="w-20 h-20 rounded"
+                 (click)="fileInput.click()">
+            <img *ngIf="!selectedFile && request.review_picture" 
+                 [src]="request.review_picture" 
+                 alt="Profile Picture" 
+                 class="w-20 h-20 rounded"
+                 (click)="fileInput.click()">
+            <img *ngIf="!selectedFile && !request.review_picture" 
+                 src="../../assets/illustration/defaultprofile.jpg" 
+                 alt="Profile Picture" 
                  class="w-20 h-20 rounded"
                  (click)="fileInput.click()">
           </div>
@@ -60,15 +65,19 @@
           placeholder="Bagikan penilaianmu dan bantu Pengguna lain membuat pilihan yang lebih baik"
           rows="4"
           required
+          [value]="request.review_description"
           [(ngModel)]="review"
           name="review_comment"
           ></textarea>
         </div>
       </div>
 
-      <div class="fixed bottom-0 left-0 w-11/12 flex justify-center m-4">
-        <button type="submit" (click)="saveReview()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-12 py-2 font-bold text-white bg-green-600 rounded " style="font-size: 24px;">SAVE</button>
+      <div *ngIf="receivedData2 == 'riwayat'"  class="fixed bottom-0 left-0 w-11/12 flex justify-center m-4 gap-x-4">
+        <button type="submit"  (click)="deleteReview(request.review_id)" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-1/2 h-12 py-2 font-bold text-white bg-red-600 rounded " style="font-size: 24px;">DELETE</button>
+        <button type="submit" (click)="saveReview()"  [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-1/2 h-12 py-2 font-bold text-white bg-green-600 rounded " style="font-size: 24px;">SAVE</button>
       </div>
+
+      <button *ngIf="receivedData2 != 'riwayat'" type="submit" (click)="saveReview()"  [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-12 py-2 font-bold text-white bg-green-600 rounded " style="font-size: 24px;">SAVE</button>
     </form>
   </div>
 </ion-content>

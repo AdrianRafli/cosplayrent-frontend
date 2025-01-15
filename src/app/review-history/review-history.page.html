@@ -22,16 +22,20 @@
   </ion-segment>
 
   <div *ngIf="selectTabs == 'menunggu'">
-    <div class="reviews mt-5 px-4">
+   <div *ngIf="statusAllNonReviewed else noData">
+    <div *ngFor="let costume of reviews" class="reviews mt-5 px-4">
       <div class="shadow-md" style="border: 1px solid #ccc; border-radius: 5px; padding: 16px; margin-bottom: 16px;">
         <div class="flex gap-3 items-center w-full">
-          <img src="../../assets/product/kostum-1.png" class="product-img rounded-sm" alt="product-image">
+          <img [src]="costume.costume_picture" class="product-img rounded-sm" alt="product-image">
           <div class="flex flex-col w-full">
-            <h3 class="font-bold">Kostum Naruto</h3>
-            <p class="font-light">26 Desember 2024</p>
-            <div class="flex justify-between w-full">
-              <p class="font-light">Size: L</p>
-              <button (click)="goToReview()" class="w-16 py-2 font-bold text-green-600 bg-white border-2 border-solid border-green-500 rounded-lg" style="margin-right: 8px;">
+            <h3 class="font-bold">{{costume.costume_name}}</h3>
+            <p class="text-gray-600 text-sm">{{costume.order_date}}</p>
+            <div class="flex justify-between w-full mt-2">
+              <div>
+                <p class="font-light text-sm">Size: {{costume.costume_size}}</p>
+                <p class="font-light text-sm">Price: Rp{{costume.costume_price}}</p>
+              </div>
+              <button (click)="goToReview(costume.order_id,costume.costume_id)" class="w-16 py-2 font-bold text-green-600 bg-white border-2 border-solid border-green-500 rounded-lg" style="margin-right: 8px;">
                 Nilai
               </button>
             </div>
@@ -39,30 +43,32 @@
         </div>
       </div>
     </div>
+   </div>
+
+   <ng-template #noData>
+    <p class="text-center mt-4">No review is available.</p>
+  </ng-template>
   </div>
 
   <div *ngIf="selectTabs == 'riwayat'">
-    <div class="review mt-5 px-4">
+    <div *ngFor="let reviewed of reviewedOrder" class="review mt-5 px-4">
       <div class="shadow-md" style="border: 1px solid #ccc; border-radius: 5px; padding: 16px; margin-bottom: 16px;">
         <div class="flex flex-col gap-2">
           <div class="flex gap-3 items-center w-100">
-            <img src="../../assets/product/kostum-1.png" class="product-img rounded-sm" alt="product-image">
+            <img [src]="reviewed.costume_picture" class="product-img rounded-sm" alt="product-image">
             <div class="flex flex-col">
-              <h3 class="font-bold">Kostum Naruto</h3>
-              <p class="font-light">26 Desember 2024</p>
+              <h3 class="font-bold">{{reviewed.costume_name}}</h3>
+              <p class="font-light">{{reviewed.review_date}}</p>
             </div>
           </div>
           <div class="stars-review flex justify-end flex-row-reverse gap-1 me-2">
             <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
-            <ion-icon name="star"></ion-icon>
+            <h1>{{reviewed.review_rating}}</h1>
           </div>
-          <p class="font-light line-clamp-2">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptate, autem sequi molestiae repudiandae veritatis inventore ab aliquid rem nulla beatae dolorem mollitia eos velit ullam eaque! Dicta et aperiam aut.</p>
+          <p class="font-light line-clamp-2">{{reviewed.review_description}}</p>
           <div class="flex justify-between items-center">
             <span></span> <!-- Placeholder untuk menjaga tombol di kanan -->
-            <button (click)="goToDetail()" class="w-16 py-2 font-bold text-green-600 bg-white border-2 border-solid border-green-500 rounded-lg">
+            <button (click)="goToDetail(reviewed.order_id,reviewed.costume_id)" class="w-16 py-2 font-bold text-green-600 bg-white border-2 border-solid border-green-500 rounded-lg">
               Detail
             </button>
           </div>

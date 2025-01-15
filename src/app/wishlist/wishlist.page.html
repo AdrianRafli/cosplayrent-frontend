@@ -45,8 +45,8 @@
               <p>Price: {{costume.costume_price}}</p>
               <div class="flex mt-3">
                 <p class="w-1/2 ">Size: {{costume.costume_size}}</p>
-               <div class="flex gap-x-4 pr-2 pb-4 ">
-                <button class="text-[15px] px-1 py-1 rounded-lg outline outline-1 outline-[#226F54] text-[#226F54] font-semibold">Keranjang</button>
+               <div class="flex ml-auto gap-x-4 pr-2 pb-4 ">
+                <!-- <button class="text-[15px] px-1 py-1 rounded-lg outline outline-1 outline-[#226F54] text-[#226F54] font-semibold">Keranjang</button> -->
                 <button class="text-[15px] px-1 py-1 rounded-lg outline outline-1 font-semibold outline-red-500 text-red-500" (click)="removeFromWishlist(costume.costume_id)">Hapus</button>
                </div>
               </div>

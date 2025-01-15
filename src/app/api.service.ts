@@ -281,4 +281,28 @@ export class ApiService {
       headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
     })
   }
+
+  getAllUserReview(url:any){
+    return this.http.get(this.baseUrl+url, {
+      headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
+    })
+  }
+  
+  getAllReviewedOrder(url:any){
+    return this.http.get(this.baseUrl+url, {
+      headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
+    })
+  }
+
+  getReviewInfo(url:any,orderid:any){
+    return this.http.get(this.baseUrl+url+orderid, {
+      headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
+    })
+  }
+
+  deleteReview(url:any,reviewid:any){
+    return this.http.delete(this.baseUrl+url+reviewid, {
+      headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
+    })
+  }
 }

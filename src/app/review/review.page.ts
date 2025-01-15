@@ -8,6 +8,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
 interface NavigationState {
   data: string;  // Adjust the type according to the data you are sending
   data1: number;    // Adjust the type accordingly
+  data2:string;
 }
 
 @Component({
@@ -20,6 +21,7 @@ export class ReviewPage implements OnInit {
   data: any = { id: '',  review_rating: '', review_picture: '', review_comment: ''};
   receivedData : any
   receivedData1: any
+  receivedData2:any
   // Token:any
 
   // resp: any;
@@ -49,18 +51,42 @@ export class ReviewPage implements OnInit {
     if (navigation && navigation.data && navigation.data1) {
       this.receivedData = navigation.data;
       this.receivedData1 = navigation.data1;
+      this.receivedData2 = navigation.data2;
       console.log('Received Data:', this.receivedData);
       console.log('Received Data1:', this.receivedData1);
+      console.log('Received Data2:', this.receivedData2);
+
+      if (this.receivedData2 == "riwayat"){
+        this.api.getCostumesById('costume/',this.receivedData1).subscribe((resp)=>{
+          this.resp = resp
+    
+          if (this.resp.code == "200"){
+            this.costume = this.resp.data
+          }
+        })
+
+        this.api.getReviewInfo("reviewinfo/",this.receivedData).subscribe((resp)=>{
+          this.resp = resp
+
+          if (this.resp.code == "200"){
+            this.request = this.resp.data
+            this.setRating(this.resp.data.review_rating)
+            console.log(this.resp.data)
+          }
+        })
+      }
+      else{
+        this.api.getCostumesById('costume/',this.receivedData1).subscribe((resp)=>{
+          this.resp = resp
+    
+          if (this.resp.code == "200"){
+            this.costume = this.resp.data
+          }
+        })
+      }
     } else {
       console.log('Failed to get navigation data');
     }
-    this.api.getCostumesById('costume/',this.receivedData1).subscribe((resp)=>{
-      this.resp = resp
-
-      if (this.resp.code == "200"){
-        this.costume = this.resp.data
-      }
-    })
   }
 
   // nilai rating disimpan di variable rating (number 1-5)
@@ -130,6 +156,18 @@ export class ReviewPage implements OnInit {
       };
       reader.readAsDataURL(file); 
     }
+  }
+
+  deleteReview(reviewid:number){
+    this.api.deleteReview('review/',reviewid).subscribe((resp)=>{
+      this.resp = resp
+
+      if (this.resp.code == "200"){
+        this.router.navigate(['/review-history']).then(() => {
+          window.location.reload();
+        });
+      }
+    })
   }
 
 }
