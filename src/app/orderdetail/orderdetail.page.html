@@ -48,7 +48,7 @@
 
       <div *ngIf="status === 'Cancelled'" class="mb-4">
         <label for="product-name" class="block mb-2 text-sm font-semibold text-gray-900">Response</label>
-        <textarea type="text" name="name" id="name" disabled [(ngModel)]="description" [value]="order.seller_response" placeholder="Type your response here" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12"></textarea>
+        <textarea type="text" name="name" id="name" disabled [(ngModel)]="description" [value]="order.shipment_notes" placeholder="Type your response here" required class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12"></textarea>
       </div>
 
      

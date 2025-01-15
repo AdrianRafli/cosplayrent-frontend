@@ -37,7 +37,7 @@ export class OrderdetailPage implements OnInit {
     costumer_origin_province: "",
     costumer_origin_city: "",
     costumer_identity_card: "",
-    seller_response:"",
+    shipment_notes:"",
   };
 
   orderResponseClient:any = {
