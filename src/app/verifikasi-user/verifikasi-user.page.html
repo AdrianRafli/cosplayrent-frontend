@@ -21,17 +21,17 @@
           <img *ngIf="selectedFile" 
                [src]="previewUrl" 
                alt="Profile Picture" 
-               class="w-full h-auto rounded-md"
+               class="w-80 h-80 rounded-md"
                (click)="fileInput.click()">
           <img *ngIf="!selectedFile && identityCardPicture" 
                [src]="identityCardPicture" 
                alt="Profile Picture" 
-               class="w-full h-auto rounded-md"
+               class="w-80 h-80 rounded-md"
                (click)="fileInput.click()">
           <img *ngIf="!selectedFile && !identityCardPicture" 
                src="../../assets/illustration/addktp.png" 
                alt="Profile Picture" 
-               class="w-80 h-auto rounded-md"
+               class="w-80 h-80 rounded-md"
                (click)="fileInput.click()">
         </div>
         <!-- <h2 class="text-center text-2xl font-semibold mb-5"></h2> -->
