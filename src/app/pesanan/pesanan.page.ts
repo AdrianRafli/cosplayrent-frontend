@@ -61,7 +61,7 @@ export class PesananPage implements OnInit {
     });
   }
   goToProfile(){
-    this.router.navigate(['/toko-home-page'])
+    this.router.navigate(['/profile'])
   }
 
   goToOrderDetail(id:any, status_order:any){

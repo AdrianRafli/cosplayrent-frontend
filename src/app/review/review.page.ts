@@ -96,7 +96,7 @@ export class ReviewPage implements OnInit {
   }
 
   goToOrder(){
-    this.router.navigate(['/home']).then(() => {
+    this.router.navigate(['/review-history']).then(() => {
       window.location.reload();
     });
   }
@@ -130,7 +130,7 @@ export class ReviewPage implements OnInit {
         this.resp = resp;
         if (this.resp.code == "200") {
           console.log(this.resp);
-          this.router.navigate(['/home']).then(() => {
+          this.router.navigate(['/review-history']).then(() => {
             window.location.reload();
           });
         } else {

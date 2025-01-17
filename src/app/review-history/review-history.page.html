@@ -63,8 +63,11 @@
               </div>
             </div>
             <div class="stars-review flex justify-end flex-row-reverse gap-1 me-2">
-              <ion-icon name="star"></ion-icon>
-              <h1>{{reviewed.review_rating}}</h1>
+              <ion-icon [class.rated]="reviewed.review_rating >= 5" class="w-4 h-4" name="star"></ion-icon>
+              <ion-icon [class.rated]="reviewed.review_rating >= 4" class="w-4 h-4" name="star"></ion-icon>
+              <ion-icon [class.rated]="reviewed.review_rating >= 3" class="w-4 h-4" name="star"></ion-icon>
+              <ion-icon [class.rated]="reviewed.review_rating >= 2" class="w-4 h-4" name="star"></ion-icon>
+              <ion-icon [class.rated]="reviewed.review_rating >= 1" class="w-4 h-4" name="star"></ion-icon>
             </div>
             <p class="font-light line-clamp-2">{{reviewed.review_description}}</p>
             <div class="flex justify-between items-center">

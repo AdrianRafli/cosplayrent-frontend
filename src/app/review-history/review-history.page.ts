@@ -17,6 +17,7 @@ export class ReviewHistoryPage implements OnInit {
   resp:any
   statusAllNonReviewed:boolean = false
   statusAllReviewed:boolean = false
+  rating:any
 
   constructor(
     private router: Router,public api: ApiService,
@@ -48,6 +49,7 @@ export class ReviewHistoryPage implements OnInit {
 
     })
   }
+
 
   goToProfile(){
     this.router.navigate(['/profile'])
