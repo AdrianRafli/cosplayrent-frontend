@@ -111,35 +111,57 @@ export class ReviewPage implements OnInit {
   }
 
   saveReview() {
-    if (this.rating != null && this.selectedFile != null && this.review != null) {
+    if(this.receivedData2 == "riwayat"){
       const formData = new FormData();
-  
-      // Convert numbers to strings and append fields
+      
       formData.append('rating', String(this.rating));
-      formData.append('order_id', String(this.receivedData));
-      formData.append('costume_id', this.receivedData1);
       formData.append('description', this.review);
-  
-      // Append file with name if selected
       if (this.selectedFile) {
         formData.append('review_picture', this.selectedFile, this.selectedFile.name);
       }
-  
-      // API call
-      this.api.sendReview('review', formData).subscribe((resp) => {
+
+      this.api.updateReview('review/',this.request.review_id,formData).subscribe((resp) => {
         this.resp = resp;
         if (this.resp.code == "200") {
           console.log(this.resp);
           this.router.navigate(['/review-history']).then(() => {
             window.location.reload();
           });
-        } else {
+        } else { 
           this.presentAlert(this.resp.data);
         }
       });
     } else {
-      this.presentAlert("Please input rating, review picture, and description");
-    }
+      if (this.rating != null && this.selectedFile != null && this.review != null) {
+        const formData = new FormData();
+        
+          // Convert numbers to strings and append fields
+        formData.append('rating', String(this.rating));
+        formData.append('order_id', String(this.receivedData));
+        formData.append('costume_id', this.receivedData1);
+        formData.append('description', this.review);
+    
+        // Append file with name if selected
+        if (this.selectedFile) {
+          formData.append('review_picture', this.selectedFile, this.selectedFile.name);
+        }
+    
+        // API call
+        this.api.sendReview('review', formData).subscribe((resp) => {
+          this.resp = resp;
+          if (this.resp.code == "200") {
+            console.log(this.resp);
+            this.router.navigate(['/review-history']).then(() => {
+              window.location.reload();
+            });
+          } else { 
+            this.presentAlert(this.resp.data);
+          }
+        });
+      } else {
+        this.presentAlert("Please input rating, review picture, and description");
+      }
+    } 
   }
   
   

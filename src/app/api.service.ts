@@ -305,4 +305,10 @@ export class ApiService {
       headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
     })
   }
+
+  updateReview(url:any,reviewid:any,data:any){
+    return this.http.patch(this.baseUrl+url+reviewid,data, {
+      headers: new HttpHeaders({ Authorization: "Bearer " + this.token }),
+    })
+  }
 }
