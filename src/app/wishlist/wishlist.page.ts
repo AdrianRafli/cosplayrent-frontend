@@ -12,6 +12,7 @@ export class WishlistPage implements OnInit {
   Token:any
   resp:any
   costume:any=[]
+  wishlistStatus:boolean=false
 
   constructor(private router: Router, public api: ApiService) { }
 
@@ -20,6 +21,7 @@ export class WishlistPage implements OnInit {
       this.resp = resp
       if (this.resp.code == "200"){
         this.costume = this.resp.data
+        this.wishlistStatus = true
       }
     })
   }

@@ -210,31 +210,41 @@ export class PesanandetailPage implements OnInit {
 
   
 
-  doShipping(){
+  async doShipping(){
     if (this.isSubmitting) return;
     this.isSubmitting = true;
+
+    // Show loading spinner
+    const loading = await this.loadingCtrl.create({
+      message: 'loading...',
+    });
+    await loading.present();
 
     if (this.nomorresi != null && this.nomorresi.trim() !== ""){
       this.orderResponseClient.orderevent_status = "Shipping (Rental Provider)"
       this.orderResponseClient.orderevent_notes = this.description
       this.orderResponseClient.shipment_receipt_user_id = this.nomorresi
-      this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient).subscribe((resp) => {
+      this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient).subscribe(
+        async(resp) => {
         this.resp = resp
         if (this.resp.code == "200"){
           console.log(this.resp)
-          this.router.navigate(['/pesanan'])
+          await loading.dismiss();
+          await this.router.navigate(['/pesanan'])
             .then(() => {
               window.location.reload();
             });
         }
         this.isSubmitting = false;
-      },(error) => {
+      },async(error) => {
         const errormessage = error.error?.data || "An error occurred. Please try again."
-        this.presentAlert(errormessage);
+        await loading.dismiss();
+        await this.presentAlert(errormessage);
         this.isSubmitting = false
       },)
     } else {
-      this.presentAlert("Please input shipment receipt id")
+      await loading.dismiss();
+      await this.presentAlert("Please input shipment receipt id")
       this.isSubmitting = false;
     }
   }

@@ -188,6 +188,12 @@
         </div>
       </div>
 
+      <div *ngIf="status === 'Paid'">
+        <div class="flex justify-center mb-4 w-full">
+          <button type="submit" (click)="doReject()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
+        </div>
+      </div>
+
       <div *ngIf="status === 'Dikembalikan (Penyedia Sewa)'">
         <div class="flex justify-center mb-4 w-full">
           <button type="submit" (click)="doKembalikanKeSeller()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Kembalikan ke penyedia sewa</button>

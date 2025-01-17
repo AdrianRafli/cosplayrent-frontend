@@ -129,7 +129,7 @@ export class OrderdetailPage implements OnInit {
     });
     await loading.present();
 
-    this.orderResponseClient.orderevent_status = "Dibatalkan"
+    this.orderResponseClient.orderevent_status = "Cancelled"
 
     this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient)
     .subscribe(
