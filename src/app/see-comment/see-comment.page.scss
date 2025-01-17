@@ -1,0 +1,13 @@
+.stars-review ion-icon {
+    color:gray;
+    font-size: 32px;
+    cursor: pointer;
+
+    &.rated, 
+    &:hover,
+    &:hover ~ ion-icon {
+        color: gold;
+    }
+
+    transition: color .3 ease-in-out;
+}
