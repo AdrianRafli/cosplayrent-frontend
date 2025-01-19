@@ -35,8 +35,7 @@ export class HomePage implements OnInit{
     const alert = await this.alertController.create({
       header: "Process Failed",
       message: message,
-      buttons: [],
-      backdropDismiss:false,
+      buttons: ["OK"],
     });
     await alert.present();
   }
@@ -73,12 +72,25 @@ export class HomePage implements OnInit{
   
   goToLoginOrProfile(){
     this.Token = localStorage.getItem('userToken')
+    console.log("woi")
     if (this.Token !== null && this.Token.trim() !== '') {
-      this.router.navigate(['profile'])
+      console.log("woi2")
+
+      this.api.goMiddleware('middleware').subscribe(
+        (resp) => {
+          this.router.navigate(['profile'])
+        },
+        (error) => {
+          console.log(this.resp.code)
+          localStorage.removeItem('userToken');
+          this.router.navigate(['/login'])
+        }
+      );      
     } else {
       this.router.navigate(['/login'])
     }
   }
+  
   goToChatList(){
     this.router.navigate(['/chat-list']);
   }
@@ -93,23 +105,47 @@ export class HomePage implements OnInit{
     if (this.Token !== null && this.Token.trim() !== '') {
       this.router.navigate(['/wishlist'])
     } else {
-      this.router.navigate(['/login'])
+      this.presentAlert('Please login or register first')
     }
   }
   goToOrder(){
     this.Token = localStorage.getItem('userToken')
+    console.log("woi")
     if (this.Token !== null && this.Token.trim() !== '') {
-      this.router.navigate(['/order'])
+      console.log("woi2")
+
+      this.api.goMiddleware('middleware').subscribe(
+        (resp) => {
+          this.router.navigate(['order'])
+        },
+        (error) => {
+          console.log(this.resp.code)
+          localStorage.removeItem('userToken');
+          this.presentAlert('Please login or register first')
+        }
+      );      
     } else {
-      this.router.navigate(['/login'])
+      this.presentAlert('Please login or register first')
     }
   }
   goToEmoney(){
     this.Token = localStorage.getItem('userToken')
+    console.log("woi")
     if (this.Token !== null && this.Token.trim() !== '') {
-      this.router.navigate(['/emoney'])
+      console.log("woi2")
+
+      this.api.goMiddleware('middleware').subscribe(
+        (resp) => {
+          this.router.navigate(['emoney'])
+        },
+        (error) => {
+          this.presentAlert('Please login or register first')
+          console.log(this.resp.code)
+          localStorage.removeItem('userToken');
+        }
+      );      
     } else {
-      this.router.navigate(['/login'])
+      this.presentAlert('Please login or register first')
     }
   }
 

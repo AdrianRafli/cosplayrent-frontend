@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Live Scores</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="p-4 bg-gray-100">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Live Scores</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div *ngIf="resp.length === 0" class="text-center text-gray-500">
+    No order available. Waiting for updates...
+  </div>
+  <div *ngFor="let order of resp" class="score-item p-2 m-2 bg-white rounded shadow-md">
+    <p>Order ID: {{ order.order_id }}</p>
+    <p>Status: {{ order.status }}</p>
+
+    <div *ngIf="order.status == 'Paid'">
+      <h1 class="text-red-500">GOT IT</h1>
+    </div>
+  </div>  
+</ion-content>

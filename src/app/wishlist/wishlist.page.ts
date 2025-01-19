@@ -42,6 +42,10 @@ export class WishlistPage implements OnInit {
   goToOrder(){
     this.router.navigate(['/order']);
   }
+  goToEmoney(){
+    this.router.navigate(['/emoney']);
+  }
+
   goToLoginOrProfile(){
     this.Token = localStorage.getItem('userToken')
     if (this.Token !== null && this.Token.trim() !== '') {

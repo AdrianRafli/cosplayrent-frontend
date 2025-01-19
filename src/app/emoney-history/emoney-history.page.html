@@ -12,7 +12,8 @@
     </a>
   </div> 
   <div class="mt-2 w-full">
-    <div *ngFor="let transaction of transaction
+    <div *ngIf="statusTransaction  else noData">
+      <div *ngFor="let transaction of transaction
     " class="flex items-center justify-between p-2 mb-2">
       <div class="flex items-center">
         <div style="background-color: #f0efef; border-radius: 100%; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
@@ -31,6 +32,10 @@
         {{ transaction.transaction_type === 'Order (Buyer)' ? '-' : '+' }} {{ transaction.transaction_amount | currency:'Rp':'symbol':'1.0-0' }}
       </span>
     </div>
+    </div>
+    <ng-template #noData>
+      <p class="text-center text-lg">No transaction is available.</p>
+    </ng-template>  
   </div>
 </ion-content>
 

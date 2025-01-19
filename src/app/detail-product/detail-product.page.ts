@@ -15,6 +15,7 @@ export class DetailProductPage implements OnInit {
   error:any
   fillColor: string = '#000000';
   wishlist:any="False"
+  Token:any
 
   product = {
     name: 'Costum Naruto',
@@ -146,31 +147,58 @@ export class DetailProductPage implements OnInit {
     })
   }
 
-  updateWishlist(wishlistStatus: string, costumeId: number) {
-    console.log("status:",wishlistStatus)
-    console.log("costume id:", costumeId)
-    if (wishlistStatus == "True"){
-      this.api.deleteWishlist('wishlist/',costumeId).subscribe((resp)=>{
-        this.resp = resp
-         if(this.resp.code == "200") {
-           console.log("mana 2", this.resp)
-           this.wishlist = "False"
-           //window.location.reload()
-         } else {
-          this.presentAlert(this.resp.data)
-         }
-       })
-    } else if (wishlistStatus == "False") {
-       this.api.kirimWishlist('wishlist/',costumeId).subscribe((resp)=>{
-        this.resp = resp
-         if(this.resp.code == "200") {
-           console.log("mana",this.Allcostume)
-           this.wishlist = "True"
-           //window.location.reload()
-         } else {
-          this.presentAlert(this.resp.data)
-         }
-       })
+  async updateWishlist(wishlistStatus: string, costumeId: number) {
+    const loading = await this.loadingCtrl.create({
+      message: 'loading...',
+    });
+    await loading.present();
+
+    this.Token = localStorage.getItem('userToken')
+    console.log("woi")
+    if (this.Token !== null && this.Token.trim() !== '') {
+      console.log("woi2")
+
+      this.api.goMiddleware('middleware').subscribe(
+        (resp) => {
+          console.log("status:",wishlistStatus)
+          console.log("costume id:", costumeId)
+          if (wishlistStatus == "True"){
+            this.api.deleteWishlist('wishlist/',costumeId).subscribe(async(resp)=>{
+              this.resp = resp
+               if(this.resp.code == "200") {
+                await loading.dismiss()
+                 console.log("mana 2", this.resp)
+                 this.wishlist = "False"
+                 //window.location.reload()
+               } else {
+                await loading.dismiss()
+                await this.presentAlert(this.resp.data)
+               }
+             })
+          } else if (wishlistStatus == "False") {
+             this.api.kirimWishlist('wishlist/',costumeId).subscribe(async(resp)=>{
+              this.resp = resp
+               if(this.resp.code == "200") {
+                await loading.dismiss()
+                 console.log("mana",this.Allcostume)
+                 this.wishlist = "True"
+                 //window.location.reload()
+               } else {
+                await loading.dismiss()
+                await this.presentAlert(this.resp.data)
+               }
+             })
+          }
+        },
+        async(error) => {
+          await loading.dismiss()
+          await this.presentAlert('Please login or register first')
+          localStorage.removeItem('userToken');
+        }
+      );      
+    } else {
+      await loading.dismiss()
+      await this.presentAlert('Please login or register first')
     }
   }
 
@@ -190,22 +218,41 @@ export class DetailProductPage implements OnInit {
     });
     await loading.present();
 
-    this.api.getUserToOrderStatus('checkuserstatus/',this.id).subscribe(async(resp) => { 
-      this.resp = resp
-      if (this.resp.code == "200"){
-        this.statusToOrder = this.resp.data.status
-        await this.router.navigate(['/checkout',this.id]);
-        await loading.dismiss();
-      } else {
-        await loading.dismiss()
-        this.error = this.resp.data
-        this.presentAlert(this.error)
-      }
-    })
+    this.Token = localStorage.getItem('userToken')
+    console.log("woi")
+    if (this.Token !== null && this.Token.trim() !== '') {
+      console.log("woi2")
+
+      this.api.goMiddleware('middleware').subscribe(
+        (resp) => {
+          this.api.getUserToOrderStatus('checkuserstatus/',this.id).subscribe(async(resp) => { 
+            this.resp = resp
+            if (this.resp.code == "200"){
+              this.statusToOrder = this.resp.data.status
+              await loading.dismiss();
+              await this.router.navigate(['/checkout',this.id]);
+            } else {
+              await loading.dismiss()
+              this.error = this.resp.data
+              this.presentAlert(this.error)
+            }
+          })
+        },
+        async(error) => {
+          await loading.dismiss()
+          await this.presentAlert('Please login or register first')
+          console.log(this.resp.code)
+          localStorage.removeItem('userToken');
+        }
+      );      
+    } else {
+      await loading.dismiss()
+      await this.presentAlert('Please login or register first')
+    }
   }
 
   goToChat(){
-    this.router.navigate(['/chat'])
+    
   }
 
   goToCostumeDetail(costumeId:number){

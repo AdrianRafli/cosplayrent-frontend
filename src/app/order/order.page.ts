@@ -62,6 +62,9 @@ export class OrderPage implements OnInit {
   goToHome(){
     this.router.navigate(['/home']);
   }
+  goToWishlist(){
+    this.router.navigate(['/wishlist']);
+  }
   goToReview(){
     this.router.navigate(['/review']);
   }

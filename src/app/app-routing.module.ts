@@ -154,7 +154,15 @@ const routes: Routes = [
   {
     path: 'about-us',
     loadChildren: () => import('./about-us/about-us.module').then( m => m.AboutUsPageModule)
+  },  {
+    path: 'belajarsse',
+    loadChildren: () => import('./belajarsse/belajarsse.module').then( m => m.BelajarssePageModule)
+  },
+  {
+    path: 'verificationcode',
+    loadChildren: () => import('./verificationcode/verificationcode.module').then( m => m.VerificationcodePageModule)
   }
+
 
 
 

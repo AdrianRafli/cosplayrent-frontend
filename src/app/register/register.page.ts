@@ -94,7 +94,7 @@ export class RegisterPage implements OnInit {
 
         if (this.resp.code == 200) {
           localStorage.setItem("userToken", this.resp.data.token);
-          await this.router.navigate(["/home"])
+          await this.router.navigate(["/verificationcode"])
           await loading.dismiss();
           window.location.reload();
         } else {
