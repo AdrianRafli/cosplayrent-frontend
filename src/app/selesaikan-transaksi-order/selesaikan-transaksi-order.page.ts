@@ -48,6 +48,9 @@ export class SelesaikanTransaksiOrderPage implements OnInit, OnDestroy {
       if (this.resp.code == "200"){
         this.transaksi = this.resp.data
         console.log(this.transaksi)
+        if(this.transaksi.payment_status == 'Paid'){
+          this.statuspayment = true
+        }
         this.startCountdownForAll(this.transaksi.midtrans_expired_time,this.transaksi.midtrans_created_at)
       }
     })
