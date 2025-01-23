@@ -19,12 +19,16 @@
   </div>
 
   <!-- New Border for Payment Method -->
-  <div style="border: 1px solid gray; border-radius: 15px; padding: 16px; margin: 0 16px 4px 16px;">
+  <div *ngIf="this.transaksi.payment_method == 'Midtrans'" style="border: 1px solid gray; border-radius: 15px; padding: 16px; margin: 0 16px 4px 16px;">
     <h3 style="margin: 0;" class="text-lg">Midtrans</h3>
   </div>
 
+  <div *ngIf="this.transaksi.payment_method == 'Emoney'" style="border: 1px solid gray; border-radius: 15px; padding: 16px; margin: 0 16px 4px 16px;">
+    <h3 style="margin: 0;" class="text-lg">Emoney</h3>
+  </div>
+
   <!-- Existing Border for Payment Details -->
-  <div style="border: 1px solid gray; border-radius: 15px; padding: 16px; margin: 20px 16px 16px 16px;">
+  <div *ngIf="this.transaksi.payment_method == 'Midtrans' else emoney" style="border: 1px solid gray; border-radius: 15px; padding: 16px; margin: 20px 16px 16px 16px;">
     <p class="text-lg">Link pembayaran melalui Midtrans</p>
     <div style="display: flex; justify-content: space-between; align-items: center;">
       <p style="font-weight: bold; " class="text-lg mt-1 truncate w-3/4">{{ transaksi.midtrans_redirect_url }}</p>
@@ -40,6 +44,18 @@
       </button> -->
     </div>
   </div>
+
+  <ng-template #emoney>
+    <div style="border: 1px solid gray; border-radius: 15px; padding: 16px; margin: 20px 16px 16px 16px;">
+      <p class="text-lg">Total Tagihan</p>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <p style="font-weight: bold; " class="text-lg mt-1">Rp{{ transaksi.payment_amount | number }}</p>
+        <!-- <button (click)="viewPaymentDetails()" style="color: #226F54; background: none; border: none; cursor: pointer; font-weight: bold;" class="text-lg">
+          Lihat Detail
+        </button> -->
+      </div>
+    </div>
+  </ng-template>    
 
   <!-- <div style="display: flex; justify-content: space-between; margin: 0 16px 16px 16px;">
     <button (click)="continueShopping()" style="flex: 1; margin-left: 8px; padding: 6px 12px; font-weight: bold; background-color: #226F54; color: white; border-radius: 15px; font-size: 17px;">

@@ -21,7 +21,7 @@ interface NavigationState {
 })
 export class SelesaikanTransaksiOrderPage implements OnInit, OnDestroy {
   countdown: string = '00:00:00';
-  paymentMethod: string = 'BCA Virtual Account';
+  paymentMethod: string = '';
   paymentTo: string = '12345678912345';
   totalAmount: number = 100000;
   timer: any;
@@ -50,7 +50,7 @@ export class SelesaikanTransaksiOrderPage implements OnInit, OnDestroy {
         console.log(this.transaksi)
         if(this.transaksi.payment_status == 'Paid'){
           this.statuspayment = true
-        }
+        } 
         this.startCountdownForAll(this.transaksi.midtrans_expired_time,this.transaksi.midtrans_created_at)
       }
     })
