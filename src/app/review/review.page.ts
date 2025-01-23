@@ -110,29 +110,42 @@ export class ReviewPage implements OnInit {
     await alert.present();
   }
 
-  saveReview() {
+  async saveReview() {
+    
+    const loading = await this.loadingCtrl.create({
+      message: 'loading...',
+    });
+    await loading.present();
+
     if(this.receivedData2 == "riwayat"){
       const formData = new FormData();
       
-      formData.append('rating', String(this.rating));
-      formData.append('description', this.review);
+      if (this.rating != null){
+        formData.append('rating', String(this.rating));
+      }
+      if (this.review != null && this.review.trim() != ""){
+        formData.append('description', this.review);
+      }
       if (this.selectedFile) {
         formData.append('review_picture', this.selectedFile, this.selectedFile.name);
       }
 
-      this.api.updateReview('review/',this.request.review_id,formData).subscribe((resp) => {
+      
+      this.api.updateReview('review/',this.request.review_id,formData).subscribe(async(resp) => {
         this.resp = resp;
         if (this.resp.code == "200") {
           console.log(this.resp);
-          this.router.navigate(['/review-history']).then(() => {
+          await loading.dismiss();
+          await this.router.navigate(['/review-history']).then(() => {
             window.location.reload();
           });
-        } else { 
-          this.presentAlert(this.resp.data);
+        } else {
+          await loading.dismiss();
+          await this.presentAlert(this.resp.data);
         }
       });
     } else {
-      if (this.rating != null && this.selectedFile != null && this.review != null) {
+      if (this.rating != null && this.selectedFile != null && this.review != null && this.review.trim() !== "") {
         const formData = new FormData();
         
           // Convert numbers to strings and append fields
@@ -147,19 +160,22 @@ export class ReviewPage implements OnInit {
         }
     
         // API call
-        this.api.sendReview('review', formData).subscribe((resp) => {
+        this.api.sendReview('review', formData).subscribe(async(resp) => {
           this.resp = resp;
           if (this.resp.code == "200") {
             console.log(this.resp);
-            this.router.navigate(['/review-history']).then(() => {
+            await loading.dismiss();
+            await this.router.navigate(['/review-history']).then(() => {
               window.location.reload();
             });
           } else { 
-            this.presentAlert(this.resp.data);
+            await loading.dismiss();
+            await this.presentAlert(this.resp.data);
           }
         });
       } else {
-        this.presentAlert("Please input rating, review picture, and description");
+        await loading.dismiss();
+        await this.presentAlert("Please input rating, review picture, and description");
       }
     } 
   }
