@@ -82,7 +82,7 @@
 
       <div *ngIf="status === 'Process'" class="flex mt-5">
         <div class="flex justify-center mb-4 w-full">
-          <button type="submit" (click)="doShipping()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Lanjutkan Pesanan</button>
+          <button type="submit" (click)="doShipping('process')" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Lanjutkan Pesanan</button>
         </div>
         <div class="flex justify-center mb-4 w-full">
           <button type="submit" (click)="doReject()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>
@@ -112,6 +112,17 @@
           value="{{order.shipment_receipt_user_id}}"  
           [(ngModel)]="order.shipment_receipt_user_id"  
           required 
+          class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" 
+        />
+
+        <label for="shipment-receipt" class="block mb-2 mt-4 text-sm font-semibold text-gray-900">Response</label>
+        <input 
+          type="text" 
+          disabled 
+          name="shipment-receipt" 
+          id="shipment-receipt" 
+          value="{{order.shipment_notes}}"  
+          disabled 
           class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" 
         />
       
@@ -163,8 +174,6 @@
           required 
           class="bg-white-50 border border-black text-black-900 rounded-lg focus:ring-green-500 focus:border-green-500 w-full h-12" 
         />
-      
-        <!-- Response -->
         <label for="response" class="block mt-4 mb-2 text-sm font-semibold text-gray-900">Response</label>
         <input 
           type="text" 
@@ -193,7 +202,7 @@
       <div *ngIf="status === 'Return (Customer)'">
         <div class="flex mt-5">
           <div class="flex justify-center mb-4 w-full">
-            <button type="submit" (click)="doShipping()" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Kembalikan Pesanan</button>
+            <button type="submit" (click)="doShipping('return')" [disabled]="isSubmitting" [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-green-600 rounded-full" style="font-size: 16px;">Kembalikan Pesanan</button>
           </div>
           <div class="flex justify-center mb-4 w-full"> 
              <button type="submit" (click)="doReject()" [disabled]="isSubmitting"  [ngClass]="{'disabled-button': isSubmitting}" class="w-full h-10 py-2 font-bold text-white bg-red-800 rounded-full" style="font-size: 16px;">Batalkan Pesanan</button>

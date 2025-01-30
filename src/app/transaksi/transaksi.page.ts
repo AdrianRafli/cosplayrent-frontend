@@ -71,7 +71,7 @@ export class TransaksiPage implements OnInit {
   }
 
   gohome() {
-    this.router.navigate(['/home']); // Adjust the route as needed
+    this.router.navigate(['/profile']); // Adjust the route as needed
   }
 
   viewPayment(paymentid:number) {

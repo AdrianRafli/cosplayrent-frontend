@@ -210,7 +210,7 @@ export class PesanandetailPage implements OnInit {
 
   
 
-  async doShipping(){
+  async doShipping(message:string){
     if (this.isSubmitting) return;
     this.isSubmitting = true;
 
@@ -222,7 +222,9 @@ export class PesanandetailPage implements OnInit {
 
     if (this.nomorresi != null && this.nomorresi.trim() !== ""){
       this.orderResponseClient.orderevent_status = "Shipping (Rental Provider)"
-      this.orderResponseClient.orderevent_notes = this.description
+      if (message == "process"){
+        this.orderResponseClient.orderevent_notes = this.description
+      }
       this.orderResponseClient.shipment_receipt_user_id = this.nomorresi
       this.api.sendOrderDetailClientResponse('orderevents/',this.id,this.orderResponseClient).subscribe(
         async(resp) => {
