@@ -33,6 +33,15 @@ export class VerificationcodePage implements OnInit {
     await alert.present();
   }
 
+  async successpresentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: "Process Success",
+      message: message,
+      buttons: ["OK"],
+    });
+    await alert.present();
+  }
+
   async onSubmit() {
     const loading = await this.loadingCtrl.create({
       message: 'loading...',
@@ -50,7 +59,7 @@ export class VerificationcodePage implements OnInit {
 
         if (this.resp.code == "200") {
           await loading.dismiss();
-          await this.presentAlert("Verification process success");
+          await this.successpresentAlert("Verification process success");
           setTimeout(() => {
             this.router.navigate(['/home']).then(() => {
               window.location.reload();
