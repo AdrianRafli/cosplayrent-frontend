@@ -200,6 +200,16 @@ export class SelesaikanTransaksiPage implements OnInit, OnDestroy {
     }
   }
 
+  goToMidtrans() {
+    if (this.isSubmitting) return;
+    this.isSubmitting = true;
+
+    console.log(this.receivedData)
+    window.open(this.receivedData, '_blank');
+    
+    this.isSubmitting = false;
+  }
+
   copyToClipboard() {
     navigator.clipboard.writeText(this.receivedData).then(() => {});
   }

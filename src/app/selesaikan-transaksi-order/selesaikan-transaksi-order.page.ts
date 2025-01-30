@@ -155,6 +155,15 @@ export class SelesaikanTransaksiOrderPage implements OnInit, OnDestroy {
     })
     }
   
+    goToMidtrans() {
+      if (this.isSubmitting) return;
+      this.isSubmitting = true;
+  
+      console.log(this.transaksi.midtrans_redirect_url)
+      window.open(this.transaksi.midtrans_redirect_url, '_blank');
+      
+      this.isSubmitting = false;
+    }
 
   copyToClipboard(url:any) {
     navigator.clipboard.writeText(url).then(() => {});
