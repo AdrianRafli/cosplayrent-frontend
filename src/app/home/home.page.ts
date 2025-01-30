@@ -56,14 +56,14 @@ export class HomePage implements OnInit{
       }
     })
 
-    this.api.getCheckApp('checkappversion').subscribe((resp)=> {
-      this.resp = resp
-      if(this.resp.code == "200"){
-        if(this.appversion != "0.9"){
-          this.presentAlert("Versi app tidak sama, mohon update aplikasinya");
-        }
-      }
-    })
+    // this.api.getCheckApp('checkappversion').subscribe((resp)=> {
+    //   this.resp = resp
+    //   if(this.resp.code == "200"){
+    //     if(this.appversion != "0.9"){
+    //       this.presentAlert("Versi app tidak sama, mohon update aplikasinya");
+    //     }
+    //   }
+    // })
   }
 
   // goToCostumeDetail(costumeId:number){
