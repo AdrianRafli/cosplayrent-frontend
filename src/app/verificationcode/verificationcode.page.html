@@ -17,6 +17,8 @@
           maxlength="1"
           [(ngModel)]="code[0]"
           name="code0"
+          (input)="focusNext($event, 1)"
+          #codeInput0
           class="h-14 w-12 rounded-lg border border-gray-600 text-center text-xl focus:border-black"
         >
         <input
@@ -24,6 +26,8 @@
           maxlength="1"
           [(ngModel)]="code[1]"
           name="code1"
+          (input)="focusNext($event, 2)"
+          #codeInput1
           class="h-14 w-12 rounded-lg border border-gray-600 text-center text-xl focus:border-black"
         >
         <input
@@ -31,6 +35,8 @@
           maxlength="1"
           [(ngModel)]="code[2]"
           name="code2"
+          (input)="focusNext($event, 3)"
+          #codeInput2
           class="h-14 w-12 rounded-lg border border-gray-600 text-center text-xl focus:border-black"
         >
         <input
@@ -38,6 +44,8 @@
           maxlength="1"
           [(ngModel)]="code[3]"
           name="code3"
+          (input)="focusNext($event, 4)"
+          #codeInput3
           class="h-14 w-12 rounded-lg border border-gray-600 text-center text-xl focus:border-black"
         >
         <input
@@ -45,6 +53,8 @@
           maxlength="1"
           [(ngModel)]="code[4]"
           name="code4"
+          (input)="focusNext($event, 5)"
+          #codeInput4
           class="h-14 w-12 rounded-lg border border-gray-600 text-center text-xl focus:border-black"
         >
       </div>
