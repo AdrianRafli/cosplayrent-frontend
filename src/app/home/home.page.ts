@@ -26,7 +26,7 @@ export class HomePage implements OnInit{
 
   costume: any[] = []
   filteredCostume : any[] = []
-  appversion:string = "0.7"
+  appversion:string = "0.9"
 
   constructor(private router: Router, public api: ApiService, private alertController: AlertController,) {
    }
@@ -59,7 +59,7 @@ export class HomePage implements OnInit{
     this.api.getCheckApp('checkappversion').subscribe((resp)=> {
       this.resp = resp
       if(this.resp.code == "200"){
-        if(this.appversion != "0.7"){
+        if(this.appversion != "0.9"){
           this.presentAlert("Versi app tidak sama, mohon update aplikasinya");
         }
       }
