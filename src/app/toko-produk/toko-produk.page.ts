@@ -62,16 +62,22 @@ export class TokoProdukPage implements OnInit {
   }
 
   goToTambahProduk(){
-    this.api.getSellerStatus('checksellerstatus').subscribe((resp) => {
-      this.resp = resp  
-      if (this.resp.code == "200"){
-        console.log(this.resp)
-        this.router.navigate(['/toko-product-tambah'])
+    this.api.getSellerStatus('checksellerstatus').subscribe(
+      (resp) => {
+        console.log("Full response:", resp);
+        this.resp = resp;
+   
+        if (this.resp.code == "200") {
+          console.log(this.resp);
+          this.router.navigate(['/toko-product-tambah']);
+        } else {
+          this.presentAlert(this.resp.data);
+        }
+      },
+      (error) => {
+        this.presentAlert(error.error.data);
       }
-      else {
-        this.presentAlert(this.resp.data)
-      }
-  },)
+   );
   }
 
   deleteProduct(id:number){
