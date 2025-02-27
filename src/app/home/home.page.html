@@ -41,13 +41,19 @@
       </div>
       <div class="flex space-x-4 overflow-x-scroll">
       <!-- Trending Products -->
-        <div *ngFor="let c of costume" class="min-w-[150px]">
-          <div (click)="goToCostumeDetail(c.id)">
-            <img [src]="c.costume_picture" class="w-full h-40 object-cover rounded-lg" alt="Trending Item">
-            <p class="mt-2 text-sm font-medium">{{ c.name }}</p>
-            <p class="text-sm font-bold">{{ c.price | currency:'IDR':'symbol':'1.0-0' }}</p>
+        <div *ngIf="costumeStatus else noCostumeData">
+          <div *ngFor="let c of costume" class="min-w-[150px]">
+            <div (click)="goToCostumeDetail(c.id)">
+              <img [src]="c.costume_picture" class="w-full h-40 object-cover rounded-lg" alt="Trending Item">
+              <p class="mt-2 text-sm font-medium">{{ c.name }}</p>
+              <p class="text-sm font-bold">{{ c.price | currency:'IDR':'symbol':'1.0-0' }}</p>
+            </div>
           </div>
         </div>
+
+        <ng-template #noCostumeData>
+          <p class="mx-auto text-center">No costume is available</p>
+        </ng-template>
       </div>
     </div>
   
@@ -56,19 +62,31 @@
       <h3 class="text-lg font-bold mb-4">For you</h3>
       <div class="flex flex-wrap gap-1 mb-4">
         <!-- Categories -->
-        <ion-chip *ngFor="let category of categories">
-          {{ category.name }}
-        </ion-chip>
+        <div *ngIf="categoryStatus else noCategoryData">
+          <ion-chip *ngFor="let category of categories">
+            {{ category.name }}
+          </ion-chip>
+        </div>
+
+        <ng-template #noCategoryData>
+          <p class="mx-auto text-center">No category is available</p>
+        </ng-template>
       </div>
       <div class="grid grid-cols-2 gap-4">
         <!-- Recommended Products -->
-        <div *ngFor="let c of costume">
-          <div (click)="goToCostumeDetail(c.id)">
-            <img [src]="c.costume_picture" class="w-full h-40 object-cover rounded-lg" alt="Recommended Item">
-            <p class="mt-2 text-sm font-medium">{{ c.name }}</p>
-            <p class="text-sm font-bold">{{ c.price | currency:'IDR':'symbol':'1.0-0' }}</p>
+        <div *ngIf="costumeStatus else noCostumeData2">
+          <div *ngFor="let c of costume">
+            <div (click)="goToCostumeDetail(c.id)">
+              <img [src]="c.costume_picture" class="w-full h-40 object-cover rounded-lg" alt="Recommended Item">
+              <p class="mt-2 text-sm font-medium">{{ c.name }}</p>
+              <p class="text-sm font-bold">{{ c.price | currency:'IDR':'symbol':'1.0-0' }}</p>
+            </div>
           </div>
         </div>
+
+        <ng-template #noCostumeData2>
+          <p class="mx-auto text-center">No costume is available</p>
+        </ng-template>
       </div>
     </div>
     </div>

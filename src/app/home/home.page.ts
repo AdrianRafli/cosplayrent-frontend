@@ -27,6 +27,8 @@ export class HomePage implements OnInit{
   costume: any[] = []
   filteredCostume : any[] = []
   appversion:string = "0.9"
+  costumeStatus:any
+  categoryStatus:any
 
   constructor(private router: Router, public api: ApiService, private alertController: AlertController,) {
    }
@@ -43,18 +45,21 @@ export class HomePage implements OnInit{
   ngOnInit() {
     this.api.getCostumes('costume').subscribe((resp)=>{  
       this.resp = resp
-      if(this.resp.code == "200") {
-        this.costume = this.resp.data
-      }
-    })
+      this.costumeStatus = true
+      this.costume = this.resp.data
+    },(error) => {
+      console.log(error.error.data)
+    }
+  )
 
     this.api.getCategory('categories').subscribe((resp)=>{
       this.resp = resp
-
-      if(this.resp.code == "200"){
-        this.categories = this.resp.data
-      }
-    })
+      this.categoryStatus = true
+      this.categories = this.resp.data
+    },(error) => {
+      console.log(error.error.data)
+    }
+  )
 
     // this.api.getCheckApp('checkappversion').subscribe((resp)=> {
     //   this.resp = resp
@@ -72,16 +77,13 @@ export class HomePage implements OnInit{
   
   goToLoginOrProfile(){
     this.Token = localStorage.getItem('userToken')
-    console.log("woi")
     if (this.Token !== null && this.Token.trim() !== '') {
-      console.log("woi2")
-
       this.api.goMiddleware('middleware').subscribe(
         (resp) => {
           this.router.navigate(['profile'])
         },
         (error) => {
-          console.log(this.resp.code)
+          console.log(error.error.data)
           localStorage.removeItem('userToken');
           this.router.navigate(['/login'])
         }
@@ -110,10 +112,7 @@ export class HomePage implements OnInit{
   }
   goToOrder(){
     this.Token = localStorage.getItem('userToken')
-    console.log("woi")
     if (this.Token !== null && this.Token.trim() !== '') {
-      console.log("woi2")
-
       this.api.goMiddleware('middleware').subscribe(
         (resp) => {
           this.router.navigate(['order'])
